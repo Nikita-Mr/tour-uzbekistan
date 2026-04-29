@@ -1,5 +1,10 @@
 <script setup>
 import AppContainer from '@/components/AppContainer.vue';
+import Button from '@/components/Button.vue';
+import Card from '@/components/Card.vue';
+import CardDMS from '@/components/CardDMS.vue';
+import CardGorzontalDMC from '@/components/CardGorzontalDMC.vue';
+import Carousel from '@/components/Carousel.vue';
 
 const mass = [
   {
@@ -23,42 +28,280 @@ const mass = [
       'Because this approach makes the entire process effortless for you. From the planning stage of your trip to its completion, it offers a comprehensive and reliable solution that you can confidently utilise at every step.',
   },
 ];
+
+const buttons = [
+  {
+    title: 'Узбекистан',
+    url: '/src/assets/icons/uzbek.png',
+  },
+  {
+    title: 'Казахстан',
+    url: '/src/assets/icons/kazah.png',
+  },
+  {
+    title: 'Кыргызстан',
+    url: '/src/assets/icons/kyrg.png',
+  },
+  {
+    title: 'Таджикистан',
+    url: '/src/assets/icons/tad.png',
+  },
+  {
+    title: 'Кавказ',
+    url: '#',
+  },
+];
+
+const tours = [
+  {
+    id: 1,
+    title: 'Тур “Выходные в Узбекистане”',
+    route: 'Ташкент – Самарканд',
+    image: '/src/assets/icons/card.png',
+  },
+  {
+    id: 2,
+    title: 'Тур “Жемчужины Востока”',
+    route: 'Ташкент – Бухара – Самарканд',
+    image: '/src/assets/icons/card.png',
+  },
+  {
+    id: 3,
+    title: 'Тур “Горный Кыргызстан”',
+    route: 'Бишкек – Иссык-Куль',
+    image: '/src/assets/icons/card.png',
+  },
+  {
+    id: 4,
+    title: 'Тур “Казахстанский трип”',
+    route: 'Алматы – Нур-Султан',
+    image: '/src/assets/icons/card.png',
+  },
+  {
+    id: 5,
+    title: 'Тур “Кавказское гостеприимство”',
+    route: 'Баку – Тбилиси',
+    image: '/src/assets/icons/card.png',
+  },
+  {
+    id: 6,
+    title: 'Тур “Таджикистан горный”',
+    route: 'Душанбе – Памир',
+    image: '/src/assets/icons/card.png',
+  },
+];
+
+const DMC = [
+  {
+    title: 'Destination Management Services (DMC)',
+    descr: 'Complete on-ground coordination and local expertise',
+    url: '/src/assets/icons/card-news.jpg',
+  },
+  {
+    title: 'Customized Itineraries',
+    descr: 'Tailor-made leisure, group, and special-interest programs',
+    url: '/src/assets/icons/card-news.jpg',
+  },
+  {
+    title: 'Flight & Air Services Coordination',
+    descr:
+      'In collaboration with group and block seat operations with Centrum Air',
+    url: '/src/assets/icons/card-news.jpg',
+  },
+];
+
+const items = [
+  {
+    number: '01',
+    image: '/src/assets/icons/dmc.png',
+    title: 'Streamlined and Reliable Operations',
+    description:
+      'Our operations are built on clearly defined, efficient, and standardized processes. From initial planning and contracting to reservations, on-ground coordination, and post-travel evaluation, every step is managed with precision and consistency. This structured approach allows us to maintain service quality while remaining flexible to meet the unique needs of each client.',
+  },
+  {
+    number: '02',
+    image: '/src/assets/icons/dmc.png',
+    title: 'Technology-Driven Infrastructure',
+    description:
+      'Centrum Holidays DMC invests heavily in technology to ensure speed, accuracy, and transparency. Through advanced systems and API integrations, we provide real-time access to hotels, transfers, and packaged products. This technology-driven infrastructure minimizes manual processes, reduces errors, and enables faster decision-making for our partners.',
+  },
+];
 </script>
 
 <template>
   <div class="page-wrapper">
     <!-- Hero секция с картинкой -->
-    <div class="hero-section">
-      <div class="hero-image"></div>
-      
-      <!-- Контейнер для абсолютно позиционированного контента -->
+    <section class="">
+      <div class="hero-section">
+        <div class="hero-image"></div>
+
+        <!-- Контейнер для абсолютно позиционированного контента -->
+        <AppContainer>
+          <div class="hero-content">
+            <h1>Excursion Tours to Uzbekistan and Central Asia</h1>
+          </div>
+        </AppContainer>
+      </div>
+
+      <!-- Карточки (уже не absolute) -->
       <AppContainer>
-        <div class="hero-content">
-          <h1>Excursion Tours to Uzbekistan and Central Asia</h1>
+        <div class="wrapper-card">
+          <div class="card-item" v-for="(item, index) in mass" :key="index">
+            <div class="flex items-center justify-between mb-[25px]">
+              <h3>{{ item.title }}</h3>
+              <router-link to="" class="text-[#88888c] underline italic"
+                >More</router-link
+              >
+            </div>
+            <div>
+              <p class="max-w-[235px]">
+                {{ item.descr }}
+              </p>
+            </div>
+          </div>
         </div>
       </AppContainer>
-    </div>
+    </section>
 
-    <!-- Карточки (уже не absolute) -->
-    <AppContainer>
-      <div class="wrapper-card">
-        <div class="card-item" v-for="(item, index) in mass" :key="index">
-          <div class="flex items-center justify-between mb-[25px]">
-            <h3>{{ item.title }}</h3>
-            <router-link to="" class="text-[#88888c] underline italic">More</router-link>
+    <section class="mb-[50px]">
+      <AppContainer>
+        <div class="w-[100%] border border-[#f6f6f6] mb-[50px]"></div>
+        <div class="flex justify-between mb-[15px]">
+          <h2>Tours of Centrum Holidays DMC</h2>
+          <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
+        </div>
+        <div class="location-buttons flex gap-[10px] mb-[50px]">
+          <button
+            v-for="(item, i) in buttons"
+            :key="i"
+            class="flex items-center gap-[10px] border rounded-[10px] px-[10px] cursor-pointer"
+          >
+            <img
+              class="w-[18px] h-[14px] rounded-[10px]"
+              :src="item.url"
+              alt=""
+            />
+            {{ item.title }}
+          </button>
+        </div>
+      </AppContainer>
+      <Carousel :items="tours" :visible-count="4" :gap="14" :autoplay="5000">
+        <template #default="{ item }">
+          <Card :tour="item" />
+        </template>
+      </Carousel>
+    </section>
+
+    <section class="mb-[50px]">
+      <div class="img bg-[#000] w-[100%] h-[788px] justify-between flex">
+        <div class="pl-[140px] pt-[80px]">
+          <h2 class="text-[#fff] mb-[50px]">
+            The choice of international travelers — discover Uzbekistan with us
+          </h2>
+          <div class="mb-[50px]">
+            <p class="text-[#fff] mb-[50px] leading-[125%] tracking-[-2%]">
+              We correct cultures, &stinations. and helping guests from around
+              the world truly discover Uzbekistan — from its rich and modern
+              energy to W"ique routes and international-level service
+            </p>
+            <div class="w-[100%] border border-[#989898]"></div>
           </div>
           <div>
-            <p class="max-w-[235px]">
-              {{ item.descr }}
-            </p>
+            <h3 class="mb-[50px]">COUNTRIES SERVED:</h3>
+            <div class="grid grid-cols-2">
+              <div class="flex flex-col gap-[11px]">
+                <p class="text-[#fff] flex gap-[7px] text-[16px]">
+                  <img src="../assets/icons/ru.png" alt="" />RUSSIA
+                </p>
+                <p class="text-[#fff] flex gap-[7px] text-[16px]">
+                  <img src="../assets/icons/tr.png" alt="" />TURKEY
+                </p>
+                <p class="text-[#fff] flex gap-[7px] text-[16px]">
+                  <img src="../assets/icons/az.png" alt="" />AZERBAIJAN
+                </p>
+                <p class="text-[#fff] flex gap-[7px] text-[16px]">
+                  <img src="../assets/icons/il.png" alt="" />ISRAEL
+                </p>
+                <p class="text-[#fff] flex gap-[7px] text-[16px]">
+                  <img src="../assets/icons/ia.png" alt="" />INDIA
+                </p>
+              </div>
+              <div class="flex flex-col gap-[11px]">
+                <p class="text-[#fff] flex gap-[7px] text-[16px]">
+                  <img src="../assets/icons/th.png" alt="" />THAILAND
+                </p>
+                <p class="text-[#fff] flex gap-[7px] text-[16px]">
+                  <img src="../assets/icons/vn.png" alt="" />VIETNAM
+                </p>
+                <p class="text-[#fff] flex gap-[7px] text-[16px]">
+                  <img src="../assets/icons/kr.png" alt="" />SOUTH KOREA
+                </p>
+                <p class="text-[#fff] flex gap-[7px] text-[16px]">
+                  <img src="../assets/icons/ge.png" alt="" />GEORGIA
+                </p>
+                <p class="text-[#fff] flex gap-[7px] text-[16px]">
+                  <img src="../assets/icons/pk.png" alt="" />PAKISTAN
+                </p>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="pr-[140px]">
+          <img
+            class="max-w-[788px] object-cover bg-left"
+            src="../assets/icons/planet.png"
+            alt=""
+          />
+        </div>
       </div>
-    </AppContainer>
+    </section>
+
+    <section class="mb-[70px]">
+      <AppContainer>
+        <div class="flex justify-between mb-[10px]">
+          <h2>Services of Centrum Holidays DMC</h2>
+          <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
+        </div>
+        <p class="tracking-[-1.5%] mb-[60px]">
+          Centrum Holidays DMC provides end-to-end destination management
+          services in Uzbekistan, designed for international tour operators,
+          agencies, and corporate clients:
+        </p>
+        <div class="flex justify-center gap-[25px]">
+          <CardDMS v-for="(item, i) in DMC" :key="i" :DMC="DMC[i]" />
+        </div>
+      </AppContainer>
+    </section>
+
+    <section>
+      <AppContainer>
+        <div class="w-[100%] border border-[#b1b1b4] mb-[65px]"></div>
+        <div class="flex justify-between mb-[25px]">
+          <h3>Why of Centrum Holidays DMC</h3>
+          <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
+        </div>
+        <p class="mb-[40px]">
+          At Centrum Holidays DMC, operational excellence is at the core of
+          everything we do. As a destination management company operating in
+          Uzbekistan, we combine local expertise with global standards to
+          deliver seamless, reliable, and high-quality travel solutions for our
+          partners and clients.
+        </p>
+        <!-- <div class="w-[100%] border border-[#f4f4f4] mb-[65px]"></div> -->
+        <CardGorzontalDMC v-for="(item, i) in items" :key="i" :GorizintalDMC="item" />
+      </AppContainer>
+    </section>
   </div>
 </template>
 
 <style scoped>
+
+.location-buttons button:focus {
+  background-color: #285aff;
+  border: 1px solid transparent;
+  color: #fff;
+}
+
 .page-wrapper {
   position: relative;
 }
@@ -132,17 +375,49 @@ h1 {
   font-style: italic;
 }
 
+.mt-[100px] {
+  margin-top: 100px;
+}
+
+.location-buttons button:focus,
+.location-buttons button.active {
+  background-color: #285aff;
+  border: 1px solid transparent;
+  color: #fff;
+}
+
+/* Адаптив для карусели */
+@media (max-width: 1200px) {
+  h2 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mt-[100px] {
+    margin-top: 50px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  .location-buttons {
+    padding-bottom: 10px;
+  }
+}
+
 /* Адаптив */
 @media (max-width: 1200px) {
   h1 {
     font-size: 40px;
     max-width: 400px;
   }
-  
+
   .card-item h3 {
     font-size: 20px;
   }
-  
+
   .card-item p {
     font-size: 11px;
   }
@@ -153,29 +428,29 @@ h1 {
     flex-wrap: wrap;
     margin-top: -15px;
   }
-  
+
   .card-item {
     flex: 0 0 50%;
   }
-  
+
   .card-item:nth-child(2) {
     border-right: none;
   }
-  
+
   h1 {
     font-size: 32px;
     max-width: 300px;
     margin-top: 50px;
   }
-  
+
   .hero-section {
     height: 458px;
   }
-  
+
   .hero-image {
     height: 458px;
   }
-  
+
   .hero-content {
     height: 458px;
   }
@@ -186,30 +461,30 @@ h1 {
     flex-direction: column;
     margin-top: -10px;
   }
-  
+
   .card-item {
     flex: 0 0 100%;
   }
-  
+
   .card-item:not(:last-child) {
     border-right: none;
     border-bottom: 1px solid #e6e6e7;
   }
-  
+
   h1 {
     font-size: 24px;
     max-width: 250px;
     margin-top: 30px;
   }
-  
+
   .hero-section {
     height: 358px;
   }
-  
+
   .hero-image {
     height: 358px;
   }
-  
+
   .hero-content {
     height: 358px;
   }
@@ -219,21 +494,21 @@ h1 {
   .hero-section {
     height: 800px;
   }
-  
+
   .hero-image {
     height: 800px;
   }
-  
+
   .hero-content {
     height: 800px;
   }
-  
+
   h1 {
     font-size: 70px;
     max-width: 600px;
     margin-top: 150px;
   }
-  .card-item p{
+  .card-item p {
     /* max-width: 500px; */
   }
 }

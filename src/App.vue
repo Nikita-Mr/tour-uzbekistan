@@ -4,19 +4,24 @@ import Footer from './components/Footer.vue';
 </script>
 
 <template>
-  <header>
-    <Header></Header>
-  </header>
-  <main>
-    <router-view />
-  </main>
-  <footer>
-    <Footer></Footer>
-  </footer>
+  <div class="app">
+    <header>
+      <Header />
+    </header>
+    <main class="grow">
+      <router-view />
+    </main>
+    <footer>
+      <Footer />
+    </footer>
+  </div>
 </template>
 
 <style scoped>
-main{
+.app{
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  
 }
 </style>
