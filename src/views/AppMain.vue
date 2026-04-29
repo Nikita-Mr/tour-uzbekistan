@@ -4,7 +4,16 @@ import Button from '@/components/Button.vue';
 import Card from '@/components/Card.vue';
 import CardDMS from '@/components/CardDMS.vue';
 import CardGorzontalDMC from '@/components/CardGorzontalDMC.vue';
+import CardNews from '@/components/CardNews.vue';
 import Carousel from '@/components/Carousel.vue';
+import Line from '@/components/Line.vue';
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
+};
 
 const mass = [
   {
@@ -126,10 +135,40 @@ const items = [
       'Centrum Holidays DMC invests heavily in technology to ensure speed, accuracy, and transparency. Through advanced systems and API integrations, we provide real-time access to hotels, transfers, and packaged products. This technology-driven infrastructure minimizes manual processes, reduces errors, and enables faster decision-making for our partners.',
   },
 ];
+
+const newsList = [
+  {
+    id: 1,
+    image: '/src/assets/icons/card.png',
+    description:
+      '«Чайхана и культура чаепития» — это настоящее искусство в Узбекистане. Многие туристы удивляются: почему в гостях им всегда наливают чай неполную чашку...',
+    date: '1 месяц назад',
+  },
+  {
+    id: 2,
+    image: '/src/assets/icons/card.png',
+    description:
+      'Мы — ваш надежный DMC-партнёр в Узбекистане. С гордостью сообщаем, что наша компания имеет прямые контракты более чем с 700 отелями по всей...',
+    date: '2 месяца назад',
+  },
+  {
+    id: 3,
+    image: '/src/assets/icons/card.png',
+    description:
+      'Необычные туры в Узбекистан — наша специализация. По следам ремесленников — путешествие в Ферганскую долину. Откройте для себя...',
+    date: '2 месяца назад',
+  },
+  {
+    id: 4,
+    image: '/src/assets/icons/card.png',
+    description: 'Ещё одна новость для туристов...',
+    date: '3 месяца назад',
+  },
+];
 </script>
 
 <template>
-  <div class="page-wrapper">
+  <div class="page-wrapper relative">
     <!-- Hero секция с картинкой -->
     <section class="">
       <div class="hero-section">
@@ -273,7 +312,7 @@ const items = [
       </AppContainer>
     </section>
 
-    <section>
+    <section class="mb-[20px]">
       <AppContainer>
         <div class="w-[100%] border border-[#b1b1b4] mb-[65px]"></div>
         <div class="flex justify-between mb-[25px]">
@@ -288,13 +327,91 @@ const items = [
           partners and clients.
         </p>
         <!-- <div class="w-[100%] border border-[#f4f4f4] mb-[65px]"></div> -->
-        <CardGorzontalDMC v-for="(item, i) in items" :key="i" :GorizintalDMC="item" />
+        <CardGorzontalDMC
+          v-for="(item, i) in items"
+          :key="i"
+          :GorizintalDMC="item"
+        />
       </AppContainer>
     </section>
+
+    <section class="mb-[70px]">
+      <AppContainer>
+        <!-- Разделитель -->
+        <div class="w-full border border-[#dddddf] mb-[60px]"></div>
+
+        <!-- Заголовок -->
+        <div class="flex justify-between items-center mb-[25px]">
+          <h2 class="text-[32px] font-medium">News:</h2>
+          <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
+        </div>
+
+        <!-- Карусель внутри контейнера -->
+        <Carousel
+          :items="newsList"
+          :visible-count="3"
+          :gap="20"
+          :autoplay="5000"
+          :item-width="380"
+        >
+          <template #default="{ item }">
+            <CardNews :news="item" />
+          </template>
+        </Carousel>
+      </AppContainer>
+    </section>
+
+    <button @click="scrollToTop" class="up-btn">
+      <img src="../assets/icons/upArrow.png" alt="Наверх" />
+    </button>
   </div>
 </template>
 
 <style scoped>
+.up-btn {
+  position: fixed;
+  bottom: 60px;
+  right: 45px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  z-index: 100;
+
+  /* Тень по вашему ТЗ: X -1, Y 2, Blur 10.4, Spread 0, цвет #000000 25% */
+  box-shadow: -1px 2px 10.4px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Ховер как у синих кнопок */
+.up-btn:hover {
+  background: #285aff;
+  transform: translateY(-3px);
+  box-shadow: -1px 5px 15px 0 rgba(40, 90, 255, 0.35);
+}
+
+.up-btn:hover img {
+  filter: brightness(0) invert(1); /* делает иконку белой */
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 768px) {
+  .up-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.gorizontal:last-child {
+  border-bottom: 0px solid#eeeeee;
+}
 
 .location-buttons button:focus {
   background-color: #285aff;

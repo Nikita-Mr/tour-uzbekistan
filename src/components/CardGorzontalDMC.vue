@@ -9,7 +9,7 @@ const props = defineProps({
 
 <template>
   <div
-    class="border-t border-[#eeeeee] pt-10 pb-10 first:pt-0 first:border-t-0"
+    class="gorizontal border-t border-[#eeeeee] pt-10 pb-10 first:pt-0 first:border-t-0"
   >
     <div class="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
       <!-- Номер -->
@@ -44,4 +44,8 @@ const props = defineProps({
     </div>
   </div>
 </template>
-<style></style>
+<style>
+.gorizontal:last-child{
+  border-bottom: 1px solid #eeeeee;
+}
+</style>

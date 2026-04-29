@@ -74,7 +74,10 @@ const props = defineProps({
   autoplay: {
     type: Number,
     default: 0
-  }
+  },
+  itemWidth: {
+    type: Number
+  },
 });
 
 const containerRef = ref(null);
@@ -133,9 +136,9 @@ const trackStyle = computed(() => {
 });
 
 const itemStyle = computed(() => ({
-  width: itemWidth.value ? `${itemWidth.value}px` : `${100 / props.visibleCount}%`,
+  width: props.itemWidth ? `${props.itemWidth}px` : `${itemWidth.value}px`,
   flexShrink: 0,
-  maxWidth: '270px',
+  // maxWidth: '270px',
 }));
 
 /* ─── Бесконечная навигация ─── */
