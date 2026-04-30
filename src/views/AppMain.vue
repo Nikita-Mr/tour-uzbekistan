@@ -8,8 +8,6 @@ import CardNews from '@/components/CardNews.vue';
 import Carousel from '@/components/Carousel.vue';
 import Line from '@/components/Line.vue';
 
-
-
 import { ref, onMounted, onUnmounted } from 'vue';
 
 // Для туров
@@ -63,65 +61,51 @@ const mass = [
   },
 ];
 
+// ✅ Исправлено: пути от public (абсолютные)
 const buttons = [
-  {
-    title: 'Узбекистан',
-    url: '@/assets/icons/uzbek.png',
-  },
-  {
-    title: 'Казахстан',
-    url: '@/assets/icons/kazah.png',
-  },
-  {
-    title: 'Кыргызстан',
-    url: '@/assets/icons/kyrg.png',
-  },
-  {
-    title: 'Таджикистан',
-    url: '@/assets/icons/tad.png',
-  },
-  {
-    title: 'Кавказ',
-    url: '#',
-  },
+  { title: 'Узбекистан', url: '/assets/icons/uzbek.png' },
+  { title: 'Казахстан', url: '/assets/icons/kazah.png' },
+  { title: 'Кыргызстан', url: '/assets/icons/kyrg.png' },
+  { title: 'Таджикистан', url: '/assets/icons/tad.png' },
+  { title: 'Кавказ', url: '#' },
 ];
 
 const tours = [
   {
     id: 1,
-    title: 'Тур “Выходные в Узбекистане”',
+    title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '@/assets/icons/card.png',
+    image: '/assets/icons/card.png',
   },
   {
     id: 2,
-    title: 'Тур “Жемчужины Востока”',
+    title: 'Тур "Жемчужины Востока"',
     route: 'Ташкент – Бухара – Самарканд',
-    image: '@/assets/icons/card.png',
+    image: '/assets/icons/card.png',
   },
   {
     id: 3,
-    title: 'Тур “Горный Кыргызстан”',
+    title: 'Тур "Горный Кыргызстан"',
     route: 'Бишкек – Иссык-Куль',
-    image: '@/assets/icons/card.png',
+    image: '/assets/icons/card.png',
   },
   {
     id: 4,
-    title: 'Тур “Казахстанский трип”',
+    title: 'Тур "Казахстанский трип"',
     route: 'Алматы – Нур-Султан',
-    image: '@/assets/icons/card.png',
+    image: '/assets/icons/card.png',
   },
   {
     id: 5,
-    title: 'Тур “Кавказское гостеприимство”',
+    title: 'Тур "Кавказское гостеприимство"',
     route: 'Баку – Тбилиси',
-    image: '@/assets/icons/card.png',
+    image: '/assets/icons/card.png',
   },
   {
     id: 6,
-    title: 'Тур “Таджикистан горный”',
+    title: 'Тур "Таджикистан горный"',
     route: 'Душанбе – Памир',
-    image: '@/assets/icons/card.png',
+    image: '/assets/icons/card.png',
   },
 ];
 
@@ -129,32 +113,32 @@ const DMC = [
   {
     title: 'Destination Management Services (DMC)',
     descr: 'Complete on-ground coordination and local expertise',
-    url: '@/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news.jpg',
   },
   {
     title: 'Customized Itineraries',
     descr: 'Tailor-made leisure, group, and special-interest programs',
-    url: '@/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news.jpg',
   },
   {
     title: 'Flight & Air Services Coordination',
     descr:
       'In collaboration with group and block seat operations with Centrum Air',
-    url: '@/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news.jpg',
   },
 ];
 
 const items = [
   {
     number: '01',
-    image: '@/assets/icons/dmc.png',
+    image: '/assets/icons/dmc.png',
     title: 'Streamlined and Reliable Operations',
     description:
       'Our operations are built on clearly defined, efficient, and standardized processes. From initial planning and contracting to reservations, on-ground coordination, and post-travel evaluation, every step is managed with precision and consistency. This structured approach allows us to maintain service quality while remaining flexible to meet the unique needs of each client.',
   },
   {
     number: '02',
-    image: '@/assets/icons/dmc.png',
+    image: '/assets/icons/dmc.png',
     title: 'Technology-Driven Infrastructure',
     description:
       'Centrum Holidays DMC invests heavily in technology to ensure speed, accuracy, and transparency. Through advanced systems and API integrations, we provide real-time access to hotels, transfers, and packaged products. This technology-driven infrastructure minimizes manual processes, reduces errors, and enables faster decision-making for our partners.',
@@ -164,28 +148,28 @@ const items = [
 const newsList = [
   {
     id: 1,
-    image: '@/assets/icons/card.png',
+    image: '/assets/icons/card.png',
     description:
       '«Чайхана и культура чаепития» — это настоящее искусство в Узбекистане. Многие туристы удивляются: почему в гостях им всегда наливают чай неполную чашку...',
     date: '1 месяц назад',
   },
   {
     id: 2,
-    image: '@/assets/icons/card.png',
+    image: '/assets/icons/card.png',
     description:
       'Мы — ваш надежный DMC-партнёр в Узбекистане. С гордостью сообщаем, что наша компания имеет прямые контракты более чем с 700 отелями по всей...',
     date: '2 месяца назад',
   },
   {
     id: 3,
-    image: '@/assets/icons/card.png',
+    image: '/assets/icons/card.png',
     description:
       'Необычные туры в Узбекистан — наша специализация. По следам ремесленников — путешествие в Ферганскую долину. Откройте для себя...',
     date: '2 месяца назад',
   },
   {
     id: 4,
-    image: '@/assets/icons/card.png',
+    image: '/assets/icons/card.png',
     description: 'Ещё одна новость для туристов...',
     date: '3 месяца назад',
   },
@@ -234,12 +218,14 @@ const newsList = [
         <div class="w-[100%] border border-[#f6f6f6] mb-[50px]"></div>
         <div class="flex justify-between mb-[15px]">
           <h2 class="text-[24px] lg:text-[32px] font-medium">
-            <!-- Мобильный текст -->
             <span class="lg:hidden uppercase font-medium italic">TOURS</span>
-            <!-- Десктопный текст -->
             <span class="hidden lg:inline">Tours of Centrum Holidays DMC</span>
           </h2>
-          <Button @click="$router.push({name:'tours'})" :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
+          <Button
+            @click="$router.push({ name: 'tours' })"
+            :title="'View all'"
+            :style="'px-[34px] border-[#bfbfbf]'"
+          />
         </div>
         <div class="location-buttons flex gap-[10px] mb-[50px] flex-wrap">
           <button
@@ -274,14 +260,12 @@ const newsList = [
         class="relative z-10 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-16 xl:px-[140px] pt-16 sm:pt-20 lg:pt-[80px] pb-40 sm:pb-48 lg:pb-28"
       >
         <div class="lg:max-w-[580px]">
-          <!-- Заголовок -->
           <h2
             class="text-white text-[28px] sm:text-[36px] lg:text-[48px] xl:text-[56px] font-light leading-[1.1] mb-6 lg:mb-[50px]"
           >
             The choice of international travelers — discover Uzbekistan with us
           </h2>
 
-          <!-- Описание -->
           <p
             class="text-[#a0a0a0] text-[14px] lg:text-[15px] leading-[1.6] mb-8 lg:mb-[50px] max-w-[460px]"
           >
@@ -291,12 +275,10 @@ const newsList = [
             service.
           </p>
 
-          <!-- Разделитель -->
           <div
             class="w-full max-w-[360px] h-px bg-[#989898] mb-8 lg:mb-[50px]"
           ></div>
 
-          <!-- Флаги -->
           <div>
             <h3
               class="text-white text-[13px] font-bold tracking-[0.12em] uppercase mb-5 lg:mb-[50px]"
@@ -310,7 +292,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="@/assets/icons/ru.png"
+                    src="/assets/icons/ru.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />RUSSIA
@@ -319,7 +301,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="@/assets/icons/tr.png"
+                    src="/assets/icons/tr.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />TURKEY
@@ -328,7 +310,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="@/assets/icons/az.png"
+                    src="/assets/icons/az.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />AZERBAIJAN
@@ -337,7 +319,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="@/assets/icons/il.png"
+                    src="/assets/icons/il.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />ISRAEL
@@ -346,7 +328,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="@/assets/icons/ia.png"
+                    src="/assets/icons/ia.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />INDIA
@@ -357,7 +339,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="@/assets/icons/th.png"
+                    src="/assets/icons/th.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />THAILAND
@@ -366,7 +348,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="@/assets/icons/vn.png"
+                    src="/assets/icons/vn.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />VIETNAM
@@ -375,7 +357,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="@/assets/icons/kr.png"
+                    src="/assets/icons/kr.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />SOUTH KOREA
@@ -384,7 +366,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="@/assets/icons/ge.png"
+                    src="/assets/icons/ge.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />GEORGIA
@@ -393,7 +375,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="@/assets/icons/pk.png"
+                    src="/assets/icons/pk.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />PAKISTAN
@@ -404,16 +386,15 @@ const newsList = [
         </div>
       </div>
 
-      <!-- Планета: выглядывает вниз -->
       <img
-        src="@/assets/icons/planet.png"
+        src="/assets/icons/planet.png"
         alt="Globe"
         class="absolute z-0 left-1/2 -translate-x-1/2 lg:left-auto lg:right-[-5%] xl:right-0 lg:translate-x-0 bottom-0 translate-y-[40%] sm:translate-y-[35%] lg:translate-y-[25%] w-[280px] sm:w-[380px] lg:w-[600px] xl:w-[750px] pointer-events-none select-none"
       />
     </section>
+
     <section class="mb-[70px]">
       <AppContainer>
-        <!-- Заголовок -->
         <div class="flex justify-between items-center mb-[10px]">
           <h2 class="text-[24px] lg:text-[32px] font-medium">
             <span class="lg:hidden uppercase font-medium italic">Services</span>
@@ -424,14 +405,12 @@ const newsList = [
           <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
         </div>
 
-        <!-- Описание -->
         <p class="tracking-[-1.5%] mb-[60px] text-[14px] lg:text-[16px]">
           Centrum Holidays DMC provides end-to-end destination management
           services in Uzbekistan, designed for international tour operators,
           agencies, and corporate clients:
         </p>
 
-        <!-- Десктоп: карточки в ряд -->
         <div class="hidden lg:flex justify-center gap-[25px]">
           <CardDMS v-for="(item, i) in DMC" :key="i" :DMC="item" />
         </div>
@@ -463,7 +442,6 @@ const newsList = [
           <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
         </div>
 
-        <!-- Описание: мобильный 12px (или 8px если прям надо), без ограничения ширины -->
         <p
           class="text-[12px] lg:text-[16px] leading-[1.5] lg:leading-[1.6] mb-6 lg:mb-[40px] text-[#333]"
         >
@@ -485,21 +463,16 @@ const newsList = [
 
     <section class="mb-[70px]">
       <AppContainer>
-        <!-- Разделитель -->
         <div class="w-full border border-[#dddddf] mb-[60px]"></div>
 
-        <!-- Заголовок -->
         <div class="flex justify-between items-center mb-[25px]">
           <h2 class="text-[24px] lg:text-[32px] font-medium">
-            <!-- Мобильный текст -->
             <span class="lg:hidden uppercase font-medium italic">News</span>
-            <!-- Десктопный текст -->
             <span class="hidden lg:inline">News:</span>
           </h2>
           <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
         </div>
 
-        <!-- Карусель внутри контейнера -->
         <Carousel
           :items="newsList"
           :visible-count="newsVisible"
@@ -517,7 +490,6 @@ const newsList = [
 </template>
 
 <style scoped>
-
 /* Адаптив для мобильных */
 @media (max-width: 768px) {
   .up-btn {
@@ -555,7 +527,7 @@ const newsList = [
   left: 0;
   width: 100%;
   height: 558px;
-  background-image: url('@/assets/icons/8ec662fe56344049271e593f6db12dfdb7df8bdb.png');
+  background-image: url('/assets/icons/8ec662fe56344049271e593f6db12dfdb7bf8bdb.png');
   background-size: cover;
   background-position: center;
   z-index: 0;
@@ -575,13 +547,12 @@ h1 {
   color: #fff;
   max-width: 500px;
   margin-top: 100px;
-  /* Убираем margin-left, используем padding от AppContainer */
 }
 
-/* Карточки - накладываются на картинку на 30px */
+/* Карточки */
 .wrapper-card {
   position: relative;
-  margin-top: -100px; /* Отрицательный margin, чтобы подняться на 30px вверх */
+  margin-top: -100px;
   background-color: #fff;
   border-radius: 15px;
   display: flex;
@@ -622,10 +593,19 @@ h1 {
   color: #fff;
 }
 
-/* Адаптив для карусели */
 @media (max-width: 1200px) {
   h2 {
     font-size: 28px;
+  }
+  h1 {
+    font-size: 40px;
+    max-width: 400px;
+  }
+  .card-item h3 {
+    font-size: 20px;
+  }
+  .card-item p {
+    font-size: 11px;
   }
 }
 
@@ -633,29 +613,11 @@ h1 {
   .mt-100px {
     margin-top: 50px;
   }
-
   h2 {
     font-size: 24px;
   }
-
   .location-buttons {
     padding-bottom: 10px;
-  }
-}
-
-/* Адаптив */
-@media (max-width: 1200px) {
-  h1 {
-    font-size: 40px;
-    max-width: 400px;
-  }
-
-  .card-item h3 {
-    font-size: 20px;
-  }
-
-  .card-item p {
-    font-size: 11px;
   }
 }
 
@@ -664,29 +626,23 @@ h1 {
     flex-wrap: wrap;
     margin-top: -15px;
   }
-
   .card-item {
     flex: 0 0 50%;
   }
-
   .card-item:nth-child(2) {
     border-right: none;
   }
-
   h1 {
     font-size: 32px;
     max-width: 300px;
     margin-top: 50px;
   }
-
   .hero-section {
     height: 458px;
   }
-
   .hero-image {
     height: 458px;
   }
-
   .hero-content {
     height: 458px;
   }
@@ -697,19 +653,15 @@ h1 {
     flex-direction: column;
     margin-top: -60px;
   }
-
   .description {
     display: none;
   }
-
   .card-item-title {
     margin: 0;
   }
-
   .card-item {
     flex: 0 0 100%;
   }
-
   .wrapper-card .card-item {
     padding: 15px;
   }
@@ -718,22 +670,18 @@ h1 {
     border-bottom: 1px solid #e6e6e7;
     padding: 15px;
   }
-
   h1 {
     font-size: 24px;
     max-width: 250px;
     margin-top: 100px;
   }
-
   .hero-section {
     height: 358px;
   }
-
   .hero-image {
     height: 358px;
     background-position: left;
   }
-
   .hero-content {
     height: 358px;
   }
@@ -743,22 +691,16 @@ h1 {
   .hero-section {
     height: 800px;
   }
-
   .hero-image {
     height: 800px;
   }
-
   .hero-content {
     height: 800px;
   }
-
   h1 {
     font-size: 70px;
     max-width: 600px;
     margin-top: 150px;
-  }
-  .card-item p {
-    /* max-width: 500px; */
   }
 }
 </style>
