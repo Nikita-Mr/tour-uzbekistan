@@ -310,7 +310,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="../assets/icons/ru.png"
+                    src="/src/assets/icons/ru.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />RUSSIA
@@ -319,7 +319,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="../assets/icons/tr.png"
+                    src="/src/assets/icons/tr.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />TURKEY
@@ -328,7 +328,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="../assets/icons/az.png"
+                    src="/src/assets/icons/az.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />AZERBAIJAN
@@ -337,7 +337,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="../assets/icons/il.png"
+                    src="/src/assets/icons/il.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />ISRAEL
@@ -346,7 +346,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="../assets/icons/ia.png"
+                    src="/src/assets/icons/ia.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />INDIA
@@ -357,7 +357,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="../assets/icons/th.png"
+                    src="/src/assets/icons/th.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />THAILAND
@@ -366,7 +366,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="../assets/icons/vn.png"
+                    src="/src/assets/icons/vn.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />VIETNAM
@@ -375,7 +375,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="../assets/icons/kr.png"
+                    src="/src/assets/icons/kr.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />SOUTH KOREA
@@ -384,7 +384,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="../assets/icons/ge.png"
+                    src="/src/assets/icons/ge.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />GEORGIA
@@ -393,7 +393,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="../assets/icons/pk.png"
+                    src="/src/assets/icons/pk.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />PAKISTAN
@@ -406,7 +406,7 @@ const newsList = [
 
       <!-- Планета: выглядывает вниз -->
       <img
-        src="../assets/icons/planet.png"
+        src="/src/assets/icons/planet.png"
         alt="Globe"
         class="absolute z-0 left-1/2 -translate-x-1/2 lg:left-auto lg:right-[-5%] xl:right-0 lg:translate-x-0 bottom-0 translate-y-[40%] sm:translate-y-[35%] lg:translate-y-[25%] w-[280px] sm:w-[380px] lg:w-[600px] xl:w-[750px] pointer-events-none select-none"
       />
@@ -555,7 +555,7 @@ const newsList = [
   left: 0;
   width: 100%;
   height: 558px;
-  background-image: url('../assets/icons/8ec662fe56344049271e593f6db12dfdb7df8bdb.png');
+  background-image: url('/src/assets/icons/8ec662fe56344049271e593f6db12dfdb7df8bdb.png');
   background-size: cover;
   background-position: center;
   z-index: 0;
