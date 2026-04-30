@@ -527,7 +527,7 @@ const newsList = [
   left: 0;
   width: 100%;
   height: 558px;
-  background-image: url('/src/assets/icons/8ec662fe56344049271e593f6db12dfdb7bf8bdb.png');
+  background-image: url('/assets/icons/8ec662fe56344049271e593f6db12dfdb7bf8bdb.png');
   background-size: cover;
   background-position: center;
   z-index: 0;
