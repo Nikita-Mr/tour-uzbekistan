@@ -611,7 +611,7 @@ h1 {
   font-style: italic;
 }
 
-.mt-[100px] {
+.mt-100px {
   margin-top: 100px;
 }
 
@@ -630,7 +630,7 @@ h1 {
 }
 
 @media (max-width: 768px) {
-  .mt-[100px] {
+  .mt-100px {
     margin-top: 50px;
   }
 
