@@ -5,7 +5,7 @@
     @mouseenter="stopAutoplay"
     @mouseleave="startAutoplay"
   >
-    <div class="carousel-wrapper" ref="wrapperRef">
+    <div class="carousel-wrapper py-[5px]" ref="wrapperRef">
       <div 
         class="carousel-track flex items-stretch" 
         ref="trackRef"

@@ -15,6 +15,36 @@ const scrollToTop = () => {
   });
 };
 
+import { ref, onMounted, onUnmounted } from 'vue';
+
+// Для туров
+const getTourCount = () => {
+  if (window.innerWidth < 640) return 1;
+  if (window.innerWidth < 768) return 1;
+  if (window.innerWidth < 1024) return 2;
+  if (window.innerWidth < 1280) return 3;
+  return 4;
+};
+
+// Для новостей
+const getNewsCount = () => {
+  if (window.innerWidth < 640) return 1;
+  if (window.innerWidth < 768) return 1;
+  if (window.innerWidth < 1024) return 2;
+  return 3;
+};
+
+const tourVisible = ref(getTourCount());
+const newsVisible = ref(getNewsCount());
+
+const onResize = () => {
+  tourVisible.value = getTourCount();
+  newsVisible.value = getNewsCount();
+};
+
+onMounted(() => window.addEventListener('resize', onResize));
+onUnmounted(() => window.removeEventListener('resize', onResize));
+
 const mass = [
   {
     title: 'About us',
@@ -186,13 +216,15 @@ const newsList = [
       <AppContainer>
         <div class="wrapper-card">
           <div class="card-item" v-for="(item, index) in mass" :key="index">
-            <div class="flex items-center justify-between mb-[25px]">
+            <div
+              class="card-item-title flex items-center justify-between mb-[25px]"
+            >
               <h3>{{ item.title }}</h3>
               <router-link to="" class="text-[#88888c] underline italic"
                 >More</router-link
               >
             </div>
-            <div>
+            <div class="card-item-title description">
               <p class="max-w-[235px]">
                 {{ item.descr }}
               </p>
@@ -206,10 +238,15 @@ const newsList = [
       <AppContainer>
         <div class="w-[100%] border border-[#f6f6f6] mb-[50px]"></div>
         <div class="flex justify-between mb-[15px]">
-          <h2>Tours of Centrum Holidays DMC</h2>
+          <h2 class="text-[24px] lg:text-[32px] font-medium">
+            <!-- Мобильный текст -->
+            <span class="lg:hidden uppercase font-medium italic">TOURS</span>
+            <!-- Десктопный текст -->
+            <span class="hidden lg:inline">Tours of Centrum Holidays DMC</span>
+          </h2>
           <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
         </div>
-        <div class="location-buttons flex gap-[10px] mb-[50px]">
+        <div class="location-buttons flex gap-[10px] mb-[50px] flex-wrap">
           <button
             v-for="(item, i) in buttons"
             :key="i"
@@ -224,113 +261,229 @@ const newsList = [
           </button>
         </div>
       </AppContainer>
-      <Carousel :items="tours" :visible-count="4" :gap="14" :autoplay="5000">
+      <Carousel
+        :items="tours"
+        :visible-count="tourVisible"
+        :gap="14"
+        :autoplay="5000"
+      >
         <template #default="{ item }">
           <Card :tour="item" />
         </template>
       </Carousel>
     </section>
 
-    <section class="mb-[50px]">
-      <div class="img bg-[#000] w-[100%] h-[788px] justify-between flex">
-        <div class="pl-[140px] pt-[80px]">
-          <h2 class="text-[#fff] mb-[50px]">
+    <section class="relative bg-black overflow-hidden">
+      <!-- Контент -->
+      <div
+        class="relative z-10 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-16 xl:px-[140px] pt-16 sm:pt-20 lg:pt-[80px] pb-40 sm:pb-48 lg:pb-28"
+      >
+        <div class="lg:max-w-[580px]">
+          <!-- Заголовок -->
+          <h2
+            class="text-white text-[28px] sm:text-[36px] lg:text-[48px] xl:text-[56px] font-light leading-[1.1] mb-6 lg:mb-[50px]"
+          >
             The choice of international travelers — discover Uzbekistan with us
           </h2>
-          <div class="mb-[50px]">
-            <p class="text-[#fff] mb-[50px] leading-[125%] tracking-[-2%]">
-              We correct cultures, &stinations. and helping guests from around
-              the world truly discover Uzbekistan — from its rich and modern
-              energy to W"ique routes and international-level service
-            </p>
-            <div class="w-[100%] border border-[#989898]"></div>
-          </div>
+
+          <!-- Описание -->
+          <p
+            class="text-[#a0a0a0] text-[14px] lg:text-[15px] leading-[1.6] mb-8 lg:mb-[50px] max-w-[460px]"
+          >
+            We connect cultures, destinations, and experiences, helping guests
+            from around the world truly discover Uzbekistan — from its rich
+            heritage and modern energy to unique routes and international-level
+            service.
+          </p>
+
+          <!-- Разделитель -->
+          <div
+            class="w-full max-w-[360px] h-px bg-[#989898] mb-8 lg:mb-[50px]"
+          ></div>
+
+          <!-- Флаги -->
           <div>
-            <h3 class="mb-[50px]">COUNTRIES SERVED:</h3>
-            <div class="grid grid-cols-2">
+            <h3
+              class="text-white text-[13px] font-bold tracking-[0.12em] uppercase mb-5 lg:mb-[50px]"
+            >
+              Countries served:
+            </h3>
+
+            <div class="grid grid-cols-2 gap-x-8 sm:gap-x-16 gap-y-3">
               <div class="flex flex-col gap-[11px]">
-                <p class="text-[#fff] flex gap-[7px] text-[16px]">
-                  <img src="../assets/icons/ru.png" alt="" />RUSSIA
+                <p
+                  class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
+                >
+                  <img
+                    src="../assets/icons/ru.png"
+                    alt=""
+                    class="w-5 h-5 rounded-full object-cover"
+                  />RUSSIA
                 </p>
-                <p class="text-[#fff] flex gap-[7px] text-[16px]">
-                  <img src="../assets/icons/tr.png" alt="" />TURKEY
+                <p
+                  class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
+                >
+                  <img
+                    src="../assets/icons/tr.png"
+                    alt=""
+                    class="w-5 h-5 rounded-full object-cover"
+                  />TURKEY
                 </p>
-                <p class="text-[#fff] flex gap-[7px] text-[16px]">
-                  <img src="../assets/icons/az.png" alt="" />AZERBAIJAN
+                <p
+                  class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
+                >
+                  <img
+                    src="../assets/icons/az.png"
+                    alt=""
+                    class="w-5 h-5 rounded-full object-cover"
+                  />AZERBAIJAN
                 </p>
-                <p class="text-[#fff] flex gap-[7px] text-[16px]">
-                  <img src="../assets/icons/il.png" alt="" />ISRAEL
+                <p
+                  class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
+                >
+                  <img
+                    src="../assets/icons/il.png"
+                    alt=""
+                    class="w-5 h-5 rounded-full object-cover"
+                  />ISRAEL
                 </p>
-                <p class="text-[#fff] flex gap-[7px] text-[16px]">
-                  <img src="../assets/icons/ia.png" alt="" />INDIA
+                <p
+                  class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
+                >
+                  <img
+                    src="../assets/icons/ia.png"
+                    alt=""
+                    class="w-5 h-5 rounded-full object-cover"
+                  />INDIA
                 </p>
               </div>
               <div class="flex flex-col gap-[11px]">
-                <p class="text-[#fff] flex gap-[7px] text-[16px]">
-                  <img src="../assets/icons/th.png" alt="" />THAILAND
+                <p
+                  class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
+                >
+                  <img
+                    src="../assets/icons/th.png"
+                    alt=""
+                    class="w-5 h-5 rounded-full object-cover"
+                  />THAILAND
                 </p>
-                <p class="text-[#fff] flex gap-[7px] text-[16px]">
-                  <img src="../assets/icons/vn.png" alt="" />VIETNAM
+                <p
+                  class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
+                >
+                  <img
+                    src="../assets/icons/vn.png"
+                    alt=""
+                    class="w-5 h-5 rounded-full object-cover"
+                  />VIETNAM
                 </p>
-                <p class="text-[#fff] flex gap-[7px] text-[16px]">
-                  <img src="../assets/icons/kr.png" alt="" />SOUTH KOREA
+                <p
+                  class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
+                >
+                  <img
+                    src="../assets/icons/kr.png"
+                    alt=""
+                    class="w-5 h-5 rounded-full object-cover"
+                  />SOUTH KOREA
                 </p>
-                <p class="text-[#fff] flex gap-[7px] text-[16px]">
-                  <img src="../assets/icons/ge.png" alt="" />GEORGIA
+                <p
+                  class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
+                >
+                  <img
+                    src="../assets/icons/ge.png"
+                    alt=""
+                    class="w-5 h-5 rounded-full object-cover"
+                  />GEORGIA
                 </p>
-                <p class="text-[#fff] flex gap-[7px] text-[16px]">
-                  <img src="../assets/icons/pk.png" alt="" />PAKISTAN
+                <p
+                  class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
+                >
+                  <img
+                    src="../assets/icons/pk.png"
+                    alt=""
+                    class="w-5 h-5 rounded-full object-cover"
+                  />PAKISTAN
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <div class="pr-[140px]">
-          <img
-            class="max-w-[788px] object-cover bg-left"
-            src="../assets/icons/planet.png"
-            alt=""
-          />
-        </div>
       </div>
-    </section>
 
+      <!-- Планета: выглядывает вниз -->
+      <img
+        src="../assets/icons/planet.png"
+        alt="Globe"
+        class="absolute z-0 left-1/2 -translate-x-1/2 lg:left-auto lg:right-[-5%] xl:right-0 lg:translate-x-0 bottom-0 translate-y-[40%] sm:translate-y-[35%] lg:translate-y-[25%] w-[280px] sm:w-[380px] lg:w-[600px] xl:w-[750px] pointer-events-none select-none"
+      />
+    </section>
     <section class="mb-[70px]">
       <AppContainer>
-        <div class="flex justify-between mb-[10px]">
-          <h2>Services of Centrum Holidays DMC</h2>
+        <!-- Заголовок -->
+        <div class="flex justify-between items-center mb-[10px]">
+          <h2 class="text-[24px] lg:text-[32px] font-medium">
+            <span class="lg:hidden uppercase font-medium italic">Services</span>
+            <span class="hidden lg:inline"
+              >Services of Centrum Holidays DMC</span
+            >
+          </h2>
           <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
         </div>
-        <p class="tracking-[-1.5%] mb-[60px]">
+
+        <!-- Описание -->
+        <p class="tracking-[-1.5%] mb-[60px] text-[14px] lg:text-[16px]">
           Centrum Holidays DMC provides end-to-end destination management
           services in Uzbekistan, designed for international tour operators,
           agencies, and corporate clients:
         </p>
-        <div class="flex justify-center gap-[25px]">
-          <CardDMS v-for="(item, i) in DMC" :key="i" :DMC="DMC[i]" />
+
+        <!-- Десктоп: карточки в ряд -->
+        <div class="hidden lg:flex justify-center gap-[25px]">
+          <CardDMS v-for="(item, i) in DMC" :key="i" :DMC="item" />
         </div>
       </AppContainer>
+      <div class="lg:hidden">
+        <Carousel
+          :items="DMC"
+          :visible-count="1"
+          :gap="20"
+          :autoplay="5000"
+          :item-width="320"
+        >
+          <template #default="{ item }">
+            <CardDMS :DMC="item" />
+          </template>
+        </Carousel>
+      </div>
     </section>
 
     <section class="mb-[20px]">
       <AppContainer>
-        <div class="w-[100%] border border-[#b1b1b4] mb-[65px]"></div>
-        <div class="flex justify-between mb-[25px]">
-          <h3>Why of Centrum Holidays DMC</h3>
+        <div class="w-full border border-[#b1b1b4] mb-8 lg:mb-[65px]"></div>
+
+        <div class="flex justify-between items-center mb-4 lg:mb-[25px]">
+          <h2 class="text-[24px] lg:text-[32px] font-medium">
+            <span class="lg:hidden uppercase font-medium italic">Why We</span>
+            <span class="hidden lg:inline">Why of Centrum Holidays DMC</span>
+          </h2>
           <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
         </div>
-        <p class="mb-[40px]">
+
+        <!-- Описание: мобильный 12px (или 8px если прям надо), без ограничения ширины -->
+        <p
+          class="text-[12px] lg:text-[16px] leading-[1.5] lg:leading-[1.6] mb-6 lg:mb-[40px] text-[#333]"
+        >
           At Centrum Holidays DMC, operational excellence is at the core of
           everything we do. As a destination management company operating in
           Uzbekistan, we combine local expertise with global standards to
           deliver seamless, reliable, and high-quality travel solutions for our
           partners and clients.
         </p>
-        <!-- <div class="w-[100%] border border-[#f4f4f4] mb-[65px]"></div> -->
+
         <CardGorzontalDMC
           v-for="(item, i) in items"
           :key="i"
-          :GorizintalDMC="item"
+          :item="item"
+          :index="i"
         />
       </AppContainer>
     </section>
@@ -342,17 +495,22 @@ const newsList = [
 
         <!-- Заголовок -->
         <div class="flex justify-between items-center mb-[25px]">
-          <h2 class="text-[32px] font-medium">News:</h2>
+          <h2 class="text-[24px] lg:text-[32px] font-medium">
+            <!-- Мобильный текст -->
+            <span class="lg:hidden uppercase font-medium italic">News</span>
+            <!-- Десктопный текст -->
+            <span class="hidden lg:inline">News:</span>
+          </h2>
           <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
         </div>
 
         <!-- Карусель внутри контейнера -->
         <Carousel
           :items="newsList"
-          :visible-count="3"
+          :visible-count="newsVisible"
           :gap="20"
           :autoplay="5000"
-          :item-width="380"
+          :item-width="400"
         >
           <template #default="{ item }">
             <CardNews :news="item" />
@@ -576,22 +734,34 @@ h1 {
 @media (max-width: 768px) {
   .wrapper-card {
     flex-direction: column;
-    margin-top: -10px;
+    margin-top: -60px;
+  }
+
+  .description {
+    display: none;
+  }
+
+  .card-item-title {
+    margin: 0;
   }
 
   .card-item {
     flex: 0 0 100%;
   }
 
+  .wrapper-card .card-item {
+    padding: 15px;
+  }
   .card-item:not(:last-child) {
     border-right: none;
     border-bottom: 1px solid #e6e6e7;
+    padding: 15px;
   }
 
   h1 {
     font-size: 24px;
     max-width: 250px;
-    margin-top: 30px;
+    margin-top: 100px;
   }
 
   .hero-section {
@@ -600,6 +770,7 @@ h1 {
 
   .hero-image {
     height: 358px;
+    background-position: left;
   }
 
   .hero-content {

@@ -10,7 +10,7 @@ defineProps({
 <template>
   <article class="news-card bg-white rounded-[16px] overflow-hidden border border-[#e6e6e7] h-full flex flex-col">
     <!-- Картинка -->
-    <div class="relative h-[200px] overflow-hidden">
+    <div class="relative h-[160px] sm:h-[180px] lg:h-[200px] overflow-hidden">
       <img 
         :src="news.image" 
         :alt="news.title"
@@ -20,11 +20,11 @@ defineProps({
     </div>
 
     <!-- Контент -->
-    <div class="p-5 flex flex-col flex-1">
-      <p class="text-[14px] text-[#333] leading-[1.5] mb-4 line-clamp-3">
+    <div class="p-4 lg:p-5 flex flex-col flex-1">
+      <p class="text-[13px] sm:text-[14px] text-[#333] leading-[1.5] mb-3 lg:mb-4 line-clamp-3">
         {{ news.description }}
       </p>
-      <span class="text-[12px] text-[#888] mt-auto">
+      <span class="text-[11px] sm:text-[12px] text-[#888] mt-auto">
         {{ news.date }}
       </span>
     </div>
