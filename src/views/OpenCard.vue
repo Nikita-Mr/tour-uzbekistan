@@ -19,10 +19,10 @@ const people = ref(2);
 const duration = ref(7);
 
 const countries = [
-  { id: 'uz', label: 'Узбекистан', icon: '/src/assets/icons/uzbek.png' },
-  { id: 'kz', label: 'Казахстан', icon: '/src/assets/icons/kazah.png' },
-  { id: 'kg', label: 'Кыргызстан', icon: '/src/assets/icons/kyrg.png' },
-  { id: 'tj', label: 'Таджикистан', icon: '/src/assets/icons/tad.png' },
+  { id: 'uz', label: 'Узбекистан', icon: '/assets/icons/uzbek.png' },
+  { id: 'kz', label: 'Казахстан', icon: '/assets/icons/kazah.png' },
+  { id: 'kg', label: 'Кыргызстан', icon: '/assets/icons/kyrg.png' },
+  { id: 'tj', label: 'Таджикистан', icon: '/assets/icons/tad.png' },
   { id: 'cauc', label: 'Кавказ', icon: null },
 ];
 
@@ -30,12 +30,12 @@ const countries = [
 const tour = {
   title: 'Тур "Выходные в Узбекистане"',
   subtitle: '(3 дня / 2 ночи)',
-  mainImage: '/src/assets/icons/card.png',
+  mainImage: '/assets/icons/card.png',
   gallery: [
-    '/src/assets/icons/card.png',
-    '/src/assets/icons/card.png',
-    '/src/assets/icons/card.png',
-    '/src/assets/icons/card.png',
+    '/assets/icons/card.png',
+    '/assets/icons/card.png',
+    '/assets/icons/card.png',
+    '/assets/icons/card.png',
   ],
   description:
     "Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem ipsum. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.",
@@ -44,7 +44,7 @@ const tour = {
   tourists: 'от 2 до 16',
   hotels: '2 ночи',
   comfort: '3, 4 звезды',
-  mapImage: '/src/assets/icons/map.png',
+  mapImage: '/assets/icons/map.png',
 };
 
 const activeImage = ref(tour.mainImage);

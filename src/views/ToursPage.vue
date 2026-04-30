@@ -27,10 +27,10 @@ const people = ref(2);
 const duration = ref(7);
 
 const countries = [
-  { id: 'uz', label: 'Узбекистан', icon: '/src/assets/icons/uzbek.png' },
-  { id: 'kz', label: 'Казахстан', icon: '/src/assets/icons/kazah.png' },
-  { id: 'kg', label: 'Кыргызстан', icon: '/src/assets/icons/kyrg.png' },
-  { id: 'tj', label: 'Таджикистан', icon: '/src/assets/icons/tad.png' },
+  { id: 'uz', label: 'Узбекистан', icon: '/assets/icons/uzbek.png' },
+  { id: 'kz', label: 'Казахстан', icon: '/assets/icons/kazah.png' },
+  { id: 'kg', label: 'Кыргызстан', icon: '/assets/icons/kyrg.png' },
+  { id: 'tj', label: 'Таджикистан', icon: '/assets/icons/tad.png' },
   { id: 'cauc', label: 'Кавказ', icon: null },
 ];
 
@@ -56,7 +56,7 @@ const tours = ref([
     id: 1,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '/src/assets/icons/card.png',
+    image: '/assets/icons/card.png',
     date: '01.04.2026',
     duration: { day: 3, night: 2 },
     price: 295,
@@ -66,7 +66,7 @@ const tours = ref([
     id: 2,
     title: 'Тур "7 дней восточной сказки"',
     route: 'Ташкент – Самарканд – Бухара',
-    image: '/src/assets/icons/card.png',
+    image: '/assets/icons/card.png',
     date: '01.04.2026',
     duration: { day: 7, night: 6 },
     price: 765,
@@ -76,7 +76,7 @@ const tours = ref([
     id: 3,
     title: 'Тур "15 дней восточной сказки"',
     route: 'Ташкент – Самарканд – Бухара – Хива',
-    image: '/src/assets/icons/card.png',
+    image: '/assets/icons/card.png',
     date: '01.04.2026',
     duration: { day: 15, night: 14 },
     price: 1495,
@@ -86,7 +86,7 @@ const tours = ref([
     id: 4,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '/src/assets/icons/card.png',
+    image: '/assets/icons/card.png',
     date: '01.04.2026',
     duration: { day: 3, night: 2 },
     price: 295,
@@ -96,7 +96,7 @@ const tours = ref([
     id: 5,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '/src/assets/icons/card.png',
+    image: '/assets/icons/card.png',
     date: '01.04.2026',
     duration: { day: 3, night: 2 },
     price: 295,
@@ -106,7 +106,7 @@ const tours = ref([
     id: 6,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '/src/assets/icons/card.png',
+    image: '/assets/icons/card.png',
     date: '01.04.2026',
     duration: { day: 3, night: 2 },
     price: 295,
@@ -116,7 +116,7 @@ const tours = ref([
     id: 7,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '/src/assets/icons/card.png',
+    image: '/assets/icons/card.png',
     date: '01.04.2026',
     duration: { day: 3, night: 2 },
     price: 295,
@@ -126,7 +126,7 @@ const tours = ref([
     id: 8,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '/src/assets/icons/card.png',
+    image: '/assets/icons/card.png',
     date: '01.04.2026',
     duration: { day: 3, night: 2 },
     price: 295,
@@ -136,7 +136,7 @@ const tours = ref([
     id: 9,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '/src/assets/icons/card.png',
+    image: '/assets/icons/card.png',
     date: '01.04.2026',
     duration: { day: 3, night: 2 },
     price: 295,
@@ -184,7 +184,7 @@ const resetFilters = () => {
         <div
           class="hero-image absolute inset-0 bg-cover bg-center"
           style="
-            background-image: url('/src/assets/icons/tours.png');
+            background-image: url('/assets/icons/tours.png');
             background-repeat: no-repeat;
             background-size:cover ;
           "
