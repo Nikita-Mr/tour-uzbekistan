@@ -9,43 +9,47 @@ const router = createRouter({
       component: () => import('../views/AppMain.vue'),
     },
     {
-    path: '/about',
-    name: 'about',
-    component: () => import('@/views/AboutPage.vue')
-  },
-  {
-    path: '/directions',
-    name: 'directions',
-    component: () => import('@/views/DirectionsPage.vue')
-  },
-  {
-    path: '/services',
-    name: 'services',
-    component: () => import('@/views/ServicesPage.vue')
-  },
-  {
-    path: '/why-we',
-    name: 'why-we',
-    component: () => import('@/views/WhyWePage.vue')
-  },
-  {
-    path: '/tours',
-    name: 'tours',
-    component: () => import('@/views/ToursPage.vue')
-  },
-  {
-    path: '/for-agent',
-    name: 'for-agent',
-    component: () => import('@/views/ForAgentPage.vue')
-  },
-  // Для стран (динамический маршрут)
-  {
-    path: '/countries/:country',
-    name: 'country',
-    component: () => import('@/views/CountryPage.vue')
-  }
+      path: '/about',
+      name: 'about',
+      component: () => import('@/views/AboutPage.vue'),
+    },
+    {
+      path: '/directions',
+      name: 'directions',
+      component: () => import('@/views/DirectionsPage.vue'),
+    },
+    {
+      path: '/services',
+      name: 'services',
+      component: () => import('@/views/ServicesPage.vue'),
+    },
+    {
+      path: '/why-we',
+      name: 'why-we',
+      component: () => import('@/views/WhyWePage.vue'),
+    },
+    {
+      path: '/tours',
+      name: 'tours',
+      component: () => import('@/views/ToursPage.vue'),
+    },
+    {
+      path: '/tours/:id',
+      name: 'ToursDetail',
+      component: () => import('@/views/OpenCard.vue'),
+    },
+    {
+      path: '/for-agent',
+      name: 'for-agent',
+      component: () => import('@/views/ForAgentPage.vue'),
+    },
+    // Для стран (динамический маршрут)
+    {
+      path: '/countries/:country',
+      name: 'country',
+      component: () => import('@/views/CountryPage.vue'),
+    },
   ],
 });
-
 
 export default router;

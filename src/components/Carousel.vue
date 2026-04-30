@@ -130,7 +130,6 @@ const trackStyle = computed(() => {
     transition: (isDragging.value || disableTransition.value) 
       ? 'none' 
       : 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
-    cursor: isDragging.value ? 'grabbing' : 'grab',
     gap: `${props.gap}px`
   };
 });

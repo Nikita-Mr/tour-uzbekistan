@@ -8,12 +8,7 @@ import CardNews from '@/components/CardNews.vue';
 import Carousel from '@/components/Carousel.vue';
 import Line from '@/components/Line.vue';
 
-const scrollToTop = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth',
-  });
-};
+
 
 import { ref, onMounted, onUnmounted } from 'vue';
 
@@ -244,7 +239,7 @@ const newsList = [
             <!-- Десктопный текст -->
             <span class="hidden lg:inline">Tours of Centrum Holidays DMC</span>
           </h2>
-          <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
+          <Button @click="$router.push({name:'tours'})" :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
         </div>
         <div class="location-buttons flex gap-[10px] mb-[50px] flex-wrap">
           <button
@@ -518,44 +513,10 @@ const newsList = [
         </Carousel>
       </AppContainer>
     </section>
-
-    <button @click="scrollToTop" class="up-btn">
-      <img src="../assets/icons/upArrow.png" alt="Наверх" />
-    </button>
   </div>
 </template>
 
 <style scoped>
-.up-btn {
-  position: fixed;
-  bottom: 60px;
-  right: 45px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #ffffff;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.25s ease;
-  z-index: 100;
-
-  /* Тень по вашему ТЗ: X -1, Y 2, Blur 10.4, Spread 0, цвет #000000 25% */
-  box-shadow: -1px 2px 10.4px 0 rgba(0, 0, 0, 0.25);
-}
-
-/* Ховер как у синих кнопок */
-.up-btn:hover {
-  background: #285aff;
-  transform: translateY(-3px);
-  box-shadow: -1px 5px 15px 0 rgba(40, 90, 255, 0.35);
-}
-
-.up-btn:hover img {
-  filter: brightness(0) invert(1); /* делает иконку белой */
-}
 
 /* Адаптив для мобильных */
 @media (max-width: 768px) {
