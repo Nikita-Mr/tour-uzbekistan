@@ -66,19 +66,19 @@ const mass = [
 const buttons = [
   {
     title: 'Узбекистан',
-    url: 'assets/icons/uzbek.png',
+    url: '@/assets/icons/uzbek.png',
   },
   {
     title: 'Казахстан',
-    url: 'assets/icons/kazah.png',
+    url: '@/assets/icons/kazah.png',
   },
   {
     title: 'Кыргызстан',
-    url: 'assets/icons/kyrg.png',
+    url: '@/assets/icons/kyrg.png',
   },
   {
     title: 'Таджикистан',
-    url: 'assets/icons/tad.png',
+    url: '@/assets/icons/tad.png',
   },
   {
     title: 'Кавказ',
@@ -91,37 +91,37 @@ const tours = [
     id: 1,
     title: 'Тур “Выходные в Узбекистане”',
     route: 'Ташкент – Самарканд',
-    image: 'assets/icons/card.png',
+    image: '@/assets/icons/card.png',
   },
   {
     id: 2,
     title: 'Тур “Жемчужины Востока”',
     route: 'Ташкент – Бухара – Самарканд',
-    image: 'assets/icons/card.png',
+    image: '@/assets/icons/card.png',
   },
   {
     id: 3,
     title: 'Тур “Горный Кыргызстан”',
     route: 'Бишкек – Иссык-Куль',
-    image: 'assets/icons/card.png',
+    image: '@/assets/icons/card.png',
   },
   {
     id: 4,
     title: 'Тур “Казахстанский трип”',
     route: 'Алматы – Нур-Султан',
-    image: 'assets/icons/card.png',
+    image: '@/assets/icons/card.png',
   },
   {
     id: 5,
     title: 'Тур “Кавказское гостеприимство”',
     route: 'Баку – Тбилиси',
-    image: 'assets/icons/card.png',
+    image: '@/assets/icons/card.png',
   },
   {
     id: 6,
     title: 'Тур “Таджикистан горный”',
     route: 'Душанбе – Памир',
-    image: 'assets/icons/card.png',
+    image: '@/assets/icons/card.png',
   },
 ];
 
@@ -129,32 +129,32 @@ const DMC = [
   {
     title: 'Destination Management Services (DMC)',
     descr: 'Complete on-ground coordination and local expertise',
-    url: 'assets/icons/card-news.jpg',
+    url: '@/assets/icons/card-news.jpg',
   },
   {
     title: 'Customized Itineraries',
     descr: 'Tailor-made leisure, group, and special-interest programs',
-    url: 'assets/icons/card-news.jpg',
+    url: '@/assets/icons/card-news.jpg',
   },
   {
     title: 'Flight & Air Services Coordination',
     descr:
       'In collaboration with group and block seat operations with Centrum Air',
-    url: 'assets/icons/card-news.jpg',
+    url: '@/assets/icons/card-news.jpg',
   },
 ];
 
 const items = [
   {
     number: '01',
-    image: 'assets/icons/dmc.png',
+    image: '@/assets/icons/dmc.png',
     title: 'Streamlined and Reliable Operations',
     description:
       'Our operations are built on clearly defined, efficient, and standardized processes. From initial planning and contracting to reservations, on-ground coordination, and post-travel evaluation, every step is managed with precision and consistency. This structured approach allows us to maintain service quality while remaining flexible to meet the unique needs of each client.',
   },
   {
     number: '02',
-    image: 'assets/icons/dmc.png',
+    image: '@/assets/icons/dmc.png',
     title: 'Technology-Driven Infrastructure',
     description:
       'Centrum Holidays DMC invests heavily in technology to ensure speed, accuracy, and transparency. Through advanced systems and API integrations, we provide real-time access to hotels, transfers, and packaged products. This technology-driven infrastructure minimizes manual processes, reduces errors, and enables faster decision-making for our partners.',
@@ -164,28 +164,28 @@ const items = [
 const newsList = [
   {
     id: 1,
-    image: 'assets/icons/card.png',
+    image: '@/assets/icons/card.png',
     description:
       '«Чайхана и культура чаепития» — это настоящее искусство в Узбекистане. Многие туристы удивляются: почему в гостях им всегда наливают чай неполную чашку...',
     date: '1 месяц назад',
   },
   {
     id: 2,
-    image: 'assets/icons/card.png',
+    image: '@/assets/icons/card.png',
     description:
       'Мы — ваш надежный DMC-партнёр в Узбекистане. С гордостью сообщаем, что наша компания имеет прямые контракты более чем с 700 отелями по всей...',
     date: '2 месяца назад',
   },
   {
     id: 3,
-    image: 'assets/icons/card.png',
+    image: '@/assets/icons/card.png',
     description:
       'Необычные туры в Узбекистан — наша специализация. По следам ремесленников — путешествие в Ферганскую долину. Откройте для себя...',
     date: '2 месяца назад',
   },
   {
     id: 4,
-    image: 'assets/icons/card.png',
+    image: '@/assets/icons/card.png',
     description: 'Ещё одна новость для туристов...',
     date: '3 месяца назад',
   },
@@ -310,7 +310,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="assets/icons/ru.png"
+                    src="@/assets/icons/ru.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />RUSSIA
@@ -319,7 +319,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="assets/icons/tr.png"
+                    src="@/assets/icons/tr.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />TURKEY
@@ -328,7 +328,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="assets/icons/az.png"
+                    src="@/assets/icons/az.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />AZERBAIJAN
@@ -337,7 +337,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="assets/icons/il.png"
+                    src="@/assets/icons/il.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />ISRAEL
@@ -346,7 +346,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="assets/icons/ia.png"
+                    src="@/assets/icons/ia.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />INDIA
@@ -357,7 +357,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="assets/icons/th.png"
+                    src="@/assets/icons/th.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />THAILAND
@@ -366,7 +366,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="assets/icons/vn.png"
+                    src="@/assets/icons/vn.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />VIETNAM
@@ -375,7 +375,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="assets/icons/kr.png"
+                    src="@/assets/icons/kr.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />SOUTH KOREA
@@ -384,7 +384,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="assets/icons/ge.png"
+                    src="@/assets/icons/ge.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />GEORGIA
@@ -393,7 +393,7 @@ const newsList = [
                   class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
                 >
                   <img
-                    src="assets/icons/pk.png"
+                    src="@/assets/icons/pk.png"
                     alt=""
                     class="w-5 h-5 rounded-full object-cover"
                   />PAKISTAN
@@ -406,7 +406,7 @@ const newsList = [
 
       <!-- Планета: выглядывает вниз -->
       <img
-        src="assets/icons/planet.png"
+        src="@/assets/icons/planet.png"
         alt="Globe"
         class="absolute z-0 left-1/2 -translate-x-1/2 lg:left-auto lg:right-[-5%] xl:right-0 lg:translate-x-0 bottom-0 translate-y-[40%] sm:translate-y-[35%] lg:translate-y-[25%] w-[280px] sm:w-[380px] lg:w-[600px] xl:w-[750px] pointer-events-none select-none"
       />
@@ -555,7 +555,7 @@ const newsList = [
   left: 0;
   width: 100%;
   height: 558px;
-  background-image: url('assets/icons/8ec662fe56344049271e593f6db12dfdb7df8bdb.png');
+  background-image: url('@/assets/icons/8ec662fe56344049271e593f6db12dfdb7df8bdb.png');
   background-size: cover;
   background-position: center;
   z-index: 0;
