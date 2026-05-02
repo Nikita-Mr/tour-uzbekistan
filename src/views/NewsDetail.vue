@@ -48,7 +48,7 @@ const breadcrumbs = computed(() => [
 
       <AppContainer>
         <!-- Карточка с формой поверх hero -->
-        <div class="wrapper-card contact-card border">
+        <div class="wrapper-card contact-card border mb-[30px]">
           <div class="card-item w-full">
             <h3 class="card-title">
               Contact us today to learn more about our unique offers
@@ -68,7 +68,7 @@ const breadcrumbs = computed(() => [
         </div>
 
         <!-- Breadcrumbs -->
-        <nav class="mb-[15px] sm:mb-[20px] mt-[30px]" aria-label="Breadcrumb">
+        <nav class="mb-[15px] sm:mb-[20px] mt-[30px] hidden lg:flex" aria-label="Breadcrumb">
           <ol class="flex items-center gap-2 text-[11px] sm:text-[12px] lg:text-[14px] text-[#000] flex-wrap">
             <li v-for="(crumb, i) in breadcrumbs" :key="i" class="flex items-center gap-2">
               <router-link v-if="crumb.path" :to="crumb.path" class="hover:text-[#285aff] transition">

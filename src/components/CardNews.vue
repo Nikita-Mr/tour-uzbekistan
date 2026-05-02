@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <article class="news-card bg-white rounded-[16px] overflow-hidden border border-[#e6e6e7] h-full flex flex-col">
+  <article class="news-card bg-white rounded-[16px] overflow-hidden border border-[#e6e6e7] h-full flex flex-col cursor-pointer" @click="$router.push({path: `/news/${news.id}`})">
     <!-- Картинка -->
     <div class="relative h-[160px] sm:h-[180px] lg:h-[200px] overflow-hidden">
       <img 

@@ -9,6 +9,7 @@ const props = defineProps({
   min: { type: Number, default: 1 },
   max: { type: Number, default: 10 },
   unit: { type: String, default: '' },
+  border: {type: Boolean, default: true}
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -153,7 +154,8 @@ watch(() => props.modelValue, (val) => {
     <!-- Триггер -->
     <button
       @click="toggle"
-      class="w-full flex items-center justify-between px-4 py-3 bg-white text-[14px] border-r border-[#e6e6e7] hover:bg-[#f9f9f9] transition cursor-pointer"
+      class="trigger w-full flex items-center justify-between px-4 py-3 bg-white text-[14px]  border-[#e6e6e7] hover:bg-[#f9f9f9] transition cursor-pointer"
+      :class="{'border-r': border}"
     >
       <!-- Counter -->
       <span v-if="type === 'counter'" class="text-[#333]">
@@ -228,8 +230,8 @@ watch(() => props.modelValue, (val) => {
 
 <style scoped>
 
-.custom-select:first-child button { border-radius: 8px 0 0 8px; }
-.custom-select:last-child button { border-radius: 0 8px 8px 0; border-right: none; }
+.custom-select:first-child .trigger { border-radius: 8px 0 0 8px; }
+.custom-select:last-child .trigger { border-radius: 0 8px 8px 0; border-right: none; }
 .dropdown { animation: fadeIn 0.15s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
 </style>

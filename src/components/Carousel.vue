@@ -9,6 +9,7 @@
       <div 
         class="carousel-track flex items-stretch" 
         ref="trackRef"
+        :class="{ 'justify-center w-full': !canNavigate }"
         :style="trackStyle"
         @transitionend="onTransitionEnd"
         @mousedown="onDragStart"
@@ -96,7 +97,6 @@ let resizeObserver = null;
 /* ─── Дублирование элементов для бесконечности ─── */
 const displayItems = computed(() => {
   if (props.items.length <= props.visibleCount) return props.items;
-  // Добавляем копии в начало и конец
   const cloneStart = props.items.slice(-props.visibleCount);
   const cloneEnd = props.items.slice(0, props.visibleCount);
   return [...cloneStart, ...props.items, ...cloneEnd];
@@ -105,10 +105,13 @@ const displayItems = computed(() => {
 const canNavigate = computed(() => props.items.length > props.visibleCount);
 
 // Индекс, с которого начинаются реальные элементы
-const startOffset = computed(() => props.visibleCount);
+const startOffset = computed(() => canNavigate.value ? props.visibleCount : 0);
 
 // Максимальный индекс (последний реальный элемент в массиве displayItems)
-const maxRealIndex = computed(() => props.items.length + props.visibleCount - 1);
+const maxRealIndex = computed(() => {
+  if (!canNavigate.value) return Math.max(0, props.items.length - 1);
+  return props.items.length + props.visibleCount - 1;
+});
 
 /* ─── Размеры ─── */
 const setDimensions = () => {
@@ -116,7 +119,6 @@ const setDimensions = () => {
   const totalWidth = wrapperRef.value.clientWidth;
   const totalGaps = props.gap * (props.visibleCount - 1);
   let newWidth = Math.floor((totalWidth - totalGaps) / props.visibleCount);
-  // Ограничиваем максимальную ширину 270px
   newWidth = Math.min(newWidth, 270);
   itemWidth.value = newWidth;
 };
@@ -137,7 +139,6 @@ const trackStyle = computed(() => {
 const itemStyle = computed(() => ({
   width: props.itemWidth ? `${props.itemWidth}px` : `${itemWidth.value}px`,
   flexShrink: 0,
-  // maxWidth: '270px',
 }));
 
 /* ─── Бесконечная навигация ─── */
@@ -153,9 +154,8 @@ const prev = () => {
 
 /* ─── Телепорт без скачков ─── */
 const onTransitionEnd = () => {
-  if (disableTransition.value) return;
+  if (disableTransition.value || !canNavigate.value) return;
   
-  // Дошли до копий в конце → телепорт в начало реальных элементов
   if (currentIndex.value >= props.items.length + startOffset.value) {
     disableTransition.value = true;
     currentIndex.value = startOffset.value;
@@ -166,7 +166,6 @@ const onTransitionEnd = () => {
     });
   }
   
-  // Дошли до копий в начале → телепорт в конец реальных элементов
   if (currentIndex.value <= startOffset.value - 1) {
     disableTransition.value = true;
     currentIndex.value = maxRealIndex.value - (startOffset.value - currentIndex.value);
@@ -225,7 +224,6 @@ const stopAutoplay = () => {
 /* ─── Жизненный цикл ─── */
 const updateDimensionsAndPosition = () => {
   setDimensions();
-  // Сбрасываем позицию на начало реальных элементов
   if (!disableTransition.value) {
     disableTransition.value = true;
     currentIndex.value = startOffset.value;
@@ -240,13 +238,11 @@ const updateDimensionsAndPosition = () => {
 onMounted(() => {
   nextTick(() => {
     setDimensions();
-    // Начинаем с первого реального элемента
     currentIndex.value = startOffset.value;
   });
   
   window.addEventListener('resize', updateDimensionsAndPosition);
   
-  // Используем ResizeObserver для отслеживания изменения размера контейнера
   if (containerRef.value) {
     resizeObserver = new ResizeObserver(() => {
       updateDimensionsAndPosition();
@@ -265,7 +261,6 @@ onUnmounted(() => {
   stopAutoplay();
 });
 
-// Следим за изменением items
 watch(() => props.items.length, () => {
   nextTick(() => {
     updateDimensionsAndPosition();

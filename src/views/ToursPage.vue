@@ -196,7 +196,7 @@ const resetFilters = () => {
     <section class="mb-[20px] sm:mb-[30px]">
       <AppContainer>
         <!-- Хлебные крошки -->
-        <nav class="mb-[15px] sm:mb-[20px]" aria-label="Breadcrumb">
+        <nav class="mb-[15px] sm:mb-[20px] hidden lg:flex" aria-label="Breadcrumb">
           <ol
             class="flex items-center gap-2 text-[12px] sm:text-[14px] text-[#000]"
           >
@@ -242,14 +242,15 @@ const resetFilters = () => {
             :options="countries"
             type="list"
             class="w-full"
+            :border = "false"
           />
           <CustomSelect
             v-model="when"
             placeholder="Когда"
             type="calendar"
             class="w-full"
+            :border = "false"
           />
-          <div class="flex gap-2 sm:gap-3">
             <CustomSelect
               v-model="people"
               placeholder="Кол-во"
@@ -258,6 +259,7 @@ const resetFilters = () => {
               :max="20"
               unit="чел"
               class="flex-1"
+              :border = "false"
             />
             <CustomSelect
               v-model="duration"
@@ -267,8 +269,8 @@ const resetFilters = () => {
               :max="30"
               unit="дн"
               class="flex-1"
+              :border = "false"
             />
-          </div>
           <button
             class="bg-[#a6a6aa] text-white px-6 py-2.5 sm:px-8 sm:py-3 rounded-[8px] text-[13px] sm:text-[14px] font-medium hover:bg-[#285aff] transition cursor-pointer w-full"
           >
@@ -861,6 +863,7 @@ input[type='range']::-moz-range-thumb {
   background-size: cover;
   background-position: center;
 }
+
 
 /* Адаптив hero */
 @media (min-width: 1921px) {

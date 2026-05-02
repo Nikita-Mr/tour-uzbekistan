@@ -8,7 +8,7 @@ import CardNews from '@/components/CardNews.vue';
 import Carousel from '@/components/Carousel.vue';
 import Line from '@/components/Line.vue';
 
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 
 // Для туров
 const getTourCount = () => {
@@ -64,54 +64,102 @@ const mass = [
       'Because this approach makes the entire process effortless for you. From the planning stage of your trip to its completion, it offers a comprehensive and reliable solution that you can confidently utilise at every step.',
   },
 ];
-
-// ✅ Исправлено: пути от public (абсолютные)
+const activeCategory = ref('all');
 const buttons = [
-  { title: 'Узбекистан', url: '/assets/icons/uzbek.png' },
-  { title: 'Казахстан', url: '/assets/icons/kazah.png' },
-  { title: 'Кыргызстан', url: '/assets/icons/kyrg.png' },
-  { title: 'Таджикистан', url: '/assets/icons/tad.png' },
-  { title: 'Кавказ', url: '#' },
+  { title: 'Все', category: 'all', url: null },
+  {
+    title: 'Узбекистан',
+    category: 'uzbekistan',
+    url: '/assets/icons/uzbek.png',
+  },
+  {
+    title: 'Казахстан',
+    category: 'kazakhstan',
+    url: '/assets/icons/kazah.png',
+  },
+  {
+    title: 'Кыргызстан',
+    category: 'kyrgyzstan',
+    url: '/assets/icons/kyrg.png',
+  },
+  {
+    title: 'Таджикистан',
+    category: 'tajikistan',
+    url: '/assets/icons/tad.png',
+  },
+  { title: 'Кавказ', category: 'caucasus', url: '#' },
 ];
-
-const tours = [
+const allTours = [
   {
     id: 1,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
     image: '/assets/icons/card.png',
+    category: 'uzbekistan',
   },
   {
     id: 2,
-    title: 'Тур "Жемчужины Востока"',
+    title: 'Тур "Жемчужины Узбекистана"',
     route: 'Ташкент – Бухара – Самарканд',
     image: '/assets/icons/card.png',
+    category: 'uzbekistan',
   },
   {
     id: 3,
     title: 'Тур "Горный Кыргызстан"',
     route: 'Бишкек – Иссык-Куль',
     image: '/assets/icons/card.png',
+    category: 'kyrgyzstan',
   },
   {
     id: 4,
     title: 'Тур "Казахстанский трип"',
     route: 'Алматы – Нур-Султан',
     image: '/assets/icons/card.png',
+    category: 'kazakhstan',
   },
   {
     id: 5,
     title: 'Тур "Кавказское гостеприимство"',
     route: 'Баку – Тбилиси',
     image: '/assets/icons/card.png',
+    category: 'caucasus',
   },
   {
     id: 6,
-    title: 'Тур "Таджикистан горный"',
+    title: 'Тур "Памирские высоты"',
     route: 'Душанбе – Памир',
     image: '/assets/icons/card.png',
+    category: 'tajikistan',
+  },
+  {
+    id: 7,
+    title: 'Тур "Самарканд - жемчужина Востока"',
+    route: 'Ташкент – Самарканд – Шахрисабз',
+    image: '/assets/icons/card.png',
+    category: 'uzbekistan',
+  },
+  {
+    id: 8,
+    title: 'Тур "Астана - новая столица"',
+    route: 'Астана – Алматы',
+    image: '/assets/icons/card.png',
+    category: 'kazakhstan',
   },
 ];
+
+const filteredTours = computed(() => {
+  if (activeCategory.value === 'all') {
+    return allTours;
+  }
+  return allTours.filter((tour) => tour.category === activeCategory.value);
+});
+
+// Функция смены категории
+const setCategory = (category) => {
+  activeCategory.value = category;
+};
+
 
 const DMC = [
   {
@@ -206,7 +254,9 @@ const newsList = [
               class="card-item-title flex items-center justify-between mb-[25px]"
             >
               <h3>{{ item.title }}</h3>
-              <router-link :to="item.route" class="text-[#88888c] underline italic"
+              <router-link
+                :to="item.route"
+                class="text-[#88888c] underline italic"
                 >More</router-link
               >
             </div>
@@ -238,9 +288,16 @@ const newsList = [
           <button
             v-for="(item, i) in buttons"
             :key="i"
-            class="flex items-center gap-[10px] border rounded-[10px] px-[10px] cursor-pointer"
+            @click="setCategory(item.category)"
+            class="flex items-center gap-[10px] border rounded-[10px] px-[10px] cursor-pointer transition-all duration-200"
+            :class="{
+              'bg-[#285aff] text-white border-[#285aff]':
+                activeCategory === item.category,
+              'hover:bg-gray-50': activeCategory !== item.category,
+            }"
           >
             <img
+              v-if="item.url"
               class="w-[18px] h-[14px] rounded-[10px]"
               :src="item.url"
               alt=""
@@ -250,7 +307,8 @@ const newsList = [
         </div>
       </AppContainer>
       <Carousel
-        :items="tours"
+        :key="activeCategory"
+        :items="filteredTours"
         :visible-count="tourVisible"
         :gap="14"
         :autoplay="5000"
@@ -409,7 +467,11 @@ const newsList = [
               >Services of Centrum Holidays DMC</span
             >
           </h2>
-          <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" @click="$router.push({name: 'services'})" />
+          <Button
+            :title="'View all'"
+            :style="'px-[34px] border-[#bfbfbf]'"
+            @click="$router.push({ name: 'services' })"
+          />
         </div>
 
         <p class="tracking-[-1.5%] mb-[60px] text-[14px] lg:text-[16px]">
@@ -446,7 +508,11 @@ const newsList = [
             <span class="lg:hidden uppercase font-medium italic">Why We</span>
             <span class="hidden lg:inline">Why of Centrum Holidays DMC</span>
           </h2>
-          <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" @click="$router.push({name: 'whyWe'})"/>
+          <Button
+            :title="'View all'"
+            :style="'px-[34px] border-[#bfbfbf]'"
+            @click="$router.push({ name: 'whyWe' })"
+          />
         </div>
 
         <p
@@ -477,7 +543,11 @@ const newsList = [
             <span class="lg:hidden uppercase font-medium italic">News</span>
             <span class="hidden lg:inline">News:</span>
           </h2>
-          <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" @click="$router.push({name: 'news'})" />
+          <Button
+            :title="'View all'"
+            :style="'px-[34px] border-[#bfbfbf]'"
+            @click="$router.push({ name: 'news' })"
+          />
         </div>
 
         <Carousel

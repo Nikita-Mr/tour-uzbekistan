@@ -121,31 +121,64 @@ const categories = [
 ];
 
 const currentCategory = ref(0);
-const currentPage = ref(0);
+const currentPage = ref(1);
 
 const totalCategories = categories.length;
 const totalPages = computed(() => categories[currentCategory.value].pages.length);
 
 const currentCategoryData = computed(() => categories[currentCategory.value]);
-const currentItems = computed(() => currentCategoryData.value.pages[currentPage.value]);
+const currentItems = computed(() => currentCategoryData.value.pages[currentPage.value - 1]);
 
 const prevCategory = () => {
   if (currentCategory.value > 0) {
     currentCategory.value--;
-    currentPage.value = 0;
+    currentPage.value = 1;
   }
 };
 
 const nextCategory = () => {
   if (currentCategory.value < totalCategories - 1) {
     currentCategory.value++;
-    currentPage.value = 0;
+    currentPage.value = 1;
   }
 };
 
-const goToPage = (n) => {
-  currentPage.value = n;
+const goToPage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page;
+  }
 };
+
+const nextPage = () => goToPage(currentPage.value + 1);
+const prevPage = () => goToPage(currentPage.value - 1);
+
+// Генерация массива страниц для отображения (с ...)
+const displayedPages = computed(() => {
+  const delta = 2;
+  const range = [];
+  const rangeWithDots = [];
+  let l;
+
+  for (let i = 1; i <= totalPages.value; i++) {
+    if (i === 1 || i === totalPages.value || (i >= currentPage.value - delta && i <= currentPage.value + delta)) {
+      range.push(i);
+    }
+  }
+
+  range.forEach((i, pos) => {
+    if (l) {
+      if (i - l === 2) {
+        rangeWithDots.push(l + 1);
+      } else if (i - l !== 1) {
+        rangeWithDots.push('...');
+      }
+    }
+    rangeWithDots.push(i);
+    l = i;
+  });
+
+  return rangeWithDots;
+});
 </script>
 
 <template>
@@ -164,7 +197,7 @@ const goToPage = (n) => {
         <button
           @click="prevCategory"
           :disabled="currentCategory === 0"
-          class="absolute flex left-[-30px] top-[55%] -translate-y-1/2 lg:flex w-[44px] h-[44px] rounded-full border border-[#000] items-center justify-center hover:border-[#285aff] hover:text-[#285aff] disabled:opacity-30 disabled:cursor-not-allowed transition z-10 bg-transparent lg:bg-white cursor-pointer"
+          class="absolute flex left-[-30px] top-[10%] lg:top-[55%] -translate-y-1/2 lg:flex w-[44px] h-[44px] rounded-full border border-[#000] items-center justify-center hover:border-[#285aff] hover:text-[#285aff] disabled:opacity-30 disabled:cursor-not-allowed transition z-10 bg-transparent lg:bg-white cursor-pointer"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -173,7 +206,7 @@ const goToPage = (n) => {
 
         <!-- Центр: крошки + заголовок + описание -->
         <div class="text-center mx-auto px-0 lg:px-16">
-          <nav class="mb-[10px] sm:mb-[15px]" aria-label="Breadcrumb">
+          <nav class="mb-[10px] sm:mb-[15px] hidden lg:flex" aria-label="Breadcrumb">
             <ol class="flex items-center justify-center gap-2 text-[11px] sm:text-[12px] lg:text-[14px] text-[#000] flex-wrap">
               <li v-for="(crumb, i) in breadcrumbs" :key="i" class="flex items-center gap-2">
                 <router-link v-if="crumb.path" :to="crumb.path" class="hover:text-[#285aff] transition">
@@ -201,7 +234,7 @@ const goToPage = (n) => {
         <button
           @click="nextCategory"
           :disabled="currentCategory === totalCategories - 1"
-          class="absolute flex right-[-30px] top-[55%] -translate-y-1/2 lg:flex w-[44px] h-[44px] rounded-full border border-[#000] items-center justify-center hover:border-[#285aff] hover:text-[#285aff] disabled:opacity-30 disabled:cursor-not-allowed transition z-10 bg-transparent lg:bg-white cursor-pointer"
+          class="absolute flex right-[-30px] top-[10%] lg:top-[55%] -translate-y-1/2 lg:flex w-[44px] h-[44px] rounded-full border border-[#000] items-center justify-center hover:border-[#285aff] hover:text-[#285aff] disabled:opacity-30 disabled:cursor-not-allowed transition z-10 bg-transparent lg:bg-white cursor-pointer"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -220,33 +253,41 @@ const goToPage = (n) => {
       </div>
 
       <!-- Пагинация -->
-      <div class="flex justify-end items-center gap-[12px] text-[14px] text-black mb-[80px]">
-        <button
-          @click="goToPage(currentPage - 1)"
-          :disabled="currentPage === 0"
-          class="hover:text-[#285aff] disabled:opacity-30 disabled:cursor-not-allowed transition cursor-pointer"
+      <div v-if="totalPages > 1" class="pagination">
+        <button 
+          class="pagination-btn" 
+          :class="{ disabled: currentPage === 1 }"
+          @click="prevPage"
+          :disabled="currentPage === 1"
         >
-          &lt;
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
         </button>
 
-        <button
-          v-for="n in totalPages"
-          :key="n"
-          @click="goToPage(n - 1)"
-          :class="[
-            'transition cursor-pointer',
-            currentPage === n - 1 ? 'text-[#285aff] font-medium' : 'hover:text-[#285aff]',
-          ]"
-        >
-          {{ n }}
-        </button>
+        <template v-for="item in displayedPages" :key="item">
+          <button 
+            v-if="item === '...'" 
+            class="pagination-dots" 
+            disabled
+          >...</button>
+          <button 
+            v-else 
+            class="pagination-btn" 
+            :class="{ active: currentPage === item }"
+            @click="goToPage(item)"
+          >{{ item }}</button>
+        </template>
 
-        <button
-          @click="goToPage(currentPage + 1)"
-          :disabled="currentPage === totalPages - 1"
-          class="hover:text-[#285aff] disabled:opacity-30 disabled:cursor-not-allowed transition cursor-pointer"
+        <button 
+          class="pagination-btn" 
+          :class="{ disabled: currentPage === totalPages }"
+          @click="nextPage"
+          :disabled="currentPage === totalPages"
         >
-          &gt;
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
         </button>
       </div>
     </AppContainer>
@@ -277,10 +318,71 @@ const goToPage = (n) => {
   z-index: 0;
 }
 
+/* Пагинация */
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 80px;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  min-width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  color: #1a1a1a;
+  transition: all 0.2s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #f5f5f5;
+}
+
+.pagination-btn.active {
+  background-color: #285aff;
+  color: white;
+}
+
+.pagination-btn.disabled,
+.pagination-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pagination-dots {
+  min-width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #888;
+}
+
 @media (max-width: 768px) {
   .hero-section,
   .hero-image {
     height: 300px;
+  }
+  
+  .pagination {
+    justify-content: center;
+  }
+  
+  .pagination-btn {
+    min-width: 32px;
+    height: 32px;
+    font-size: 12px;
   }
 }
 

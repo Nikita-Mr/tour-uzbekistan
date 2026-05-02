@@ -156,7 +156,7 @@ onUnmounted(() => {
 
     <AppContainer>
       <!-- Breadcrumbs -->
-      <nav class="mb-[15px] sm:mb-[20px] mt-[30px]" aria-label="Breadcrumb">
+      <nav class="mb-[15px] sm:mb-[20px] mt-[30px] hidden lg:flex" aria-label="Breadcrumb">
         <ol
           class="flex items-center gap-2 text-[11px] sm:text-[12px] lg:text-[14px] text-[#000] flex-wrap"
         >

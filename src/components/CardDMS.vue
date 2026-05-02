@@ -9,9 +9,9 @@ defineProps({
 
 <template>
   <div
-    class="card w-full max-w-[370px] rounded-[15px] border border-[#e5e5e6] bg-white overflow-hidden flex flex-col"
+    class="card w-full max-w-[370px] rounded-[15px] border border-[#e5e5e6] bg-white overflow-hidden flex flex-col cursor-pointer"
     @click="
-      $router.push({path: `/news/${DMC.id}`})
+      $router.push({path: `/services/${DMC.id}`})
     "
   >
     <div class="img">

@@ -49,6 +49,11 @@ const router = createRouter({
       component: () => import('@/views/OpenCard.vue'),
     },
     {
+      path: '/services/:id',
+      name: 'ServicesDetail',
+      component: () => import('@/views/ServicesDetail.vue'),
+    },
+    {
       path: '/booking/:id',
       name: 'Booking',
       component: () => import('@/views/BookingPage.vue'),
@@ -58,11 +63,21 @@ const router = createRouter({
       name: 'for-agent',
       component: () => import('@/views/ForAgentPage.vue'),
     },
+    {
+      path: '/register',
+      name: 'Register',
+      component: () => import('@/views/RegisterPage.vue'),
+    },
     // Для стран (динамический маршрут)
     {
       path: '/countries/:country',
       name: 'country',
       component: () => import('@/views/CountryPage.vue'),
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'maintenance',
+      component: () => import('@/views/TechnicalWorkPage.vue'),
     },
   ],
 });

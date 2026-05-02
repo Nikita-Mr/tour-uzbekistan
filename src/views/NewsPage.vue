@@ -10,7 +10,6 @@ const breadcrumbs = [
 
 const currentPage = ref(1);
 const perPage = 9;
-const totalPages = 4;
 
 // Пример данных — замени на реальный API-запрос
 const allNews = [
@@ -28,21 +27,57 @@ const allNews = [
   { id: 12, image: '/assets/icons/card.png', title: 'Summer schedule update', description: 'More flights, more destinations, more comfort...', date: '4 months ago' },
 ];
 
+const totalPages = computed(() => Math.ceil(allNews.length / perPage));
+
 const paginatedNews = computed(() => {
   const start = (currentPage.value - 1) * perPage;
   return allNews.slice(start, start + perPage);
 });
 
-const goToPage = (n) => { currentPage.value = n; };
-const prevPage = () => { if (currentPage.value > 1) currentPage.value--; };
-const nextPage = () => { if (currentPage.value < totalPages) currentPage.value++; };
+const goToPage = (page) => {
+  if (page >= 1 && page <= totalPages.value) {
+    currentPage.value = page;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+};
+
+const nextPage = () => goToPage(currentPage.value + 1);
+const prevPage = () => goToPage(currentPage.value - 1);
+
+// Генерация массива страниц для отображения (с ...)
+const displayedPages = computed(() => {
+  const delta = 2;
+  const range = [];
+  const rangeWithDots = [];
+  let l;
+
+  for (let i = 1; i <= totalPages.value; i++) {
+    if (i === 1 || i === totalPages.value || (i >= currentPage.value - delta && i <= currentPage.value + delta)) {
+      range.push(i);
+    }
+  }
+
+  range.forEach((i) => {
+    if (l) {
+      if (i - l === 2) {
+        rangeWithDots.push(l + 1);
+      } else if (i - l !== 1) {
+        rangeWithDots.push('...');
+      }
+    }
+    rangeWithDots.push(i);
+    l = i;
+  });
+
+  return rangeWithDots;
+});
 </script>
 
 <template>
   <div class="page-wrapper">
     <AppContainer>
       <!-- Breadcrumbs -->
-      <nav class="mb-[15px] sm:mb-[20px] mt-[30px]" aria-label="Breadcrumb">
+      <nav class="mb-[15px] sm:mb-[20px] mt-[30px] hidden lg:flex" aria-label="Breadcrumb">
         <ol class="flex items-center gap-2 text-[11px] sm:text-[12px] lg:text-[14px] text-[#000] flex-wrap">
           <li v-for="(crumb, i) in breadcrumbs" :key="i" class="flex items-center gap-2">
             <router-link v-if="crumb.path" :to="crumb.path" class="hover:text-[#285aff] transition">
@@ -64,7 +99,7 @@ const nextPage = () => { if (currentPage.value < totalPages) currentPage.value++
       </h1>
 
       <!-- Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[20px] lg:gap-[25px] mb-[40px]">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-[20px] lg:gap-[25px] mb-[40px]">
         <CardNews
           v-for="item in paginatedNews"
           :key="item.id"
@@ -72,18 +107,43 @@ const nextPage = () => { if (currentPage.value < totalPages) currentPage.value++
         />
       </div>
 
-      <!-- Pagination -->
-      <div class="flex justify-end items-center gap-[12px] text-[14px] text-black mb-[80px]">
-        <button @click="prevPage" :disabled="currentPage === 1" class="hover:text-[#285aff] disabled:opacity-30 disabled:cursor-not-allowed transition cursor-pointer">&lt;</button>
-        <button
-          v-for="n in totalPages"
-          :key="n"
-          @click="goToPage(n)"
-          :class="['transition cursor-pointer', currentPage === n ? 'text-[#285aff] font-medium' : 'hover:text-[#285aff]']"
+      <!-- Пагинация -->
+      <div v-if="totalPages > 1" class="pagination">
+        <button 
+          class="pagination-btn" 
+          :class="{ disabled: currentPage === 1 }"
+          @click="prevPage"
+          :disabled="currentPage === 1"
         >
-          {{ n }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
         </button>
-        <button @click="nextPage" :disabled="currentPage === totalPages" class="hover:text-[#285aff] disabled:opacity-30 disabled:cursor-not-allowed transition cursor-pointer">&gt;</button>
+
+        <template v-for="item in displayedPages" :key="item">
+          <button 
+            v-if="item === '...'" 
+            class="pagination-dots" 
+            disabled
+          >...</button>
+          <button 
+            v-else 
+            class="pagination-btn" 
+            :class="{ active: currentPage === item }"
+            @click="goToPage(item)"
+          >{{ item }}</button>
+        </template>
+
+        <button 
+          class="pagination-btn" 
+          :class="{ disabled: currentPage === totalPages }"
+          @click="nextPage"
+          :disabled="currentPage === totalPages"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
       </div>
     </AppContainer>
   </div>
@@ -93,5 +153,68 @@ const nextPage = () => { if (currentPage.value < totalPages) currentPage.value++
 .page-wrapper {
   position: relative;
   padding-top: 20px;
+}
+
+/* Пагинация */
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 80px;
+  flex-wrap: wrap;
+}
+
+.pagination-btn {
+  min-width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  color: #1a1a1a;
+  transition: all 0.2s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #f5f5f5;
+}
+
+.pagination-btn.active {
+  background-color: #285aff;
+  color: white;
+}
+
+.pagination-btn.disabled,
+.pagination-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pagination-dots {
+  min-width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #888;
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    justify-content: center;
+  }
+  
+  .pagination-btn {
+    min-width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
 }
 </style>
