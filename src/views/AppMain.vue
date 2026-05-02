@@ -41,21 +41,25 @@ onUnmounted(() => window.removeEventListener('resize', onResize));
 const mass = [
   {
     title: 'About us',
+    route: '/about',
     descr:
       'Centrum Holidays DMC is a destination management company in Uzbekistan with a young, dynamic team, steadily growing and focused on innovation and high service standards. Founded in Tashkent in 2024 by Abdulaziz Abdurakhmanov.',
   },
   {
     title: 'Directions',
+    route: '/directions',
     descr:
       "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
   },
   {
     title: 'Services',
+    route: '/services',
     descr:
       'We provide end-to-end services for individual and group tourism, from airport transfers and visa support to accommodation, health tourism, cultural tours, and tailored programmes.',
   },
   {
     title: 'Why we?',
+    route: '/why-we',
     descr:
       'Because this approach makes the entire process effortless for you. From the planning stage of your trip to its completion, it offers a comprehensive and reliable solution that you can confidently utilise at every step.',
   },
@@ -111,16 +115,19 @@ const tours = [
 
 const DMC = [
   {
+    id: 1,
     title: 'Destination Management Services (DMC)',
     descr: 'Complete on-ground coordination and local expertise',
     url: '/assets/icons/card-news.jpg',
   },
   {
+    id: 2,
     title: 'Customized Itineraries',
     descr: 'Tailor-made leisure, group, and special-interest programs',
     url: '/assets/icons/card-news.jpg',
   },
   {
+    id: 3,
     title: 'Flight & Air Services Coordination',
     descr:
       'In collaboration with group and block seat operations with Centrum Air',
@@ -199,7 +206,7 @@ const newsList = [
               class="card-item-title flex items-center justify-between mb-[25px]"
             >
               <h3>{{ item.title }}</h3>
-              <router-link to="" class="text-[#88888c] underline italic"
+              <router-link :to="item.route" class="text-[#88888c] underline italic"
                 >More</router-link
               >
             </div>
@@ -402,7 +409,7 @@ const newsList = [
               >Services of Centrum Holidays DMC</span
             >
           </h2>
-          <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
+          <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" @click="$router.push({name: 'services'})" />
         </div>
 
         <p class="tracking-[-1.5%] mb-[60px] text-[14px] lg:text-[16px]">
@@ -439,7 +446,7 @@ const newsList = [
             <span class="lg:hidden uppercase font-medium italic">Why We</span>
             <span class="hidden lg:inline">Why of Centrum Holidays DMC</span>
           </h2>
-          <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
+          <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" @click="$router.push({name: 'whyWe'})"/>
         </div>
 
         <p
@@ -470,7 +477,7 @@ const newsList = [
             <span class="lg:hidden uppercase font-medium italic">News</span>
             <span class="hidden lg:inline">News:</span>
           </h2>
-          <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" />
+          <Button :title="'View all'" :style="'px-[34px] border-[#bfbfbf]'" @click="$router.push({name: 'news'})" />
         </div>
 
         <Carousel

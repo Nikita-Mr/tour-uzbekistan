@@ -18,6 +18,49 @@ const when = ref('');
 const people = ref(2);
 const duration = ref(7);
 
+const isModalOpen = ref(false);
+const modalStep = ref(1); // 1 - форма, 2 - успех
+
+const isMobileFilterOpen = ref(false);
+const openMobileFilter = () => {
+  isMobileFilterOpen.value = true;
+};
+const closeMobileFilter = () => {
+  isMobileFilterOpen.value = false;
+};
+
+// Данные формы
+const formData = ref({
+  sex: '',
+  firstName: '',
+  lastName: '',
+  birthDate: '',
+  phone: '',
+  email: '',
+  idCard: '',
+  nationality: '',
+  documentSeries: '',
+  documentNumber: '',
+  issuedDate: '',
+  validUntil: '',
+});
+
+const openModal = () => {
+  isModalOpen.value = true;
+  modalStep.value = 1;
+  document.body.style.overflow = 'hidden';
+};
+
+const closeModal = () => {
+  isModalOpen.value = false;
+  document.body.style.overflow = '';
+};
+
+const submitForm = () => {
+  // Тут будет отправка данных
+  modalStep.value = 2;
+};
+
 const countries = [
   { id: 'uz', label: 'Узбекистан', icon: '/assets/icons/uzbek.png' },
   { id: 'kz', label: 'Казахстан', icon: '/assets/icons/kazah.png' },
@@ -144,7 +187,7 @@ const tabs = [
 <template>
   <div>
     <!-- ═══ ПОИСКОВАЯ ПАНЕЛЬ (как на странице туров) ═══ -->
-    <section class="mb-[20px] sm:mb-[30px]">
+    <section class="mb-[20px] sm:mb-[30px] hidden lg:flex">
       <AppContainer>
         <!-- Хлебные крошки -->
         <nav class="mb-[15px] sm:mb-[20px]" aria-label="Breadcrumb">
@@ -183,48 +226,6 @@ const tabs = [
           </ol>
         </nav>
 
-        <!-- Мобильная поисковая панель -->
-        <div class="lg:hidden flex flex-col gap-2 sm:gap-3">
-          <CustomSelect
-            v-model="where"
-            placeholder="Куда"
-            :options="countries"
-            type="list"
-            class="w-full"
-          />
-          <CustomSelect
-            v-model="when"
-            placeholder="Когда"
-            type="calendar"
-            class="w-full"
-          />
-          <div class="flex gap-2 sm:gap-3">
-            <CustomSelect
-              v-model="people"
-              placeholder="Кол-во"
-              type="counter"
-              :min="1"
-              :max="20"
-              unit="чел"
-              class="flex-1"
-            />
-            <CustomSelect
-              v-model="duration"
-              placeholder="Дни"
-              type="counter"
-              :min="1"
-              :max="30"
-              unit="дн"
-              class="flex-1"
-            />
-          </div>
-          <button
-            class="bg-[#a6a6aa] text-white px-6 py-2.5 rounded-[8px] text-[13px] font-medium hover:bg-[#285aff] transition cursor-pointer w-full"
-          >
-            Поиск
-          </button>
-        </div>
-
         <!-- Десктопная поисковая панель -->
         <div class="hidden lg:flex bg-white rounded-[12px] border px-[0.5px]">
           <CustomSelect
@@ -261,20 +262,93 @@ const tabs = [
 
     <!-- ═══ ОСНОВНОЙ КОНТЕНТ ═══ -->
     <section class="mb-[50px] sm:mb-[70px]">
+      <div
+        class="relative lg:hidden overflow-hidden aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] group"
+      >
+        <img
+          :src="currentImage"
+          :alt="tour.title"
+          class="w-full h-full object-cover"
+        />
+
+        <!-- Счетчик фото -->
+        <div
+          class="absolute top-3 right-3 bg-black/60 text-white text-xs px-2 py-1 rounded-full"
+        >
+          {{ currentIndex + 1 }} / {{ allImages.length }}
+        </div>
+
+        <!-- Кнопка "Назад" -->
+        <button
+          @click="prevImage"
+          class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white/80 hover:bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md"
+        >
+          <svg
+            class="w-4 h-4 sm:w-5 sm:h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </button>
+
+        <!-- Кнопка "Вперед" -->
+        <button
+          @click="nextImage"
+          class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white/80 hover:bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md"
+        >
+          <svg
+            class="w-4 h-4 sm:w-5 sm:h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </button>
+
+        <!-- Точки индикаторы (опционально) -->
+        <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+          <div
+            v-for="(_, i) in allImages"
+            :key="i"
+            @click="selectImage(i)"
+            class="transition-all duration-300 cursor-pointer rounded-full bg-white/50 hover:bg-white"
+            :class="i === currentIndex ? 'w-6 h-1.5' : 'w-1.5 h-1.5'"
+          ></div>
+        </div>
+      </div>
+
       <AppContainer>
-        <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
+        <h1
+          class="text-[22px] sm:text-[28px] lg:text-[36px] font-medium mb-1 leading-tight mb-4 sm:mb-6 lg:hidden"
+        >
+          {{ tour.title }} {{ tour.subtitle }}
+        </h1>
+        <div class="flex flex-col flex-col-reverse lg:flex-row gap-6 lg:gap-8">
           <!-- ЛЕВАЯ КОЛОНКА -->
           <div class="flex-1 min-w-0">
             <!-- Заголовок -->
             <h1
-              class="text-[22px] sm:text-[28px] lg:text-[36px] font-medium mb-1 leading-tight mb-4 sm:mb-6"
+              class="text-[22px] sm:text-[28px] lg:text-[36px] font-medium mb-1 leading-tight mb-4 sm:mb-6 hidden lg:block"
             >
               {{ tour.title }} {{ tour.subtitle }}
             </h1>
 
             <!-- Главное фото -->
             <div
-              class="relative rounded-[16px] overflow-hidden mb-4 sm:mb-5 aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] group"
+              class="relative rounded-[16px] hidden lg:block overflow-hidden mb-4 sm:mb-5 aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] group"
             >
               <img
                 :src="currentImage"
@@ -292,7 +366,7 @@ const tabs = [
               <!-- Кнопка "Назад" -->
               <button
                 @click="prevImage"
-                class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white/80 hover:bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md"
+                class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white border hover:border-transparent rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md"
               >
                 <svg
                   class="w-4 h-4 sm:w-5 sm:h-5"
@@ -312,7 +386,7 @@ const tabs = [
               <!-- Кнопка "Вперед" -->
               <button
                 @click="nextImage"
-                class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white/80 hover:bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md"
+                class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white border hover:border-transparent rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-md"
               >
                 <svg
                   class="w-4 h-4 sm:w-5 sm:h-5"
@@ -345,7 +419,7 @@ const tabs = [
 
             <!-- Галерея миниатюр -->
             <div
-              class="flex gap-2 sm:gap-3 mb-6 sm:mb-8 overflow-x-auto p-2 scrollbar-hide"
+              class="flex gap-2 hidden lg:flex sm:gap-3 mb-6 sm:mb-8 overflow-x-auto p-2 scrollbar-hide"
             >
               <div
                 v-for="(img, i) in allImages"
@@ -472,10 +546,10 @@ const tabs = [
 
           <!-- ПРАВАЯ КОЛОНКА (сайдбар) -->
           <div class="w-full lg:w-[300px] xl:w-[340px] flex-shrink-0">
-            <div class="border border-[#000] rounded-[16px] bg-white">
+            <div class="lg:border border-[#000] rounded-[16px] bg-white">
               <!-- Описание -->
               <p
-                class="text-[11px] sm:text-[16px] text-[#000] leading-[1] py-[20px] border-b border-b-[#e3e3e4] p-[40px]"
+                class="text-[11px] sm:text-[16px] text-[#000] leading-[1] py-[20px] border-b border-b-[#e3e3e4] lg:p-[40px]"
               >
                 Исследуйте красоты страны, насладитесь местной кухней и откройте
                 для себя культурные достопримечательности за 3 дня
@@ -484,7 +558,7 @@ const tabs = [
               <!-- Характеристики -->
               <div class="">
                 <div
-                  class="flex items-center gap-3 px-[40px] py-[25px] border-b border-b-[#e3e3e4]"
+                  class="flex items-center gap-3 lg:px-[40px] py-[25px] border-b border-b-[#e3e3e4]"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -508,7 +582,7 @@ const tabs = [
                   </span>
                 </div>
                 <div
-                  class="flex items-center gap-3 px-[40px] py-[25px] border-b border-b-[#e3e3e4]"
+                  class="flex items-center gap-3 lg:px-[40px] py-[25px] border-b border-b-[#e3e3e4]"
                 >
                   <svg
                     class="w-4 h-4 sm:w-5 sm:h-5 text-[#000] flex-shrink-0"
@@ -529,7 +603,7 @@ const tabs = [
                   </span>
                 </div>
                 <div
-                  class="flex items-center gap-3 px-[40px] py-[25px] border-b border-b-[#e3e3e4]"
+                  class="flex items-center gap-3 lg:px-[40px] py-[25px] border-b border-b-[#e3e3e4]"
                 >
                   <svg
                     class="w-4 h-4 sm:w-5 sm:h-5 text-[#000] flex-shrink-0"
@@ -550,7 +624,7 @@ const tabs = [
                   </span>
                 </div>
                 <div
-                  class="flex items-center gap-3 px-[40px] py-[25px] border-b border-b-[#e3e3e4]"
+                  class="flex items-center gap-3 lg:px-[40px] py-[25px] border-b border-b-[#e3e3e4]"
                 >
                   <svg
                     class="w-4 h-4 sm:w-5 sm:h-5 text-[#000] flex-shrink-0"
@@ -570,7 +644,7 @@ const tabs = [
                   </span>
                 </div>
                 <div
-                  class="flex items-center gap-3 px-[40px] py-[25px] border-b border-b-[#e3e3e4]"
+                  class="flex items-center gap-3 lg:px-[40px] py-[25px] border-b border-b-[#e3e3e4]"
                 >
                   <svg
                     class="w-4 h-4 sm:w-5 sm:h-5 text-[#000] flex-shrink-0"
@@ -627,7 +701,7 @@ const tabs = [
 
               <!-- Текущая дата и цена -->
               <div
-                class="border-t border-[#e3e3e4] pt-4 sm:pt-5 px-[40px] pt-[15px] pb-[20px]"
+                class="border-t border-[#e3e3e4] pt-4 sm:pt-5 lg:px-[40px] pt-[15px] pb-[20px]"
               >
                 <div
                   class="flex items-center justify-between mb-[10px] border-b border-b-[#e3e3e4] pb-[10px]"
@@ -640,7 +714,7 @@ const tabs = [
                     >100$</span
                   >
                 </div>
-                <div class="text-center mb-[5px]">
+                <div class="text-center mb-[5px] flex lg:block gap-[10px] justify-between">
                   <p
                     class="text-[11px] sm:text-[12px] text-[#000] font-light leading-[15px]"
                   >
@@ -653,7 +727,8 @@ const tabs = [
                   </p>
                 </div>
                 <button
-                  class="w-full bg-[#ff00e7] text-white rounded-[10px] py-2 sm:py-2 text-[14px] font-medium hover:bg-[#eb02d3] transition"
+                  @click="openModal"
+                  class="w-full bg-[#ff00e7] text-white rounded-[10px] py-2 sm:py-2 text-[14px] font-medium hover:bg-[#eb02d3] transition cursor-pointer"
                 >
                   Купить
                 </button>
@@ -661,14 +736,28 @@ const tabs = [
 
               <!-- Другие даты -->
               <div>
-                <div class="py-[10px] border-t border-b bg-[#f6f6f6]">
+                <div
+                  class="py-[10px] border-t border-b bg-[#f6f6f6] hidden lg:block"
+                >
                   <h4
                     class="text-[13px] sm:text-[16px] font-medium text-center"
                   >
                     Другие даты
                   </h4>
                 </div>
-                <div class="px-[40px] py-[15px] bg-[#f6f6f6] rounded-b-[15px]">
+                <div
+                  class="py-[10px] border-t border-b bg-[#f6f6f6] mx-[-11vw] lg:mx-0 lg:hidden cursor-pointer"
+                  @click="openMobileFilter"
+                >
+                  <h4
+                    class="text-[13px] sm:text-[16px] font-medium text-center"
+                  >
+                    Другие даты
+                  </h4>
+                </div>
+                <div
+                  class="lg:px-[40px] py-[15px] bg-[#f6f6f6] rounded-b-[15px] hidden lg:block"
+                >
                   <div
                     v-for="(d, i) in otherDates"
                     :key="i"
@@ -691,10 +780,366 @@ const tabs = [
         </div>
       </AppContainer>
     </section>
+    <!-- ═══ МОДАЛЬНОЕ ОКНО ═══ -->
+    <Transition name="modal">
+      <div v-if="isModalOpen" class="modal-overlay" @click="closeModal">
+        <div>
+          <div
+            v-if="modalStep === 1"
+            class="py-[33px] border-b border-b-[#4d4d54] w-[50%] bg-[#fff] rounded-t-[15px]"
+          >
+            <h2 class="modal-title">Данные о туристе</h2>
+          </div>
+          <div
+            class="modal-container rounded-br-[15px] rounded-tr-[15px] rounded-bl-[15px]"
+            :class="{ 'rounded-[15px]': modalStep != 1 }"
+            @click.stop
+          >
+            <!-- Кнопка закрытия -->
+            <!-- <button class="modal-close" @click="closeModal">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button> -->
+
+            <!-- Шаг 1: Форма -->
+
+            <div v-if="modalStep === 1" class="modal-content">
+              <form @submit.prevent="submitForm" class="modal-form">
+                <div class="form-group">
+                  <label>Пол</label>
+                  <input type="text" v-model="formData.sex" required />
+                </div>
+
+                <div class="form-group">
+                  <label>Имя на латинском</label>
+                  <input type="text" v-model="formData.firstName" required />
+                </div>
+
+                <div class="form-group">
+                  <label>Фамилия на латинице</label>
+                  <input type="text" v-model="formData.lastName" required />
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Дата рождения</label>
+                    <input type="date" v-model="formData.birthDate" />
+                  </div>
+                  <div class="form-group">
+                    <label>Телефон</label>
+                    <input type="tel" v-model="formData.phone" required />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" v-model="formData.email" required />
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Тип Документа</label>
+                    <input type="text" v-model="formData.idCard" />
+                  </div>
+                  <div class="form-group">
+                    <label>Гражданство</label>
+                    <input type="text" v-model="formData.nationality" />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Серия Паспорта</label>
+                    <input type="text" v-model="formData.documentSeries" />
+                  </div>
+                  <div class="form-group">
+                    <label>Номер Документа</label>
+                    <input type="text" v-model="formData.documentNumber" />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Выдан</label>
+                    <input type="date" v-model="formData.issuedDate" />
+                  </div>
+                  <div class="form-group">
+                    <label>Действителен до</label>
+                    <input type="date" v-model="formData.validUntil" />
+                  </div>
+                </div>
+
+                <button type="submit" class="modal-submit">Далее</button>
+              </form>
+            </div>
+
+            <!-- Шаг 2: Успех -->
+            <div v-else-if="modalStep === 2" class="modal-success">
+              <div class="success-icon">✓</div>
+              <h2 class="success-title">Ваше бронирование получено</h2>
+              <button class="modal-submit" @click="modalStep = 3">Далее</button>
+            </div>
+
+            <div v-else-if="modalStep === 3" class="modal-success">
+              <h2 class="success-title">
+                С вами свяжется наш менеджер для подтверждения
+              </h2>
+              <button class="modal-submit" @click="closeModal">Готово</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
+    <Teleport to="body">
+      <Transition name="fade">
+        <div
+          v-if="isMobileFilterOpen"
+          class="fixed inset-0 bg-black/60 z-40 lg:hidden"
+          @click="closeMobileFilter"
+        ></div>
+      </Transition>
+
+      <Transition name="slide-up">
+        <div
+          v-if="isMobileFilterOpen"
+          class="fixed bottom-0 left-0 right-0 bg-white rounded-t-[20px] z-50 lg:hidden max-h-[90vh] overflow-y-auto"
+        >
+          <!-- Шапка -->
+          <div
+            class="sticky top-0 bg-white px-4 sm:px-5 pt-3 sm:pt-4 pb-3 border-b border-[#e6e6e7] flex items-center justify-between rounded-t-[20px]"
+          >
+            <h3 class="text-[16px] sm:text-[18px] font-medium">Другие даты</h3>
+            <button
+              @click="closeMobileFilter"
+              class="text-[13px] sm:text-[14px] text-[#285aff] font-medium"
+            >
+              Закрыть
+            </button>
+          </div>
+
+          <div class="px-4 sm:px-5 py-4">
+            <!-- Цена -->
+            <div
+              class="lg:px-[40px] py-[15px] rounded-b-[15px]"
+            >
+              <div
+                v-for="(d, i) in otherDates"
+                :key="i"
+                class="flex items-center justify-between py-2 border-b border-[#eaeaea] last:border-0"
+              >
+                <span class="text-[16px] text-[#000]">{{
+                  d.date
+                }}</span>
+                <div class="flex items-center gap-2">
+                  <span
+                    class="text-[16px] font-medium text-[#FF00E7]"
+                    >{{ d.price }}$</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
   </div>
 </template>
 
 <style scoped>
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  position: relative;
+  max-width: 600px;
+  width: 100%;
+  max-height: 85vh;
+  background: white;
+  /* border-radius: 0 15px 15px 15px; */
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.2s;
+  z-index: 10;
+}
+
+.modal-close:hover {
+  background: #f5f5f5;
+}
+
+.modal-content {
+  padding: 32px;
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: -3%;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+.form-group label {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0%;
+  color: #999999;
+  position: absolute;
+  z-index: 20;
+  left: 15px;
+  top: 5px;
+}
+
+.form-group input {
+  padding: 20px 12px 10px 12px;
+  border: 1px solid #000;
+  border-radius: 15px;
+  font-size: 16px;
+  transition: border 0.2s;
+  background-color: #f6f6f6;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #285aff;
+}
+
+.modal-submit {
+  background: #ff00e7;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal-submit:hover {
+  background: #eb02d3;
+}
+
+/* Успех */
+.modal-success {
+  padding: 35px 35px;
+  text-align: center;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background: #4ade80;
+  color: white;
+  font-size: 48px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+}
+
+.success-title {
+  font-size: 32px;
+  font-weight: 400;
+  margin-bottom: 34px;
+}
+
+.success-text {
+  color: #666;
+  margin-bottom: 32px;
+}
+
+/* Анимация */
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active .modal-container,
+.modal-leave-active .modal-container {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.modal-enter-from .modal-container,
+.modal-leave-to .modal-container {
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+/* Адаптив */
+@media (max-width: 640px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .modal-content {
+    padding: 24px;
+  }
+
+  .modal-title {
+    font-size: 20px;
+  }
+  h1 {
+    font-size: 20px;
+  }
+}
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }

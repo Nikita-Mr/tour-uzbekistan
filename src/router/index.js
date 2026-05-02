@@ -25,7 +25,7 @@ const router = createRouter({
     },
     {
       path: '/why-we',
-      name: 'why-we',
+      name: 'whyWe',
       component: () => import('@/views/WhyWePage.vue'),
     },
     {
@@ -34,9 +34,24 @@ const router = createRouter({
       component: () => import('@/views/ToursPage.vue'),
     },
     {
+      path: '/news',
+      name: 'news',
+      component: () => import('@/views/NewsPage.vue'),
+    },
+    {
+      path: '/news/:id',
+      name: 'news-detail',
+      component: () => import('@/views/NewsDetail.vue'),
+    },
+    {
       path: '/tours/:id',
       name: 'ToursDetail',
       component: () => import('@/views/OpenCard.vue'),
+    },
+    {
+      path: '/booking/:id',
+      name: 'Booking',
+      component: () => import('@/views/BookingPage.vue'),
     },
     {
       path: '/for-agent',

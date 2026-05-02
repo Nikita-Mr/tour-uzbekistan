@@ -54,6 +54,7 @@ defineProps({
     <div class="button px-4 py-3 lg:px-[15px] lg:py-[10px]">
       <button
         class="cursor-pointer bg-[#ff00e7] w-full text-white rounded-[10px] py-[8px] text-[14px] hover:bg-[#eb02d3] transition"
+        @click="$router.push({path: `/booking/${tour.id}`})"
       >
         Бронировать
       </button>
