@@ -1,17 +1,58 @@
 <script setup>
 import AppContainer from '@/components/AppContainer.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-const breadcrumbs = [
-  { label: 'Main', path: '/' },
-  { label: 'Directions', path: null },
-];
+const { t } = useI18n();
 
+// Хлебные крошки
+const breadcrumbs = computed(() => [
+  { label: t('breadcrumbs.main'), path: '/' },
+  { label: t('breadcrumbs.directions'), path: null },
+]);
+
+// Форма
 const form = ref({
   name: '',
   phone: '',
   email: '',
 });
+
+// Контент для v-for (потом будет приходить из WordPress)
+const contentBlocks = ref([
+  {
+    title: 'Our Direction at Centrum Holidays DMC',
+    text: 'At Centrum Holidays DMC, our direction is shaped by a clear vision: to position Uzbekistan as a well-managed, high-quality, and globally competitive destination while becoming a trusted destination management partner for international markets.'
+  },
+  {
+    title: 'A Clear Strategic Vision',
+    text: 'Our growth strategy is built on long-term sustainability rather than short-term expansion. We focus on developing strong foundations—operational excellence, destination expertise, and reliable partnerships—ensuring that every stage of our growth adds value to our clients, partners, and the destination itself.'
+  },
+  {
+    title: 'Strengthening Destination Leadership',
+    text: 'Centrum Holidays DMC aims to play an active role in shaping Uzbekistan\'s tourism landscape. By continuously developing new routes, experiences, and service concepts, we contribute to destination diversification while maintaining cultural authenticity and service quality.'
+  },
+  {
+    title: 'Technology and Innovation Focus',
+    text: 'Our direction is firmly aligned with technology-driven solutions. We continue to invest in digital infrastructure, API integrations, and data-driven decision-making to improve efficiency, transparency, and scalability. Innovation enables us to respond quickly to market needs and support our partners with smarter, faster solutions.'
+  },
+  {
+    title: 'Expanding Global Partnerships',
+    text: 'International market development is a key priority. We aim to strengthen our presence across diverse source markets by building long-term relationships with tour operators, travel agencies, and corporate partners. Our direction is focused on being a reliable, flexible, and solution-oriented DMC for global stakeholders.'
+  },
+  {
+    title: 'Talent and Culture Development',
+    text: 'Our future is powered by people. Centrum Holidays DMC is committed to developing skilled, motivated, and globally minded teams. By fostering a culture of ownership, accountability, and continuous learning, we ensure consistent service quality and operational resilience.'
+  },
+  {
+    title: 'Responsible and Sustainable Growth',
+    text: 'As we grow, we remain committed to responsible tourism practices. Our direction includes supporting local communities, working with trusted suppliers, and promoting sustainable operations that respect the destination\'s cultural and natural heritage.'
+  },
+  {
+    title: 'Our Commitment',
+    text: 'Centrum Holidays DMC\'s direction is guided by clarity, consistency, and purpose. By combining strategic growth, innovation, and destination expertise, we are building a DMC that delivers long-term value—today and for the future of tourism in Uzbekistan.'
+  }
+]);
 </script>
 
 <template>
@@ -27,32 +68,34 @@ const form = ref({
         <div class="wrapper-card contact-card border mb-[30px]">
           <div class="card-item w-full">
             <h3 class="card-title">
-              Contact us today to learn more about our unique offers
+              {{ $t('about.contact_title') }}
             </h3>
             <form class="contact-form" @submit.prevent>
               <div class="form-row">
                 <input
                   v-model="form.name"
                   type="text"
-                  placeholder="Name"
+                  :placeholder="$t('about.name')"
                   class="form-input"
                 />
                 <input
                   v-model="form.phone"
                   type="tel"
-                  placeholder="Phone"
+                  :placeholder="$t('about.phone')"
                   class="form-input"
                 />
                 <input
                   v-model="form.email"
                   type="email"
-                  placeholder="Email"
+                  :placeholder="$t('about.email')"
                   class="form-input"
                 />
-                <button type="submit" class="send-btn">Send</button>
+                <button type="submit" class="send-btn">
+                  {{ $t('about.send') }}
+                </button>
               </div>
               <p class="consent-text">
-                By clicking the 'Send' button, you consent to the processing of personal data
+                {{ $t('about.consent') }}
               </p>
             </form>
           </div>
@@ -95,65 +138,14 @@ const form = ref({
           </ol>
         </nav>
 
-        <!-- Контент -->
+        <!-- Контент (через v-for) -->
         <div class="content-wrapper">
-          <h1 class="page-title">Directions</h1>
+          <h1 class="page-title">{{ $t('breadcrumbs.directions') }}</h1>
 
           <div class="text-blocks">
-            <div class="text-block">
-              <strong>Our Direction at Centrum Holidays DMC</strong>
-              <p>
-                At Centrum Holidays DMC, our direction is shaped by a clear vision: to position Uzbekistan as a well-managed, high-quality, and globally competitive destination while becoming a trusted destination management partner for international markets.
-              </p>
-            </div>
-
-            <div class="text-block">
-              <strong>A Clear Strategic Vision</strong>
-              <p>
-                Our growth strategy is built on long-term sustainability rather than short-term expansion. We focus on developing strong foundations—operational excellence, destination expertise, and reliable partnerships—ensuring that every stage of our growth adds value to our clients, partners, and the destination itself.
-              </p>
-            </div>
-
-            <div class="text-block">
-              <strong>Strengthening Destination Leadership</strong>
-              <p>
-                Centrum Holidays DMC aims to play an active role in shaping Uzbekistan's tourism landscape. By continuously developing new routes, experiences, and service concepts, we contribute to destination diversification while maintaining cultural authenticity and service quality.
-              </p>
-            </div>
-
-            <div class="text-block">
-              <strong>Technology and Innovation Focus</strong>
-              <p>
-                Our direction is firmly aligned with technology-driven solutions. We continue to invest in digital infrastructure, API integrations, and data-driven decision-making to improve efficiency, transparency, and scalability. Innovation enables us to respond quickly to market needs and support our partners with smarter, faster solutions.
-              </p>
-            </div>
-
-            <div class="text-block">
-              <strong>Expanding Global Partnerships</strong>
-              <p>
-                International market development is a key priority. We aim to strengthen our presence across diverse source markets by building long-term relationships with tour operators, travel agencies, and corporate partners. Our direction is focused on being a reliable, flexible, and solution-oriented DMC for global stakeholders.
-              </p>
-            </div>
-
-            <div class="text-block">
-              <strong>Talent and Culture Development</strong>
-              <p>
-                Our future is powered by people. Centrum Holidays DMC is committed to developing skilled, motivated, and globally minded teams. By fostering a culture of ownership, accountability, and continuous learning, we ensure consistent service quality and operational resilience.
-              </p>
-            </div>
-
-            <div class="text-block">
-              <strong>Responsible and Sustainable Growth</strong>
-              <p>
-                As we grow, we remain committed to responsible tourism practices. Our direction includes supporting local communities, working with trusted suppliers, and promoting sustainable operations that respect the destination's cultural and natural heritage.
-              </p>
-            </div>
-
-            <div class="text-block">
-              <strong>Our Commitment</strong>
-              <p>
-                Centrum Holidays DMC's direction is guided by clarity, consistency, and purpose. By combining strategic growth, innovation, and destination expertise, we are building a DMC that delivers long-term value—today and for the future of tourism in Uzbekistan.
-              </p>
+            <div v-for="(block, index) in contentBlocks" :key="index" class="text-block">
+              <strong>{{ block.title }}</strong>
+              <p>{{ block.text }}</p>
             </div>
           </div>
         </div>

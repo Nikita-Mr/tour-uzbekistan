@@ -1,5 +1,8 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps({
   modelValue: [String, Number, Object],
@@ -9,7 +12,7 @@ const props = defineProps({
   min: { type: Number, default: 1 },
   max: { type: Number, default: 10 },
   unit: { type: String, default: '' },
-  border: {type: Boolean, default: true}
+  border: { type: Boolean, default: true }
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -37,11 +40,18 @@ const disableParentCarouselOverflow = () => {
   }
 };
 
+// Переведённые названия месяцев
 const monthNames = [
-  'Январь','Февраль','Март','Апрель','Май','Июнь',
-  'Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'
+  t('calendar.january'), t('calendar.february'), t('calendar.march'), t('calendar.april'),
+  t('calendar.may'), t('calendar.june'), t('calendar.july'), t('calendar.august'),
+  t('calendar.september'), t('calendar.october'), t('calendar.november'), t('calendar.december')
 ];
-const weekDays = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+
+// Переведённые дни недели
+const weekDays = [
+  t('calendar.mon'), t('calendar.tue'), t('calendar.wed'),
+  t('calendar.thu'), t('calendar.fri'), t('calendar.sat'), t('calendar.sun')
+];
 
 const calendarDays = computed(() => {
   if (props.type !== 'calendar') return [];
@@ -127,7 +137,12 @@ const selectOption = (opt) => {
 };
 
 // ─── ОБЩЕЕ ───
-const toggle = () => (isOpen.value = !isOpen.value);
+const toggle = () => {
+  isOpen.value = !isOpen.value;
+  if (isOpen.value) {
+    disableParentCarouselOverflow();
+  }
+};
 const close = () => (isOpen.value = false);
 
 function onClickOutside(e) {
@@ -154,7 +169,7 @@ watch(() => props.modelValue, (val) => {
     <!-- Триггер -->
     <button
       @click="toggle"
-      class="trigger w-full flex items-center justify-between px-4 py-3 bg-white text-[14px]  border-[#e6e6e7] hover:bg-[#f9f9f9] transition cursor-pointer"
+      class="trigger w-full flex items-center justify-between px-4 py-3 bg-white text-[14px] border-[#e6e6e7] hover:bg-[#f9f9f9] transition cursor-pointer"
       :class="{'border-r': border}"
     >
       <!-- Counter -->
@@ -210,7 +225,7 @@ watch(() => props.modelValue, (val) => {
         </template>
       </div>
       <div v-if="modelValue" class="mt-3 pt-3 border-t border-[#f0f0f0] flex justify-end">
-        <button @click="clearSelection" class="text-[12px] text-[#285aff] hover:underline">Очистить</button>
+        <button @click="clearSelection" class="text-[12px] text-[#285aff] hover:underline">{{ t('calendar.clear') }}</button>
       </div>
     </div>
 
@@ -229,7 +244,6 @@ watch(() => props.modelValue, (val) => {
 </template>
 
 <style scoped>
-
 .custom-select:first-child .trigger { border-radius: 8px 0 0 8px; }
 .custom-select:last-child .trigger { border-radius: 0 8px 8px 0; border-right: none; }
 .dropdown { animation: fadeIn 0.15s ease; }

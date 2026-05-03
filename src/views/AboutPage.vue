@@ -1,17 +1,34 @@
 <script setup>
 import AppContainer from '@/components/AppContainer.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-const breadcrumbs = [
-  { label: 'Main', path: '/' },
-  { label: 'About Us', path: null },
-];
+const { t } = useI18n();
+
+// Хлебные крошки
+const breadcrumbs = computed(() => [
+  { label: t('breadcrumbs.main'), path: '/' },
+  { label: t('breadcrumbs.about'), path: null },
+]);
 
 const form = ref({
   name: '',
   phone: '',
   email: '',
 });
+
+const ContentBlock = ref([
+  {
+    text: "It was established in 2024 by Abdulaziz Abdurrahmanov as a subsidiary of Centrum Holding. Centrum Holding, the flagship company, is one of the largest tourism holdings in the Republic of Uzbekistan, encompassing the country's leading tourism and transportation investments, including Centrum Air, Centrum Holidays Tour Operator, and Air Freightnet."
+  },
+  {
+    text: "<strong>Centrum Holidays DMC</strong> is a destination management company based in Uzbekistan, specializing in delivering comprehensive, high-quality travel solutions for international partners and clients. As part of the Centrum Holding ecosystem, the company combines strong local expertise with global service standards to provide seamless leisure, group, and MICE travel experiences."
+  },
+  {
+    text: "With in-depth destination knowledge, a reliable supplier network, and technology-driven operations, Centrum Holidays DMC offers end-to-end services including customized itineraries, hotels, transportation, tours, and on-ground coordination. Positioned as a trusted destination partner, the company focuses on operational excellence, tailored services, and long-term partnerships to showcase Uzbekistan as a competitive and well-managed travel destination."
+  }
+])
+
 </script>
 
 <template>
@@ -27,39 +44,44 @@ const form = ref({
         <div class="wrapper-card contact-card border mb-[30px]">
           <div class="card-item w-full">
             <h3 class="card-title">
-              Contact us today to learn more about our unique offers
+              {{ $t('about.contact_title') }}
             </h3>
             <form class="contact-form" @submit.prevent>
               <div class="form-row">
                 <input
                   v-model="form.name"
                   type="text"
-                  placeholder="Name"
+                  :placeholder="$t('about.name')"
                   class="form-input"
                 />
                 <input
                   v-model="form.phone"
                   type="tel"
-                  placeholder="Phone"
+                  :placeholder="$t('about.phone')"
                   class="form-input"
                 />
                 <input
                   v-model="form.email"
                   type="email"
-                  placeholder="Email"
+                  :placeholder="$t('about.email')"
                   class="form-input"
                 />
-                <button type="submit" class="send-btn">Send</button>
+                <button type="submit" class="send-btn">
+                  {{ $t('about.send') }}
+                </button>
               </div>
               <p class="consent-text">
-                By clicking the 'Send' button, you consent to the processing of personal data
+                {{ $t('about.consent') }}
               </p>
             </form>
           </div>
         </div>
 
         <!-- Breadcrumbs -->
-        <nav class="mb-[15px] sm:mb-[20px] mt-[30px] hidden lg:flex" aria-label="Breadcrumb">
+        <nav
+          class="mb-[15px] sm:mb-[20px] mt-[30px] hidden lg:flex"
+          aria-label="Breadcrumb"
+        >
           <ol
             class="flex items-center gap-2 text-[11px] sm:text-[12px] lg:text-[14px] text-[#000] flex-wrap"
           >
@@ -94,40 +116,12 @@ const form = ref({
             </li>
           </ol>
         </nav>
-
         <!-- Контент -->
         <div class="content-wrapper">
-          <h1 class="page-title">About Us</h1>
+          <h1 class="page-title">{{ $t('about.page_title') }}</h1>
 
           <div class="text-blocks">
-            <p class="text-block">
-              It was established in 2024 by Abdulaziz Abdurrahmanov as a
-              subsidiary of Centrum Holding. Centrum Holding, the flagship
-              company, is one of the largest tourism holdings in the Republic of
-              Uzbekistan, encompassing the country's leading tourism and
-              transportation investments, including Centrum Air, Centrum Holidays
-              Tour Operator, and Air Freightnet.
-            </p>
-
-            <p class="text-block">
-              <strong>Centrum Holidays DMC</strong> is a destination management
-              company based in Uzbekistan, specializing in delivering
-              comprehensive, high-quality travel solutions for international
-              partners and clients. As part of the Centrum Holding ecosystem,
-              the company combines strong local expertise with global service
-              standards to provide seamless leisure, group, and MICE travel
-              experiences.
-            </p>
-
-            <p class="text-block">
-              With in-depth destination knowledge, a reliable supplier network,
-              and technology-driven operations, Centrum Holidays DMC offers
-              end-to-end services including customized itineraries, hotels,
-              transportation, tours, and on-ground coordination. Positioned as a
-              trusted destination partner, the company focuses on operational
-              excellence, tailored services, and long-term partnerships to
-              showcase Uzbekistan as a competitive and well-managed travel
-              destination.
+            <p class="text-block" v-for="(item, index) in ContentBlock" v-html="item.text" :key="index">
             </p>
           </div>
         </div>
@@ -137,6 +131,9 @@ const form = ref({
 </template>
 
 <style scoped>
+.text-block :deep(strong) {
+  font-weight: 700;
+}
 .page-wrapper {
   position: relative;
 }
@@ -267,7 +264,6 @@ const form = ref({
 }
 
 @media (max-width: 1200px) {
-
 }
 
 @media (max-width: 768px) {
@@ -290,7 +286,6 @@ const form = ref({
     height: 358px;
     background-position: left;
   }
-
 }
 
 @media (min-width: 1921px) {

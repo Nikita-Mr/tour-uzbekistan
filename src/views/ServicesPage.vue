@@ -3,13 +3,17 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import AppContainer from '@/components/AppContainer.vue';
 import CardDMS from '@/components/CardDMS.vue';
 import Line from '@/components/Line.vue';
+import { useI18n } from 'vue-i18n';
 
-const breadcrumbs = [
-  { label: 'Main', path: '/' },
-  { label: 'Services', path: null },
-];
+const { t } = useI18n();
 
-// Все услуги
+// Хлебные крошки (переведенные)
+const breadcrumbs = computed(() => [
+  { label: t('breadcrumbs.main'), path: '/' },
+  { label: t('breadcrumbs.services'), path: null },
+]);
+
+// Все услуги (контент НЕ переводим)
 const allServices = [
   {
     title: 'Destination Management Services (DMC)',
@@ -90,7 +94,6 @@ const paginatedServices = computed(() => {
 const goToPage = (page) => {
   if (page >= 1 && page <= totalPages.value) {
     currentPage.value = page;
-    // Прокрутка к началу списка
     window.scrollTo({ top: 400, behavior: 'smooth' });
   }
 };
@@ -155,7 +158,7 @@ onUnmounted(() => {
     </section>
 
     <AppContainer>
-      <!-- Breadcrumbs -->
+      <!-- Breadcrumbs (переведены) -->
       <nav class="mb-[15px] sm:mb-[20px] mt-[30px] hidden lg:flex" aria-label="Breadcrumb">
         <ol
           class="flex items-center gap-2 text-[11px] sm:text-[12px] lg:text-[14px] text-[#000] flex-wrap"
@@ -192,17 +195,17 @@ onUnmounted(() => {
         </ol>
       </nav>
 
-      <!-- Heading -->
+      <!-- Heading (переведено) -->
       <div class="mb-[30px] lg:mb-[50px]">
         <h2 class="text-[28px] sm:text-[36px] lg:text-[48px] font-normal text-black mb-[25px] leading-tight">
-          Services of Centrum Holidays DMC
+          {{ t('services.title') }}
         </h2>
         <p class="text-[13px] sm:text-[14px] lg:text-[15px] text-black leading-relaxed">
-          Centrum Holidays DMC provides end-to-end destination management services in Uzbekistan, designed for international tour operators, agencies, and corporate clients:
+          {{ t('services.subtitle') }}
         </p>
       </div>
 
-      <!-- Grid с gap 25px -->
+      <!-- Grid с gap 25px (контент НЕ переведен) -->
       <div class="services-grid">
         <CardDMS
           v-for="(item, index) in paginatedServices"
@@ -211,14 +214,14 @@ onUnmounted(() => {
         />
       </div>
 
-      <!-- Bottom text -->
+      <!-- Bottom text (переведен) -->
       <p class="text-[13px] sm:text-[14px] text-black leading-relaxed mb-[25px]">
-        Centrum Holidays DMC combines local destination knowledge, operational excellence, and flexible service models to deliver reliable and scalable travel solutions.
+        {{ t('services.bottom_text') }}
       </p>
 
       <Line class="mb-[20px]" />
 
-      <!-- Пагинация -->
+      <!-- Пагинация (переведена) -->
       <div v-if="totalPages > 1" class="pagination">
         <button 
           class="pagination-btn" 
@@ -379,10 +382,10 @@ onUnmounted(() => {
     height: 550px;
   }
 }
+
 @media (min-width: 1920px) {
   .services-grid {
     grid-template-columns: repeat(5, 1fr);
   }
-  
 }
 </style>

@@ -2,11 +2,13 @@
 import { ref, computed } from 'vue';
 import AppContainer from '@/components/AppContainer.vue';
 import CardNews from '@/components/CardNews.vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
-const breadcrumbs = [
-  { label: 'Main', path: '/' },
-  { label: 'News', path: null },
-];
+const breadcrumbs = computed(() => [
+  { label: t('breadcrumbs.main'), path: '/' },
+  { label: t('breadcrumbs.news'), path: null },
+]);
 
 const currentPage = ref(1);
 const perPage = 9;
@@ -95,7 +97,7 @@ const displayedPages = computed(() => {
 
       <!-- Heading -->
       <h1 class="text-[36px] sm:text-[48px] lg:text-[54px] font-normal text-black mb-[30px] lg:mb-[50px] leading-tight">
-        News
+        {{ t('breadcrumbs.news') }}
       </h1>
 
       <!-- Grid -->

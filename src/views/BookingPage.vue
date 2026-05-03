@@ -1,7 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const router = useRouter();
 
 const modalStep = ref(null); // null - форма видна, 2,3 - модальные окна
@@ -22,7 +24,6 @@ const formData = ref({
 });
 
 const submitForm = () => {
-  // Тут будет отправка данных
   modalStep.value = 2;
 };
 
@@ -33,7 +34,7 @@ const nextStep = () => {
 const closeModal = () => {
   modalStep.value = null;
   document.body.style.overflow = '';
-  router.back()
+  router.back();
 };
 
 const openModal = (step) => {
@@ -52,83 +53,83 @@ const openModal = (step) => {
       <div class="form-wrapper">
         <!-- Заголовок формы -->
         <div class="form-header w-[50%]">
-          <h2 class="form-title">Данные о туристе</h2>
+          <h2 class="form-title">{{ t('openCard.modal_title') }}</h2>
         </div>
         
-        <!-- Статичная форма (всегда видна) -->
+        <!-- Статичная форма -->
         <div class="form-container">
           <form @submit.prevent="submitForm" class="booking-form">
             <div class="form-group">
-              <label>Пол</label>
+              <label>{{ t('openCard.modal_sex') }}</label>
               <input type="text" v-model="formData.sex" required />
             </div>
 
             <div class="form-group">
-              <label>Имя на латинском</label>
+              <label>{{ t('openCard.modal_firstname') }}</label>
               <input type="text" v-model="formData.firstName" required />
             </div>
 
             <div class="form-group">
-              <label>Фамилия на латинице</label>
+              <label>{{ t('openCard.modal_lastname') }}</label>
               <input type="text" v-model="formData.lastName" required />
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label>Дата рождения</label>
+                <label>{{ t('openCard.modal_birthdate') }}</label>
                 <input type="date" v-model="formData.birthDate" />
               </div>
               <div class="form-group">
-                <label>Телефон</label>
+                <label>{{ t('openCard.modal_phone') }}</label>
                 <input type="tel" v-model="formData.phone" required />
               </div>
             </div>
 
             <div class="form-group">
-              <label>Email</label>
+              <label>{{ t('openCard.modal_email') }}</label>
               <input type="email" v-model="formData.email" required />
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label>Тип Документа</label>
+                <label>{{ t('openCard.modal_doc_type') }}</label>
                 <input type="text" v-model="formData.idCard" />
               </div>
               <div class="form-group">
-                <label>Гражданство</label>
+                <label>{{ t('openCard.modal_nationality') }}</label>
                 <input type="text" v-model="formData.nationality" />
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label>Серия Паспорта</label>
+                <label>{{ t('openCard.modal_passport_series') }}</label>
                 <input type="text" v-model="formData.documentSeries" />
               </div>
               <div class="form-group">
-                <label>Номер Документа</label>
+                <label>{{ t('openCard.modal_doc_number') }}</label>
                 <input type="text" v-model="formData.documentNumber" />
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label>Выдан</label>
+                <label>{{ t('openCard.modal_issued') }}</label>
                 <input type="date" v-model="formData.issuedDate" />
               </div>
               <div class="form-group">
-                <label>Действителен до</label>
+                <label>{{ t('openCard.modal_valid_until') }}</label>
                 <input type="date" v-model="formData.validUntil" />
               </div>
             </div>
 
-            <button type="submit" class="form-submit">Далее</button>
+            <button type="submit" class="form-submit">{{ t('openCard.modal_next') }}</button>
           </form>
         </div>
       </div>
     </div>
 
-    <!-- ═══ МОДАЛЬНЫЕ ОКНА (поверх формы) ═══ -->
+    <!-- МОДАЛЬНЫЕ ОКНА -->
     <Transition name="modal">
       <div v-if="modalStep === 2" class="modal-overlay" @click="closeModal">
         <div class="modal-container" @click.stop>
@@ -139,8 +140,8 @@ const openModal = (step) => {
           </button>
           <div class="modal-success">
             <div class="success-icon">✓</div>
-            <h2 class="success-title">Ваше бронирование получено</h2>
-            <button class="modal-submit" @click="nextStep">Далее</button>
+            <h2 class="success-title">{{ t('openCard.modal_success_title') }}</h2>
+            <button class="modal-submit" @click="nextStep">{{ t('openCard.modal_next') }}</button>
           </div>
         </div>
       </div>
@@ -155,8 +156,8 @@ const openModal = (step) => {
             </svg>
           </button>
           <div class="modal-success">
-            <h2 class="success-title">С вами свяжется наш менеджер для подтверждения</h2>
-            <button class="modal-submit" @click="closeModal">Готово</button>
+            <h2 class="success-title">{{ t('openCard.modal_success_text') }}</h2>
+            <button class="modal-submit" @click="closeModal">{{ t('openCard.modal_close') }}</button>
           </div>
         </div>
       </div>
@@ -165,12 +166,12 @@ const openModal = (step) => {
 </template>
 
 <style scoped>
+/* Все стили остаются без изменений */
 .booking-page {
   position: relative;
   min-height: 100vh;
 }
 
-/* Фоновая картинка */
 .hero-image {
   position: absolute;
   top: 0;
@@ -183,7 +184,6 @@ const openModal = (step) => {
   z-index: 0;
 }
 
-/* Контент поверх картинки */
 .booking-content {
   position: relative;
   z-index: 1;
@@ -286,7 +286,6 @@ const openModal = (step) => {
   background: #eb02d3;
 }
 
-/* ─── Модальные окна ─── */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -370,7 +369,6 @@ const openModal = (step) => {
   background: #eb02d3;
 }
 
-/* Анимация */
 .modal-enter-active,
 .modal-leave-active {
   transition: opacity 0.3s ease;
@@ -392,21 +390,17 @@ const openModal = (step) => {
   opacity: 0;
 }
 
-/* Адаптив */
 @media (max-width: 640px) {
   .form-row {
     grid-template-columns: 1fr;
     gap: 12px;
   }
-
   .form-container {
     padding: 24px;
   }
-
   .form-title {
     font-size: 16px;
   }
-
   .success-title {
     font-size: 20px;
   }

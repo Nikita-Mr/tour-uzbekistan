@@ -1,5 +1,7 @@
 <script setup>
-// Можно добавить таймер обратного отсчёта или авто-рефреш
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 </script>
 
 <template>
@@ -14,15 +16,21 @@
     <div class="content">
       <!-- Спиннер -->
       <div class="spinner">
-        <div class="dot" v-for="i in 8" :key="i" :style="{ animationDelay: `${(i - 1) * 0.12}s` }" />
+        <div
+          class="dot"
+          v-for="i in 8"
+          :key="i"
+          :style="{ animationDelay: `${(i - 1) * 0.12}s` }"
+        />
       </div>
 
       <!-- Текст -->
       <h1 class="title">
-        Вы попали в зону <span class="highlight">турбулентности</span>
+        {{ t('technical.title') }}
+        <span class="highlight">{{ t('technical.highlight') }}</span>
       </h1>
       <p class="subtitle">
-        Сайт находится на технических работах
+        {{ t('technical.subtitle') }}
       </p>
     </div>
   </div>
@@ -85,14 +93,30 @@
   opacity: 0;
 }
 
-.dot:nth-child(1) { transform: rotate(0deg) translateX(24px); }
-.dot:nth-child(2) { transform: rotate(45deg) translateX(24px); }
-.dot:nth-child(3) { transform: rotate(90deg) translateX(24px); }
-.dot:nth-child(4) { transform: rotate(135deg) translateX(24px); }
-.dot:nth-child(5) { transform: rotate(180deg) translateX(24px); }
-.dot:nth-child(6) { transform: rotate(225deg) translateX(24px); }
-.dot:nth-child(7) { transform: rotate(270deg) translateX(24px); }
-.dot:nth-child(8) { transform: rotate(315deg) translateX(24px); }
+.dot:nth-child(1) {
+  transform: rotate(0deg) translateX(24px);
+}
+.dot:nth-child(2) {
+  transform: rotate(45deg) translateX(24px);
+}
+.dot:nth-child(3) {
+  transform: rotate(90deg) translateX(24px);
+}
+.dot:nth-child(4) {
+  transform: rotate(135deg) translateX(24px);
+}
+.dot:nth-child(5) {
+  transform: rotate(180deg) translateX(24px);
+}
+.dot:nth-child(6) {
+  transform: rotate(225deg) translateX(24px);
+}
+.dot:nth-child(7) {
+  transform: rotate(270deg) translateX(24px);
+}
+.dot:nth-child(8) {
+  transform: rotate(315deg) translateX(24px);
+}
 
 @keyframes orbit {
   0% {
@@ -114,14 +138,30 @@
 }
 
 /* Фикс для правильного rotate в keyframes */
-.dot:nth-child(1) { --rot: 0deg; }
-.dot:nth-child(2) { --rot: 45deg; }
-.dot:nth-child(3) { --rot: 90deg; }
-.dot:nth-child(4) { --rot: 135deg; }
-.dot:nth-child(5) { --rot: 180deg; }
-.dot:nth-child(6) { --rot: 225deg; }
-.dot:nth-child(7) { --rot: 270deg; }
-.dot:nth-child(8) { --rot: 315deg; }
+.dot:nth-child(1) {
+  --rot: 0deg;
+}
+.dot:nth-child(2) {
+  --rot: 45deg;
+}
+.dot:nth-child(3) {
+  --rot: 90deg;
+}
+.dot:nth-child(4) {
+  --rot: 135deg;
+}
+.dot:nth-child(5) {
+  --rot: 180deg;
+}
+.dot:nth-child(6) {
+  --rot: 225deg;
+}
+.dot:nth-child(7) {
+  --rot: 270deg;
+}
+.dot:nth-child(8) {
+  --rot: 315deg;
+}
 
 /* Текст */
 .title {
@@ -160,20 +200,48 @@
     height: 8px;
     margin: -4px 0 0 -4px;
   }
-  .dot:nth-child(1) { transform: rotate(0deg) translateX(18px); }
-  .dot:nth-child(2) { transform: rotate(45deg) translateX(18px); }
-  .dot:nth-child(3) { transform: rotate(90deg) translateX(18px); }
-  .dot:nth-child(4) { transform: rotate(135deg) translateX(18px); }
-  .dot:nth-child(5) { transform: rotate(180deg) translateX(18px); }
-  .dot:nth-child(6) { transform: rotate(225deg) translateX(18px); }
-  .dot:nth-child(7) { transform: rotate(270deg) translateX(18px); }
-  .dot:nth-child(8) { transform: rotate(315deg) translateX(18px); }
-  
+  .dot:nth-child(1) {
+    transform: rotate(0deg) translateX(18px);
+  }
+  .dot:nth-child(2) {
+    transform: rotate(45deg) translateX(18px);
+  }
+  .dot:nth-child(3) {
+    transform: rotate(90deg) translateX(18px);
+  }
+  .dot:nth-child(4) {
+    transform: rotate(135deg) translateX(18px);
+  }
+  .dot:nth-child(5) {
+    transform: rotate(180deg) translateX(18px);
+  }
+  .dot:nth-child(6) {
+    transform: rotate(225deg) translateX(18px);
+  }
+  .dot:nth-child(7) {
+    transform: rotate(270deg) translateX(18px);
+  }
+  .dot:nth-child(8) {
+    transform: rotate(315deg) translateX(18px);
+  }
+
   @keyframes orbit {
-    0% { opacity: 0; transform: rotate(var(--rot, 0deg)) translateX(18px) scale(0.5); }
-    20% { opacity: 1; transform: rotate(var(--rot, 0deg)) translateX(18px) scale(1); }
-    80% { opacity: 1; transform: rotate(var(--rot, 0deg)) translateX(18px) scale(1); }
-    100% { opacity: 0; transform: rotate(var(--rot, 0deg)) translateX(18px) scale(0.5); }
+    0% {
+      opacity: 0;
+      transform: rotate(var(--rot, 0deg)) translateX(18px) scale(0.5);
+    }
+    20% {
+      opacity: 1;
+      transform: rotate(var(--rot, 0deg)) translateX(18px) scale(1);
+    }
+    80% {
+      opacity: 1;
+      transform: rotate(var(--rot, 0deg)) translateX(18px) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: rotate(var(--rot, 0deg)) translateX(18px) scale(0.5);
+    }
   }
 }
 </style>

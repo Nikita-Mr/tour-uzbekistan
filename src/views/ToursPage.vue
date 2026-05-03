@@ -1,15 +1,18 @@
 <script setup>
 import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import AppContainer from '@/components/AppContainer.vue';
 import Button from '@/components/Button.vue';
 import CustomSelect from '@/components/CustomSelect.vue';
 import Card from '@/components/Card.vue';
 
+const { t } = useI18n();
+
 // ─── Хлебные крошки ───
-const breadcrumbs = [
-  { label: 'Главная', path: '/' },
-  { label: 'Туры', path: null },
-];
+const breadcrumbs = computed(() => [
+  { label: t('breadcrumbs.main'), path: '/' },
+  { label: t('breadcrumbs.tours'), path: null },
+]);
 
 // ─── Мобильная модалка фильтров ───
 const isMobileFilterOpen = ref(false);
@@ -26,31 +29,42 @@ const when = ref('');
 const people = ref(2);
 const duration = ref(7);
 
-const countries = [
-  { id: 'uz', label: 'Узбекистан', icon: '/assets/icons/uzbek.png' },
-  { id: 'kz', label: 'Казахстан', icon: '/assets/icons/kazah.png' },
-  { id: 'kg', label: 'Кыргызстан', icon: '/assets/icons/kyrg.png' },
-  { id: 'tj', label: 'Таджикистан', icon: '/assets/icons/tad.png' },
-  { id: 'cauc', label: 'Кавказ', icon: null },
-];
+const countries = computed(() => [
+  {
+    id: 'uz',
+    label: t('countries.uzbekistan'),
+    icon: '/assets/icons/uzbek.png',
+  },
+  {
+    id: 'kz',
+    label: t('countries.kazakhstan'),
+    icon: '/assets/icons/kazah.png',
+  },
+  {
+    id: 'kg',
+    label: t('countries.kyrgyzstan'),
+    icon: '/assets/icons/kyrg.png',
+  },
+  { id: 'tj', label: t('countries.tajikistan'), icon: '/assets/icons/tad.png' },
+  { id: 'cauc', label: t('countries.caucasus'), icon: null },
+]);
 
 // ─── Фильтры ───
 const comfortFilter = ref(null);
 
-const tourTypes = [
-  { id: 'short', label: 'Короткие', checked: true },
-  { id: 'oneday', label: 'Однодневные', checked: false },
-  { id: 'multiday', label: 'Многодневные', checked: false },
-];
+const tourTypes = ref([
+  { id: 'short', label: t('toursPage.short'), checked: true },
+  { id: 'oneday', label: t('toursPage.oneday'), checked: false },
+  { id: 'multiday', label: t('toursPage.multiday'), checked: false },
+]);
 
-const seasons = [
-  { id: 'winter', label: 'Зимний', checked: true },
-  { id: 'spring', label: 'Весенний', checked: false },
-  { id: 'summer', label: 'Летний', checked: false },
-  { id: 'autumn', label: 'Осенний', checked: false },
-];
+const seasons = ref([
+  { id: 'winter', label: t('toursPage.winter'), checked: true },
+  { id: 'spring', label: t('toursPage.spring'), checked: false },
+  { id: 'summer', label: t('toursPage.summer'), checked: false },
+  { id: 'autumn', label: t('toursPage.autumn'), checked: false },
+]);
 
-// ─── Данные туров ───
 const tours = ref([
   {
     id: 1,
@@ -144,11 +158,43 @@ const tours = ref([
   },
 ]);
 
+const filteredTours = computed(() => {
+  if (!where.value) return tours.value;
+
+  const selectedCountry = countries.find((c) => c.id === where.value?.id);
+  if (!selectedCountry) return tours.value;
+
+  // Фильтруем туры по названию страны (связываем с маршрутом тура)
+  // Например: если выбрали Узбекистан — показываем туры, где в route или title есть "Узбекистан"
+  const countryName = selectedCountry.label.toLowerCase();
+
+  return tours.value.filter(
+    (tour) =>
+      tour.title.toLowerCase().includes(countryName) ||
+      tour.route.toLowerCase().includes(countryName)
+  );
+});
+
+// Пагинация теперь работает с filteredTours
+const totalPages = computed(() =>
+  Math.ceil(filteredTours.value.length / perPage.value)
+);
+
+const paginatedTours = computed(() => {
+  const start = (currentPage.value - 1) * perPage.value;
+  return filteredTours.value.slice(start, start + perPage.value);
+});
+
+// Функция поиска (обновляет пагинацию)
+const performSearch = () => {
+  currentPage.value = 1;
+  // Можно добавить логику для when, people, duration позже
+};
+
 // ─── Пагинация ───
 const currentPage = ref(1);
 const perPage = ref(9);
 
-// Адаптивное количество карточек на страницу
 const updatePerPage = () => {
   const w = window.innerWidth;
   if (w < 640) perPage.value = 4;
@@ -157,28 +203,27 @@ const updatePerPage = () => {
   else perPage.value = 10;
 };
 
-// Вызываем при монтировании
 updatePerPage();
 window.addEventListener('resize', updatePerPage);
 
-const totalPages = computed(() =>
-  Math.ceil(tours.value.length / perPage.value)
-);
-const paginatedTours = computed(() => {
-  const start = (currentPage.value - 1) * perPage.value;
-  return tours.value.slice(start, start + perPage.value);
-});
+// const totalPages = computed(() =>
+//   Math.ceil(tours.value.length / perPage.value)
+// );
+// const paginatedTours = computed(() => {
+//   const start = (currentPage.value - 1) * perPage.value;
+//   return tours.value.slice(start, start + perPage.value);
+// });
 
 const resetFilters = () => {
   comfortFilter.value = null;
-  seasons.forEach((s) => (s.checked = false));
-  tourTypes.forEach((t) => (t.checked = false));
+  seasons.value.forEach((s) => (s.checked = false));
+  tourTypes.value.forEach((t) => (t.checked = false));
 };
 </script>
 
 <template>
   <div>
-    <!-- ═══ HERO ═══ -->
+    <!-- HERO -->
     <section class="mb-[30px] sm:mb-[55px]">
       <div class="hero-section relative h-[200px] sm:h-[400px] lg:h-[558px]">
         <div
@@ -186,17 +231,20 @@ const resetFilters = () => {
           style="
             background-image: url('/assets/icons/tours.png');
             background-repeat: no-repeat;
-            background-size:cover ;
+            background-size: cover;
           "
         ></div>
       </div>
     </section>
 
-    <!-- ═══ ПОИСКОВАЯ ПАНЕЛЬ ═══ -->
+    <!-- ПОИСКОВАЯ ПАНЕЛЬ -->
     <section class="mb-[20px] sm:mb-[30px]">
       <AppContainer>
         <!-- Хлебные крошки -->
-        <nav class="mb-[15px] sm:mb-[20px] hidden lg:flex" aria-label="Breadcrumb">
+        <nav
+          class="mb-[15px] sm:mb-[20px] hidden lg:flex"
+          aria-label="Breadcrumb"
+        >
           <ol
             class="flex items-center gap-2 text-[12px] sm:text-[14px] text-[#000]"
           >
@@ -238,83 +286,89 @@ const resetFilters = () => {
         <div class="lg:hidden flex flex-col gap-2 sm:gap-3">
           <CustomSelect
             v-model="where"
-            placeholder="Куда"
+            :placeholder="t('toursPage.search_where')"
             :options="countries"
             type="list"
             class="w-full"
-            :border = "false"
+            :border="false"
           />
           <CustomSelect
             v-model="when"
-            placeholder="Когда"
+            :placeholder="t('toursPage.search_when')"
             type="calendar"
             class="w-full"
-            :border = "false"
+            :border="false"
           />
+          <div class="flex gap-2 sm:gap-3">
             <CustomSelect
               v-model="people"
-              placeholder="Кол-во"
+              :placeholder="t('toursPage.search_people')"
               type="counter"
               :min="1"
               :max="20"
-              unit="чел"
+              :unit="t('toursPage.search_people_unit')"
               class="flex-1"
-              :border = "false"
+              :border="false"
             />
             <CustomSelect
               v-model="duration"
-              placeholder="Дни"
+              :placeholder="t('toursPage.search_days')"
               type="counter"
               :min="1"
               :max="30"
-              unit="дн"
+              :unit="t('toursPage.search_days_unit')"
               class="flex-1"
-              :border = "false"
+              :border="false"
             />
+          </div>
           <button
             class="bg-[#a6a6aa] text-white px-6 py-2.5 sm:px-8 sm:py-3 rounded-[8px] text-[13px] sm:text-[14px] font-medium hover:bg-[#285aff] transition cursor-pointer w-full"
+            @click="performSearch"
           >
-            Поиск
+            {{ t('toursPage.search_button') }}
           </button>
         </div>
 
         <!-- Десктопная поисковая панель -->
-        <div
-          class="hidden lg:flex bg-white rounded-[12px] border px-[0.5px]"
-        >
+        <div class="hidden lg:flex bg-white rounded-[12px] border px-[0.5px]">
           <CustomSelect
             v-model="where"
-            placeholder="Куда"
+            :placeholder="t('toursPage.search_where')"
             :options="countries"
             type="list"
           />
-          <CustomSelect v-model="when" placeholder="Когда" type="calendar" />
+          <CustomSelect
+            v-model="when"
+            :placeholder="t('toursPage.search_when')"
+            type="calendar"
+          />
           <CustomSelect
             v-model="people"
-            placeholder="Кол-во человек"
+            :placeholder="t('toursPage.search_people_full')"
             type="counter"
             :min="1"
             :max="20"
-            unit="человек"
+            :unit="t('toursPage.search_people_unit')"
           />
           <CustomSelect
             v-model="duration"
-            placeholder="Длительность"
+            :placeholder="t('toursPage.search_duration')"
             type="counter"
             :min="1"
             :max="30"
-            unit="дней"
+            :unit="t('toursPage.search_days_unit')"
           />
           <button
             class="bg-[#a6a6aa] text-white px-8 py-3 text-[14px] font-medium hover:bg-[#285aff] transition cursor-pointer rounded-r-[10px] flex-shrink-0"
+            @click="performSearch"
           >
-            Поиск
+            {{ t('toursPage.search_button') }}
           </button>
         </div>
       </AppContainer>
     </section>
 
-    <!-- ═══ КОНТЕНТ: ФИЛЬТРЫ + СЕТКА ═══ -->
+    <!-- КОНТЕНТ: ФИЛЬТРЫ + СЕТКА -->
     <section class="mb-[40px] sm:mb-[70px]">
       <AppContainer>
         <div class="flex flex-col lg:flex-row gap-5 sm:gap-8">
@@ -326,7 +380,7 @@ const resetFilters = () => {
               <!-- Цена -->
               <div class="p-4 xl:p-5 border-b border-[#e6e6e7]">
                 <h4 class="text-[14px] xl:text-[15px] font-medium mb-3 xl:mb-4">
-                  Цена $
+                  {{ t('toursPage.price') }}
                 </h4>
                 <div class="relative mb-3 xl:mb-4">
                   <input
@@ -339,18 +393,17 @@ const resetFilters = () => {
                 <div
                   class="flex justify-between text-[11px] xl:text-[12px] text-[#888]"
                 >
-                  <span>000</span>
-                  <span>000</span>
+                  <span>000</span><span>000</span>
                 </div>
               </div>
 
               <!-- Длительность -->
               <div class="p-4 xl:p-5 border-b border-[#e6e6e7]">
                 <h4 class="text-[14px] xl:text-[15px] font-medium mb-1">
-                  Длительность
+                  {{ t('toursPage.duration_label') }}
                 </h4>
                 <p class="text-[11px] xl:text-[12px] text-[#888] mb-2 xl:mb-3">
-                  Дней
+                  {{ t('toursPage.days_label') }}
                 </p>
                 <div class="relative mb-3 xl:mb-4">
                   <input
@@ -363,8 +416,7 @@ const resetFilters = () => {
                 <div
                   class="flex justify-between text-[11px] xl:text-[12px] text-[#888]"
                 >
-                  <span>00</span>
-                  <span>00</span>
+                  <span>00</span><span>00</span>
                 </div>
               </div>
 
@@ -374,7 +426,7 @@ const resetFilters = () => {
                   <h4
                     class="text-[13px] xl:text-[14px] font-medium mb-2 xl:mb-3"
                   >
-                    По сезону
+                    {{ t('toursPage.season') }}
                   </h4>
                   <div class="flex flex-col gap-2 xl:gap-2.5">
                     <label
@@ -415,7 +467,7 @@ const resetFilters = () => {
                   <h4
                     class="text-[13px] xl:text-[14px] font-medium mb-2 xl:mb-3"
                   >
-                    По типу тура
+                    {{ t('toursPage.tour_type') }}
                   </h4>
                   <div class="flex flex-col gap-2 xl:gap-2.5">
                     <label
@@ -457,7 +509,7 @@ const resetFilters = () => {
               <!-- Комфорт -->
               <div class="p-4 xl:p-5 border-b border-[#e6e6e7]">
                 <h4 class="text-[13px] xl:text-[14px] font-medium mb-2 xl:mb-3">
-                  Комфорт
+                  {{ t('toursPage.comfort') }}
                 </h4>
                 <div class="flex flex-col gap-1.5 xl:gap-2">
                   <button
@@ -480,10 +532,10 @@ const resetFilters = () => {
                     >
                       {{
                         stars === 3
-                          ? 'Три звезды'
+                          ? t('toursPage.stars_3')
                           : stars === 4
-                          ? 'Четыре звезды'
-                          : 'Пять звезд'
+                          ? t('toursPage.stars_4')
+                          : t('toursPage.stars_5')
                       }}
                     </span>
                   </button>
@@ -505,19 +557,18 @@ const resetFilters = () => {
                 >
                   <path d="M18 6L6 18M6 6l12 12" />
                 </svg>
-                Сбросить фильтры
+                {{ t('toursPage.reset_filters') }}
               </button>
             </div>
           </aside>
 
           <!-- Сетка туров -->
           <div class="flex-1 min-w-0">
-            <!-- Заголовок + кнопка фильтра -->
             <div class="flex items-center justify-between mb-4 sm:mb-6 lg:mb-8">
               <h2
                 class="text-[20px] sm:text-[24px] lg:text-[28px] xl:text-[36px] font-medium"
               >
-                Туры в Узбекистан
+                {{ t('toursPage.tours_title') }}
               </h2>
               <button
                 @click="openMobileFilter"
@@ -533,11 +584,12 @@ const resetFilters = () => {
                 >
                   <path d="M3 4h18M6 12h12M9 20h6" />
                 </svg>
-                <span class="hidden sm:inline">Фильтр</span>
+                <span class="hidden sm:inline">{{
+                  t('toursPage.filter')
+                }}</span>
               </button>
             </div>
 
-            <!-- Грид карточек -->
             <div
               class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-5 xl:gap-[20px]"
             >
@@ -545,18 +597,17 @@ const resetFilters = () => {
                 v-for="tour in paginatedTours"
                 :key="tour.id"
                 :tour="tour"
+                :country="where?.label"
               />
             </div>
 
-            <!-- Пусто -->
             <div
               v-if="paginatedTours.length === 0"
               class="text-center py-10 sm:py-20 text-[#888] text-[14px]"
             >
-              Нет туров по выбранным фильтрам
+              {{ t('toursPage.no_tours') }}
             </div>
 
-            <!-- Пагинация -->
             <div
               class="flex justify-center sm:justify-end items-center gap-1.5 sm:gap-2 mt-6 sm:mt-10"
             >
@@ -584,7 +635,7 @@ const resetFilters = () => {
       </AppContainer>
     </section>
 
-    <!-- ═══ МОБИЛЬНАЯ МОДАЛКА ФИЛЬТРОВ ═══ -->
+    <!-- МОБИЛЬНАЯ МОДАЛКА ФИЛЬТРОВ -->
     <Teleport to="body">
       <Transition name="fade">
         <div
@@ -599,16 +650,17 @@ const resetFilters = () => {
           v-if="isMobileFilterOpen"
           class="fixed bottom-0 left-0 right-0 bg-white rounded-t-[20px] z-50 lg:hidden max-h-[90vh] overflow-y-auto"
         >
-          <!-- Шапка -->
           <div
             class="sticky top-0 bg-white px-4 sm:px-5 pt-3 sm:pt-4 pb-3 border-b border-[#e6e6e7] flex items-center justify-between rounded-t-[20px]"
           >
-            <h3 class="text-[16px] sm:text-[18px] font-medium">Фильтры</h3>
+            <h3 class="text-[16px] sm:text-[18px] font-medium">
+              {{ t('toursPage.filter_modal_title') }}
+            </h3>
             <button
               @click="closeMobileFilter"
               class="text-[13px] sm:text-[14px] text-[#285aff] font-medium"
             >
-              Закрыть
+              {{ t('toursPage.close') }}
             </button>
           </div>
 
@@ -616,7 +668,7 @@ const resetFilters = () => {
             <!-- Цена -->
             <div class="mb-5 sm:mb-6">
               <h4 class="text-[14px] sm:text-[15px] font-medium mb-3 sm:mb-4">
-                Цена $
+                {{ t('toursPage.price') }}
               </h4>
               <div class="relative mb-3">
                 <input
@@ -627,17 +679,18 @@ const resetFilters = () => {
                 />
               </div>
               <div class="flex justify-between text-[12px] text-[#888]">
-                <span>000</span>
-                <span>000</span>
+                <span>000</span><span>000</span>
               </div>
             </div>
 
             <!-- Длительность -->
             <div class="mb-5 sm:mb-6 pb-5 sm:pb-6 border-b border-[#e6e6e7]">
               <h4 class="text-[14px] sm:text-[15px] font-medium mb-1">
-                Длительность
+                {{ t('toursPage.duration_label') }}
               </h4>
-              <p class="text-[12px] text-[#888] mb-2 sm:mb-3">Дней</p>
+              <p class="text-[12px] text-[#888] mb-2 sm:mb-3">
+                {{ t('toursPage.days_label') }}
+              </p>
               <div class="relative mb-3">
                 <input
                   type="range"
@@ -647,8 +700,7 @@ const resetFilters = () => {
                 />
               </div>
               <div class="flex justify-between text-[12px] text-[#888]">
-                <span>00</span>
-                <span>00</span>
+                <span>00</span><span>00</span>
               </div>
             </div>
 
@@ -658,7 +710,7 @@ const resetFilters = () => {
             >
               <div class="pr-2 sm:pr-3 border-r border-[#e6e6e7]">
                 <h4 class="text-[13px] sm:text-[14px] font-medium mb-2 sm:mb-3">
-                  По сезону
+                  {{ t('toursPage.season') }}
                 </h4>
                 <div class="flex flex-col gap-2 sm:gap-2.5">
                   <label
@@ -697,7 +749,7 @@ const resetFilters = () => {
               </div>
               <div class="pl-2 sm:pl-3">
                 <h4 class="text-[13px] sm:text-[14px] font-medium mb-2 sm:mb-3">
-                  По типу тура
+                  {{ t('toursPage.tour_type') }}
                 </h4>
                 <div class="flex flex-col gap-2 sm:gap-2.5">
                   <label
@@ -739,7 +791,7 @@ const resetFilters = () => {
             <!-- Комфорт -->
             <div class="mb-5 sm:mb-6 pb-5 sm:pb-6 border-b border-[#e6e6e7]">
               <h4 class="text-[13px] sm:text-[14px] font-medium mb-2 sm:mb-3">
-                Комфорт
+                {{ t('toursPage.comfort') }}
               </h4>
               <div class="flex flex-col gap-2">
                 <button
@@ -760,10 +812,10 @@ const resetFilters = () => {
                   <span class="text-[12px] text-[#666]">
                     {{
                       stars === 3
-                        ? 'Три звезды'
+                        ? t('toursPage.stars_3')
                         : stars === 4
-                        ? 'Четыре звезды'
-                        : 'Пять звезд'
+                        ? t('toursPage.stars_4')
+                        : t('toursPage.stars_5')
                     }}
                   </span>
                 </button>
@@ -785,7 +837,7 @@ const resetFilters = () => {
               >
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
-              Сбросить фильтры
+              {{ t('toursPage.reset_filters') }}
             </button>
           </div>
         </div>
@@ -863,7 +915,6 @@ input[type='range']::-moz-range-thumb {
   background-size: cover;
   background-position: center;
 }
-
 
 /* Адаптив hero */
 @media (min-width: 1921px) {

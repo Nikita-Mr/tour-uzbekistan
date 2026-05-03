@@ -1,8 +1,10 @@
 <script setup>
 import { useRoute } from 'vue-router';
 import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import AppContainer from '@/components/AppContainer.vue';
 
+const { t } = useI18n();
 const route = useRoute();
 const newsId = route.params.id;
 
@@ -31,9 +33,10 @@ const news = ref({
   ],
 });
 
+// Хлебные крошки (переведены)
 const breadcrumbs = computed(() => [
-  { label: 'Main', path: '/' },
-  { label: 'News', path: '/news' },
+  { label: t('breadcrumbs.main'), path: '/' },
+  { label: t('breadcrumbs.news'), path: '/news' },
   { label: news.value.title, path: null },
 ]);
 </script>
@@ -47,27 +50,44 @@ const breadcrumbs = computed(() => [
       </div>
 
       <AppContainer>
-        <!-- Карточка с формой поверх hero -->
+        <!-- Карточка с формой поверх hero (переведена) -->
         <div class="wrapper-card contact-card border mb-[30px]">
           <div class="card-item w-full">
             <h3 class="card-title">
-              Contact us today to learn more about our unique offers
+              {{ $t('about.contact_title') }}
             </h3>
             <form class="contact-form" @submit.prevent>
               <div class="form-row">
-                <input v-model="form.name" type="text" placeholder="Name" class="form-input" />
-                <input v-model="form.phone" type="tel" placeholder="Phone" class="form-input" />
-                <input v-model="form.email" type="email" placeholder="Email" class="form-input" />
-                <button type="submit" class="send-btn">Send</button>
+                <input
+                  v-model="form.name"
+                  type="text"
+                  :placeholder="$t('about.name')"
+                  class="form-input"
+                />
+                <input
+                  v-model="form.phone"
+                  type="tel"
+                  :placeholder="$t('about.phone')"
+                  class="form-input"
+                />
+                <input
+                  v-model="form.email"
+                  type="email"
+                  :placeholder="$t('about.email')"
+                  class="form-input"
+                />
+                <button type="submit" class="send-btn">
+                  {{ $t('about.send') }}
+                </button>
               </div>
               <p class="consent-text">
-                By clicking the 'Send' button, you consent to the processing of personal data
+                {{ $t('about.consent') }}
               </p>
             </form>
           </div>
         </div>
 
-        <!-- Breadcrumbs -->
+        <!-- Breadcrumbs (переведены) -->
         <nav class="mb-[15px] sm:mb-[20px] mt-[30px] hidden lg:flex" aria-label="Breadcrumb">
           <ol class="flex items-center gap-2 text-[11px] sm:text-[12px] lg:text-[14px] text-[#000] flex-wrap">
             <li v-for="(crumb, i) in breadcrumbs" :key="i" class="flex items-center gap-2">
@@ -84,7 +104,6 @@ const breadcrumbs = computed(() => [
           </ol>
         </nav>
 
-        <!-- Контент -->
         <div class="content-wrapper">
           <h1 class="page-title">{{ news.title }}</h1>
           <div class="text-blocks">

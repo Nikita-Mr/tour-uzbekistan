@@ -1,8 +1,12 @@
 <script setup>
 import { useRoute } from 'vue-router';
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import AppContainer from '@/components/AppContainer.vue';
+import CustomSelect from '@/components/CustomSelect.vue';
 
+const { t } = useI18n();
 const route = useRoute();
 const countryCode = computed(() => route.params.country || 'uzbekistan');
 
@@ -49,16 +53,25 @@ const unlockBody = () => {
 };
 
 const countries = [
-  { id: 'uz', label: 'Узбекистан', icon: '/assets/icons/uzbek.png' },
-  { id: 'kz', label: 'Казахстан', icon: '/assets/icons/kazah.png' },
-  { id: 'kg', label: 'Кыргызстан', icon: '/assets/icons/kyrg.png' },
-  { id: 'tj', label: 'Таджикистан', icon: '/assets/icons/tad.png' },
-  { id: 'cauc', label: 'Кавказ', icon: null },
+  {
+    id: 'uz',
+    label: t('countries.uzbekistan'),
+    icon: '/assets/icons/uzbek.png',
+  },
+  {
+    id: 'kz',
+    label: t('countries.kazakhstan'),
+    icon: '/assets/icons/kazah.png',
+  },
+  {
+    id: 'kg',
+    label: t('countries.kyrgyzstan'),
+    icon: '/assets/icons/kyrg.png',
+  },
+  { id: 'tj', label: t('countries.tajikistan'), icon: '/assets/icons/tad.png' },
+  { id: 'cauc', label: t('countries.caucasus'), icon: null },
 ];
 
-// Блокируем скролл при открытой модалке
-import { watch } from 'vue';
-import CustomSelect from '@/components/CustomSelect.vue';
 watch(isCityModalOpen, (val) => {
   if (val) lockBody();
   else unlockBody();
@@ -67,7 +80,7 @@ watch(isCityModalOpen, (val) => {
 onMounted(() => window.addEventListener('scroll', onScroll));
 onUnmounted(() => window.removeEventListener('scroll', onScroll));
 
-// ===== ДАННЫЕ ПО СТРАНАМ =====
+// ===== ДАННЫЕ ПО СТРАНАМ (НЕ ПЕРЕВОДИМ) =====
 const countriesData = {
   uzbekistan: {
     heroImage: '/assets/icons/countryPage.jpg',
@@ -275,13 +288,29 @@ const countriesData = {
   },
 };
 
+const translatedToc = computed(() => {
+  return data.value.toc.map((item) => ({
+    ...item,
+    title: t(`countrySections.${item.id}`) || item.title,
+  }));
+});
+
+// Переводим sections на лету
+const translatedSections = computed(() => {
+  return data.value.sections.map((section) => ({
+    ...section,
+    title: t(`countrySections.${section.id}`) || section.title,
+  }));
+});
+
 const data = computed(() => {
   return countriesData[countryCode.value] || countriesData.uzbekistan;
 });
 
+// Хлебные крошки (переведены)
 const breadcrumbs = computed(() => [
-  { label: 'Главная', path: '/' },
-  { label: 'Страны', path: '/countries' },
+  { label: t('breadcrumbs.main'), path: '/' },
+  { label: t('breadcrumbs.countries'), path: '/countries' },
   { label: data.value.welcomeTitle, path: null },
 ]);
 
@@ -306,8 +335,11 @@ const filters = ref({
     </section>
 
     <AppContainer>
-      <!-- Breadcrumbs -->
-      <nav class="mb-[15px] sm:mb-[20px] mt-[30px] hidden lg:flex" aria-label="Breadcrumb">
+      <!-- Breadcrumbs (переведены) -->
+      <nav
+        class="mb-[15px] sm:mb-[20px] mt-[30px] hidden lg:flex"
+        aria-label="Breadcrumb"
+      >
         <ol
           class="flex items-center gap-2 text-[11px] sm:text-[12px] lg:text-[14px] text-[#000] flex-wrap"
         >
@@ -343,83 +375,87 @@ const filters = ref({
         </ol>
       </nav>
 
-      <!-- МОБИЛЬНАЯ КНОПКА выбора города (только телефон) -->
-
-      <!-- Десктопная форма поиска -->
+      <!-- Мобильная поисковая панель (переведена) -->
       <div class="lg:hidden flex flex-col gap-2 sm:gap-3 mb-[35px]">
         <CustomSelect
-          v-model="where"
-          placeholder="Куда"
+          v-model="filters.where"
+          :placeholder="t('countryPage.search_where')"
           :options="countries"
           type="list"
           class="w-full"
           :border="false"
         />
         <CustomSelect
-          v-model="when"
-          placeholder="Когда"
+          v-model="filters.when"
+          :placeholder="t('countryPage.search_when')"
           type="calendar"
           class="w-full"
           :border="false"
         />
+        <div class="flex gap-2 sm:gap-3">
           <CustomSelect
-            v-model="people"
-            placeholder="Кол-во"
+            v-model="filters.people"
+            :placeholder="t('countryPage.search_people')"
             type="counter"
             :min="1"
             :max="20"
-            unit="чел"
+            :unit="t('countryPage.search_people_unit')"
             class="flex-1"
             :border="false"
           />
           <CustomSelect
-            v-model="duration"
-            placeholder="Дни"
+            v-model="filters.duration"
+            :placeholder="t('countryPage.search_days')"
             type="counter"
             :min="1"
             :max="30"
-            unit="дн"
+            :unit="t('countryPage.search_days_unit')"
             class="flex-1"
             :border="false"
           />
+        </div>
         <button
           class="bg-[#a6a6aa] text-white px-6 py-2.5 sm:px-8 sm:py-3 rounded-[8px] text-[13px] sm:text-[14px] font-medium hover:bg-[#285aff] transition cursor-pointer w-full"
         >
-          Поиск
+          {{ t('countryPage.search_button') }}
         </button>
       </div>
 
-      <!-- Десктопная поисковая панель -->
+      <!-- Десктопная поисковая панель (переведена) -->
       <div
         class="hidden lg:flex bg-white rounded-[12px] border px-[0.5px] mb-[35px]"
       >
         <CustomSelect
-          v-model="where"
-          placeholder="Куда"
+          v-model="filters.where"
+          :placeholder="t('countryPage.search_where')"
           :options="countries"
           type="list"
         />
-        <CustomSelect v-model="when" placeholder="Когда" type="calendar" />
         <CustomSelect
-          v-model="people"
-          placeholder="Кол-во человек"
+          v-model="filters.when"
+          :placeholder="t('countryPage.search_when')"
+          type="calendar"
+        />
+        <CustomSelect
+          v-model="filters.people"
+          :placeholder="t('countryPage.search_people_full')"
           type="counter"
           :min="1"
           :max="20"
-          unit="человек"
+          :unit="t('countryPage.search_people_unit')"
         />
         <CustomSelect
-          v-model="duration"
-          placeholder="Длительность"
+          v-model="filters.duration"
+          :placeholder="t('countryPage.search_duration')"
           type="counter"
           :min="1"
           :max="30"
-          unit="дней"
+          :unit="t('countryPage.search_days_unit')"
         />
         <button
           class="bg-[#a6a6aa] text-white px-8 py-3 text-[14px] font-medium hover:bg-[#285aff] transition cursor-pointer rounded-r-[10px] flex-shrink-0"
         >
-          Поиск
+          {{ t('countryPage.search_button') }}
         </button>
       </div>
 
@@ -430,7 +466,8 @@ const filters = ref({
           <h1
             class="text-[28px] sm:text-[36px] lg:text-[42px] font-normal text-black mb-[20px] leading-tight"
           >
-            {{ data.welcomeTitle }}
+            {{ $t('countryPage.welcome_prefix') }}
+            {{ $t(`countries.${countryCode}`) }}
           </h1>
 
           <div class="lg:hidden mb-[15px]">
@@ -442,7 +479,7 @@ const filters = ref({
                 {{
                   selectedCity
                     ? data.cities.find((c) => c.code === selectedCity)?.name
-                    : `Туристические места ${data.name}`
+                    : `${t('countryPage.modal_title_prefix')} ${data.name}`
                 }}
               </span>
               <svg
@@ -469,18 +506,18 @@ const filters = ref({
 
           <hr class="border-[#e5e5e6] mb-[30px]" />
 
-          <!-- Содержание -->
+          <!-- Содержание (переведён заголовок) -->
           <div class="mb-[40px]">
             <h2
               class="text-[20px] sm:text-[24px] font-medium text-black mb-[20px]"
             >
-              Содержание:
+              {{ t('countryPage.content_title') }}
             </h2>
             <div
               class="grid grid-cols-1 sm:grid-cols-2 gap-x-[30px] gap-y-[10px]"
             >
               <button
-                v-for="(item, idx) in data.toc"
+                v-for="(item, idx) in translatedToc"
                 :key="item.id"
                 @click="scrollToSection(item.id)"
                 class="text-left text-[14px] text-[#333] hover:text-[#285aff] transition cursor-pointer"
@@ -492,10 +529,10 @@ const filters = ref({
 
           <hr class="border-[#e5e5e6] mb-[40px]" />
 
-          <!-- Секции -->
+          <!-- Секции (контент НЕ переведён) -->
           <div class="flex flex-col gap-[40px] lg:gap-[50px] pb-[60px]">
             <section
-              v-for="section in data.sections"
+              v-for="section in translatedSections"
               :key="section.id"
               :id="section.id"
             >
@@ -511,7 +548,7 @@ const filters = ref({
           </div>
         </div>
 
-        <!-- Сайдбар -->
+        <!-- Сайдбар (переведён заголовок) -->
         <aside
           class="w-full lg:w-[280px] flex-shrink-0 lg:sticky lg:top-[20px] self-start hidden lg:flex"
         >
@@ -519,7 +556,7 @@ const filters = ref({
             <h3
               class="text-[14px] font-medium text-black mb-[15px] leading-snug"
             >
-              {{ data.sidebarTitle }}
+              {{ t('countryPage.sidebar_title_prefix') }} {{ data.name }}
             </h3>
             <div class="flex flex-col gap-[10px]">
               <label
@@ -530,14 +567,13 @@ const filters = ref({
                 <input
                   type="checkbox"
                   :checked="selectedCity === city.code"
-                  @change="selectedCity = city.code"
+                  @change="selectCity(city.code)"
                   class="w-[18px] h-[18px] accent-[#285aff] cursor-pointer"
                 />
                 <span
                   class="text-[13px] text-[#333] group-hover:text-[#285aff] transition"
+                  >{{ city.name }}</span
                 >
-                  {{ city.name }}
-                </span>
               </label>
             </div>
           </div>
@@ -545,8 +581,7 @@ const filters = ref({
       </div>
     </AppContainer>
 
-
-    <!-- ═══ МОБИЛЬНАЯ МОДАЛКА ВЫБОРА ГОРОДА ═══ -->
+    <!-- МОБИЛЬНАЯ МОДАЛКА ВЫБОРА ГОРОДА (переведена) -->
     <Teleport to="body">
       <Transition name="fade">
         <div
@@ -561,22 +596,20 @@ const filters = ref({
           v-if="isCityModalOpen"
           class="fixed bottom-0 left-0 right-0 bg-white rounded-t-[20px] z-50 lg:hidden max-h-[85vh] overflow-y-auto"
         >
-          <!-- Шапка -->
           <div
             class="sticky top-0 bg-white px-5 pt-4 pb-3 border-b border-[#e6e6e7] flex items-center justify-between rounded-t-[20px]"
           >
             <h3 class="text-[18px] font-medium pr-4">
-              Туристические места {{ data.name }}
+              {{ t('countryPage.modal_title_prefix') }} {{ data.name }}
             </h3>
             <button
               @click="closeCityModal"
               class="text-[14px] text-[#285aff] font-medium flex-shrink-0"
             >
-              Закрыть
+              {{ t('countryPage.close') }}
             </button>
           </div>
 
-          <!-- Список городов -->
           <div class="py-2">
             <button
               v-for="city in data.cities"
@@ -663,21 +696,16 @@ const filters = ref({
   scrollbar-width: none;
 }
 
-
-
 @media (max-width: 992px) {
-
   .hero-section {
     height: 458px;
   }
   .hero-image {
     height: 458px;
   }
-
 }
 
 @media (max-width: 768px) {
-
   .hero-section {
     height: 358px;
   }
@@ -685,7 +713,6 @@ const filters = ref({
     height: 358px;
     background-position: left;
   }
-
 }
 
 @media (min-width: 1921px) {
@@ -695,7 +722,6 @@ const filters = ref({
   .hero-image {
     height: 800px;
   }
-
 }
 
 select {

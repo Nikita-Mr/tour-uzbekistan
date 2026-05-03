@@ -4,22 +4,19 @@
   >
     <!-- Верхняя часть -->
     <div class="mb-8 lg:mb-[53px]">
-      <!-- <h2
-        class="text-[24px] sm:text-[32px] lg:text-[40px]  font-medium tracking-[-0.01em] leading-tight mb-3"
-      ></h2> -->
       <h2 class="text-[24px] lg:text-[32px] font-medium mb-[15px]">
         <!-- Мобильный текст -->
-        <span class="lg:hidden uppercase font-medium italic text-[18px] trigger-[0%] leading-[100%]">
-          Centrum Holidays — Национальный Туроператор Узбекистана
+        <span class="lg:hidden uppercase font-medium italic text-[18px] tracking-[0%] leading-[100%]">
+          {{ $t('footer.title_mobile') }}
         </span>
         <!-- Десктопный текст -->
         <span class="hidden lg:inline text-[#285aaf]">
-          Centrum Holidays — Национальный Туроператор Узбекистана
+          {{ $t('footer.title') }}
         </span>
       </h2>
       <div class="flex items-center gap-[10px]">
         <p class="text-[16px] lg:text-[20px] font-medium tracking-[-0.01em]">
-          Air Company
+          {{ $t('footer.air_company') }}
         </p>
         <img
           src="../assets/icons/centrum.png"
@@ -42,89 +39,101 @@
             <div class="flex flex-col gap-3 sm:gap-4">
               <li>
                 <router-link
-                  to=""
+                  to="/"
                   class="hover:text-[#285aff] transition text-[14px] lg:text-[16px]"
-                  >Main page</router-link
                 >
+                  {{ $t('footer.main_page') }}
+                </router-link>
               </li>
               <li>
                 <router-link
-                  to=""
+                  to="/about"
                   class="hover:text-[#285aff] transition text-[14px] lg:text-[16px]"
-                  >Who we are</router-link
                 >
+                  {{ $t('footer.who_we_are') }}
+                </router-link>
               </li>
               <li>
                 <router-link
-                  to=""
+                  to="/services"
                   class="hover:text-[#285aff] transition text-[14px] lg:text-[16px]"
-                  >Services</router-link
                 >
+                  {{ $t('footer.services') }}
+                </router-link>
               </li>
               <li>
                 <router-link
-                  to=""
+                  to="/directions"
                   class="hover:text-[#285aff] transition text-[14px] lg:text-[16px]"
-                  >Direction</router-link
                 >
+                  {{ $t('footer.direction') }}
+                </router-link>
               </li>
               <li>
                 <router-link
-                  to=""
+                  to="/about"
                   class="hover:text-[#285aff] transition text-[14px] lg:text-[16px]"
-                  >About us</router-link
                 >
+                  {{ $t('footer.about_us') }}
+                </router-link>
               </li>
               <li>
                 <router-link
-                  to=""
+                  to="/news"
                   class="hover:text-[#285aff] transition text-[14px] lg:text-[16px]"
-                  >News</router-link
                 >
+                  {{ $t('footer.news') }}
+                </router-link>
               </li>
             </div>
             <div class="flex flex-col gap-3 sm:gap-4">
               <li>
                 <router-link
-                  to=""
+                  to="/countries/uzbekistan"
                   class="hover:text-[#285aff] transition text-[14px] lg:text-[16px]"
-                  >Uzbekistan</router-link
                 >
+                  {{ $t('footer.uzbekistan') }}
+                </router-link>
               </li>
               <li>
                 <router-link
-                  to=""
+                  to="/countries/kazakhstan"
                   class="hover:text-[#285aff] transition text-[14px] lg:text-[16px]"
-                  >Kazakhstan</router-link
                 >
+                  {{ $t('footer.kazakhstan') }}
+                </router-link>
               </li>
               <li>
                 <router-link
-                  to=""
+                  to="/countries/kyrgyzstan"
                   class="hover:text-[#285aff] transition text-[14px] lg:text-[16px]"
-                  >Kyrgyzstan</router-link
                 >
+                  {{ $t('footer.kyrgyzstan') }}
+                </router-link>
               </li>
               <li>
                 <router-link
-                  to=""
+                  to="/countries/tajikistan"
                   class="hover:text-[#285aff] transition text-[14px] lg:text-[16px]"
-                  >Tajikistan</router-link
                 >
+                  {{ $t('footer.tajikistan') }}
+                </router-link>
               </li>
               <li>
                 <router-link
-                  to=""
+                  to="/countries/caucasus"
                   class="hover:text-[#285aff] transition text-[14px] lg:text-[16px]"
-                  >Caucasus</router-link
                 >
+                  {{ $t('footer.caucasus') }}
+                </router-link>
               </li>
               <li>
                 <router-link
-                  to=""
+                  to="/privacy-policy"
                   class="hover:text-[#285aff] transition text-[14px] lg:text-[16px]"
-                  >Privacy Policy</router-link
                 >
+                  {{ $t('footer.privacy_policy') }}
+                </router-link>
               </li>
             </div>
           </ul>
@@ -134,37 +143,41 @@
         <div class="contact">
           <div class="icons flex flex-col gap-[11px] mb-4 lg:mb-[15px]">
             <div class="flex gap-[11px] justify-start lg:justify-end">
-              <routerLink to=""
-                ><img src="../assets/icons/tg.png" alt="" class="w-6 h-6"
-              /></routerLink>
-              <routerLink to=""
-                ><img src="../assets/icons/inst.png" alt="" class="w-6 h-6"
-              /></routerLink>
-              <routerLink to=""
-                ><img src="../assets/icons/in.png" alt="" class="w-6 h-6"
-              /></routerLink>
-              <routerLink to=""
-                ><img src="../assets/icons/vk.png" alt="" class="w-6 h-6"
-              /></routerLink>
+              <a href="#" target="_blank" rel="noopener noreferrer">
+                <img src="../assets/icons/tg.png" alt="Telegram" class="w-6 h-6" />
+              </a>
+              <a href="#" target="_blank" rel="noopener noreferrer">
+                <img src="../assets/icons/inst.png" alt="Instagram" class="w-6 h-6" />
+              </a>
+              <a href="#" target="_blank" rel="noopener noreferrer">
+                <img src="../assets/icons/in.png" alt="LinkedIn" class="w-6 h-6" />
+              </a>
+              <a href="#" target="_blank" rel="noopener noreferrer">
+                <img src="../assets/icons/vk.png" alt="VK" class="w-6 h-6" />
+              </a>
             </div>
             <div class="flex gap-[11px] justify-start lg:justify-end">
-              <routerLink to=""
-                ><img src="../assets/icons/dz.png" alt="" class="w-6 h-6"
-              /></routerLink>
-              <routerLink to=""
-                ><img src="../assets/icons/routube.png" alt="" class="w-6 h-6"
-              /></routerLink>
-              <routerLink to=""
-                ><img src="../assets/icons/youtube.png" alt="" class="w-6 h-6"
-              /></routerLink>
+              <a href="#" target="_blank" rel="noopener noreferrer">
+                <img src="../assets/icons/dz.png" alt="Dzen" class="w-6 h-6" />
+              </a>
+              <a href="#" target="_blank" rel="noopener noreferrer">
+                <img src="../assets/icons/routube.png" alt="Rutube" class="w-6 h-6" />
+              </a>
+              <a href="#" target="_blank" rel="noopener noreferrer">
+                <img src="../assets/icons/youtube.png" alt="YouTube" class="w-6 h-6" />
+              </a>
             </div>
           </div>
-          <div class="adress">
+          <div class="address">
             <p class="text-[14px] lg:text-[16px] text-start lg:text-end">
-              info@centrumholidaysdmc.uz
+              <a href="mailto:info@centrumholidaysdmc.uz" class="hover:text-[#285aff] transition">
+                info@centrumholidaysdmc.uz
+              </a>
             </p>
             <p class="text-[14px] lg:text-[16px] text-start lg:text-end">
-              +998(77) 290-08-80
+              <a href="tel:+998772900880" class="hover:text-[#285aff] transition">
+                +998(77) 290-08-80
+              </a>
             </p>
           </div>
         </div>
@@ -172,10 +185,8 @@
 
       <!-- Копирайт -->
       <div class="pt-6 border-t border-[#e6e6e7] lg:border-0 lg:pt-0">
-        <p
-          class="text-[12px] sm:text-[14px] lg:text-[16px] text-[#666] lg:text-black"
-        >
-          Copyright {{ currentYear }} Centrum Holidays
+        <p class="text-[12px] sm:text-[14px] lg:text-[16px] text-[#666] lg:text-black">
+          {{ $t('footer.copyright') }} {{ currentYear }} {{ $t('footer.all_rights') }}
         </p>
       </div>
     </div>
@@ -184,6 +195,9 @@
 
 <script setup>
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 const currentYear = computed(() => new Date().getFullYear());
 </script>
 

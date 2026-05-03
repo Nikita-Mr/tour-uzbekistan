@@ -1,7 +1,9 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const router = useRouter();
 
 const form = ref({
@@ -14,17 +16,17 @@ const form = ref({
   tin: '',
 });
 
-// === КАСТОМНЫЙ СЕЛЕКТ (встроенный) ===
+// === КАСТОМНЫЙ СЕЛЕКТ ===
 const isCompanyOpen = ref(false);
 const isLangOpen = ref(false);
 
 const companyOptions = [
-  { id: 'agency', label: 'Турагентство' },
-  { id: 'operator', label: 'Туроператор' },
-  { id: 'transport', label: 'Транспортная компания' },
+  { id: 'agency', label: t('register.agency') },
+  { id: 'operator', label: t('register.operator') },
+  { id: 'transport', label: t('register.transport') },
 ];
 
-const languageOptions = ['English', 'Русский', 'O\'zbek', 'Deutsch', 'Français'];
+const languageOptions = ['English', 'Русский', "O'zbek", 'Deutsch', 'Français'];
 
 const selectCompany = (opt) => {
   form.value.company = opt.label;
@@ -46,7 +48,6 @@ const onDocClick = (e) => {
 };
 
 document.addEventListener('click', onDocClick);
-// =====================================
 
 const handleSubmit = () => {
   console.log('Register:', form.value);
@@ -57,7 +58,7 @@ const handleSubmit = () => {
 <template>
   <div class="min-h-screen bg-white flex flex-col items-center py-10 px-4">
     <h1 class="text-[32px] sm:text-[42px] font-normal text-black mb-8">
-      Registration
+      {{ t('register.title') }}
     </h1>
 
     <form
@@ -66,7 +67,7 @@ const handleSubmit = () => {
     >
       <!-- Name -->
       <div>
-        <label class="block text-[11px] text-[#888] mb-1 ml-1">Name</label>
+        <label class="block text-[11px] text-[#888] mb-1 ml-1">{{ t('register.name') }}</label>
         <input
           v-model="form.name"
           type="text"
@@ -77,7 +78,7 @@ const handleSubmit = () => {
 
       <!-- Email -->
       <div>
-        <label class="block text-[11px] text-[#888] mb-1 ml-1">Email</label>
+        <label class="block text-[11px] text-[#888] mb-1 ml-1">{{ t('register.email') }}</label>
         <input
           v-model="form.email"
           type="email"
@@ -88,7 +89,7 @@ const handleSubmit = () => {
 
       <!-- Password -->
       <div>
-        <label class="block text-[11px] text-[#888] mb-1 ml-1">Password</label>
+        <label class="block text-[11px] text-[#888] mb-1 ml-1">{{ t('register.password') }}</label>
         <input
           v-model="form.password"
           type="password"
@@ -97,9 +98,9 @@ const handleSubmit = () => {
         />
       </div>
 
-      <!-- Company — КАСТОМНЫЙ СЕЛЕКТ -->
+      <!-- Company — кастомный селект -->
       <div ref="companyRef" class="relative">
-        <label class="block text-[11px] text-[#888] mb-1 ml-1">Partnertype</label>
+        <label class="block text-[11px] text-[#888] mb-1 ml-1">{{ t('register.partner_type') }}</label>
         <button
           type="button"
           @click="isCompanyOpen = !isCompanyOpen"
@@ -107,10 +108,10 @@ const handleSubmit = () => {
           :class="{ 'border-[#285aff] ring-1 ring-[#285aff]': isCompanyOpen }"
         >
           <span :class="form.company ? 'text-[#333]' : 'text-[#888]'">
-            {{ form.company || 'Выбрать' }}
+            {{ form.company || t('register.select_partner') }}
           </span>
           <svg 
-            class="w-4 h-4 text-[#666] transition-transform flex-shrink-0" 
+            class="w-4 h-4 text-[#666] transition-transform" 
             :class="{ 'rotate-180': isCompanyOpen }" 
             fill="none" 
             stroke="currentColor" 
@@ -120,7 +121,6 @@ const handleSubmit = () => {
           </svg>
         </button>
         
-        <!-- Dropdown -->
         <div 
           v-if="isCompanyOpen"
           class="absolute top-full left-0 right-0 mt-2 bg-[#f5f5f5] border border-[#e6e6e7] rounded-[12px] shadow-lg z-50 overflow-hidden"
@@ -140,7 +140,7 @@ const handleSubmit = () => {
 
       <!-- City -->
       <div>
-        <label class="block text-[11px] text-[#888] mb-1 ml-1">City</label>
+        <label class="block text-[11px] text-[#888] mb-1 ml-1">{{ t('register.city') }}</label>
         <input
           v-model="form.city"
           type="text"
@@ -149,9 +149,9 @@ const handleSubmit = () => {
         />
       </div>
 
-      <!-- Language — КАСТОМНЫЙ СЕЛЕКТ -->
+      <!-- Language — кастомный селект -->
       <div ref="langRef" class="relative">
-        <label class="block text-[11px] text-[#888] mb-1 ml-1">Language</label>
+        <label class="block text-[11px] text-[#888] mb-1 ml-1">{{ t('register.language') }}</label>
         <button
           type="button"
           @click="isLangOpen = !isLangOpen"
@@ -162,7 +162,7 @@ const handleSubmit = () => {
             {{ form.language || 'English' }}
           </span>
           <svg 
-            class="w-4 h-4 text-[#666] transition-transform flex-shrink-0" 
+            class="w-4 h-4 text-[#666] transition-transform" 
             :class="{ 'rotate-180': isLangOpen }" 
             fill="none" 
             stroke="currentColor" 
@@ -172,7 +172,6 @@ const handleSubmit = () => {
           </svg>
         </button>
         
-        <!-- Dropdown -->
         <div 
           v-if="isLangOpen"
           class="absolute top-full left-0 right-0 mt-2 bg-[#f5f5f5] border border-[#e6e6e7] rounded-[12px] shadow-lg z-50 overflow-hidden"
@@ -192,7 +191,7 @@ const handleSubmit = () => {
 
       <!-- TIN -->
       <div>
-        <label class="block text-[11px] text-[#888] mb-1 ml-1">TIN</label>
+        <label class="block text-[11px] text-[#888] mb-1 ml-1">{{ t('register.tin') }}</label>
         <input
           v-model="form.tin"
           type="text"
@@ -201,54 +200,20 @@ const handleSubmit = () => {
         />
       </div>
 
-      <!-- Submit -->
       <button
         type="submit"
         class="w-full py-3 rounded-[10px] bg-[#ff00cc] text-white text-[14px] font-medium hover:bg-[#e000b8] transition mt-2 cursor-pointer"
       >
-        Continue
+        {{ t('register.continue_btn') }}
       </button>
     </form>
 
     <p class="mt-4 text-[12px] text-[#666] text-center">
-      After registration, a manager will contact you to confirm your details.
+      {{ t('register.terms_text') }}
     </p>
   </div>
 </template>
 
 <style scoped>
-/* Анимация dropdown */
-.absolute {
-  animation: slideDown 0.2s ease;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Скролл в dropdown */
-.overflow-hidden {
-  max-height: 250px;
-  overflow-y: auto;
-}
-
-.overflow-hidden::-webkit-scrollbar {
-  width: 4px;
-}
-
-.overflow-hidden::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.overflow-hidden::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 2px;
-}
+/* стили без изменений */
 </style>

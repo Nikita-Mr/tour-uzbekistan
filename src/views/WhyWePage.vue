@@ -2,18 +2,21 @@
 import { ref, computed } from 'vue';
 import AppContainer from '@/components/AppContainer.vue';
 import CardGorzontalDMC from '@/components/CardGorzontalDMC.vue';
+import { useI18n } from 'vue-i18n';
 
-const breadcrumbs = [
-  { label: 'Main', path: '/' },
-  { label: 'Why of Centrum Holidays DMC', path: null },
-];
+const { t } = useI18n();
 
-// 4 категории, в каждой по 4 страницы (по 3 карточки)
+// Хлебные крошки (переведенные)
+const breadcrumbs = computed(() => [
+  { label: t('breadcrumbs.main'), path: '/' },
+  { label: t('breadcrumbs.why_we'), path: null },
+]);
+
+// 4 категории (контент НЕ переводим)
 const categories = [
   {
     title: 'Why of Centrum Holidays DMC',
-    description:
-      'At Centrum Holidays DMC, operational excellence is at the core of everything we do. As a destination management company operating in Uzbekistan, we combine local expertise with global standards to deliver seamless, reliable, and high-quality travel solutions for our partners and clients.',
+    description: 'At Centrum Holidays DMC, operational excellence is at the core of everything we do. As a destination management company operating in Uzbekistan, we combine local expertise with global standards to deliver seamless, reliable, and high-quality travel solutions for our partners and clients.',
     pages: [
       [
         { number: '01', image: '/assets/icons/dmc.png', title: 'Streamlined and Reliable Operations', description: 'Our operations are built on clearly defined, efficient, and standardized processes. From initial planning and contracting to reservations, on-ground coordination, and post-travel evaluation, every step is managed with precision and consistency. This structured approach allows us to maintain service quality while remaining flexible to meet the unique needs of each client.' },
@@ -39,8 +42,7 @@ const categories = [
   },
   {
     title: 'Customized Service at Centrum Holidays DMC',
-    description:
-      'At Centrum Holidays DMC, we believe that no two journeys should ever be the same. Customized service is at the heart of our destination management approach, allowing us to design travel experiences that reflect the unique needs, expectations, and preferences of each client and market.',
+    description: 'At Centrum Holidays DMC, we believe that no two journeys should ever be the same. Customized service is at the heart of our destination management approach, allowing us to design travel experiences that reflect the unique needs, expectations, and preferences of each client and market.',
     pages: [
       [
         { number: '01', image: '/assets/icons/dmc.png', title: 'Tailor-Made Travel Solutions', description: 'Every program we create begins with listening. Whether for leisure travel, group tours, or MICE projects, we carefully analyze objectives, budgets, travel styles, and cultural preferences to design itineraries that deliver both value and authenticity, rather than one-size-fits-all solutions.' },
@@ -66,8 +68,7 @@ const categories = [
   },
   {
     title: 'Passion & Dedication at Centrum Holidays DMC',
-    description:
-      'At Centrum Holidays DMC, passion and dedication are not just values—they are the driving force behind every journey we design and every service we deliver. Our commitment to destination management goes beyond logistics; it is rooted in a genuine love for travel, culture, and creating meaningful experiences.',
+    description: 'At Centrum Holidays DMC, passion and dedication are not just values—they are the driving force behind every journey we design and every service we deliver. Our commitment to destination management goes beyond logistics; it is rooted in a genuine love for travel, culture, and creating meaningful experiences.',
     pages: [
       [
         { number: '01', image: '/assets/icons/dmc.png', title: 'A Team Driven by Passion', description: 'Our team is made up of travel professionals who are deeply passionate about what they do. From destination experts to operations managers, each member brings enthusiasm, creativity, and a constant desire to exceed expectations. We approach every project with emotion, whether it is a single traveler itinerary or a large-scale group or MICE operation.' },
@@ -93,8 +94,7 @@ const categories = [
   },
   {
     title: 'Destination Expertise at Centrum Holidays DMC',
-    description:
-      'At Centrum Holidays DMC, destination expertise is the foundation of our success. With in-depth local knowledge of Uzbekistan and a strong understanding of international travel expectations, we deliver authentic, well-structured, and seamless destination management solutions for our global partners.',
+    description: 'At Centrum Holidays DMC, destination expertise is the foundation of our success. With in-depth local knowledge of Uzbekistan and a strong understanding of international travel expectations, we deliver authentic, well-structured, and seamless destination management solutions for our global partners.',
     pages: [
       [
         { number: '01', image: '/assets/icons/dmc.png', title: 'Deep Local Knowledge', description: 'Our team possesses comprehensive, on-the-ground expertise across Uzbekistan. From the ancient cities of Samarkand, Bukhara, and Khiva to the modern capital of Tashkent and the remote landscapes of the Aral Sea, we know every route, attraction, hotel, and cultural site. This local insight allows us to design experiences that go beyond typical tourist paths and offer genuine immersion.' },
@@ -193,7 +193,7 @@ const displayedPages = computed(() => {
     <AppContainer>
       <!-- Шапка со стрелками -->
       <div class="relative mb-[20px] lg:mb-[40px]">
-        <!-- Левая стрелка (только десктоп) -->
+        <!-- Левая стрелка -->
         <button
           @click="prevCategory"
           :disabled="currentCategory === 0"
@@ -206,6 +206,7 @@ const displayedPages = computed(() => {
 
         <!-- Центр: крошки + заголовок + описание -->
         <div class="text-center mx-auto px-0 lg:px-16">
+          <!-- Breadcrumbs (переведены) -->
           <nav class="mb-[10px] sm:mb-[15px] hidden lg:flex" aria-label="Breadcrumb">
             <ol class="flex items-center justify-center gap-2 text-[11px] sm:text-[12px] lg:text-[14px] text-[#000] flex-wrap">
               <li v-for="(crumb, i) in breadcrumbs" :key="i" class="flex items-center gap-2">
@@ -222,15 +223,17 @@ const displayedPages = computed(() => {
             </ol>
           </nav>
 
+          <!-- Заголовок категории (переведен) -->
           <h1 class="text-[32px] sm:text-[42px] lg:text-[54px] font-normal text-black mb-[15px] leading-tight">
-            {{ currentCategoryData.title }}
+            {{ t(`whyWe.categories.${currentCategory}.title`) }}
           </h1>
+          <!-- Описание категории (переведено) -->
           <p class="text-[13px] sm:text-[14px] lg:text-[15px] text-black leading-relaxed">
-            {{ currentCategoryData.description }}
+            {{ t(`whyWe.categories.${currentCategory}.description`) }}
           </p>
         </div>
 
-        <!-- Правая стрелка (только десктоп) -->
+        <!-- Правая стрелка -->
         <button
           @click="nextCategory"
           :disabled="currentCategory === totalCategories - 1"
@@ -242,7 +245,7 @@ const displayedPages = computed(() => {
         </button>
       </div>
 
-      <!-- Cards -->
+      <!-- Cards (контент НЕ переведен) -->
       <div class="mb-[40px]">
         <CardGorzontalDMC
           v-for="(item, index) in currentItems"

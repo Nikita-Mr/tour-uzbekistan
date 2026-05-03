@@ -3,14 +3,32 @@ import { ref, computed } from 'vue';
 import AppContainer from '@/components/AppContainer.vue';
 import CustomSelect from '@/components/CustomSelect.vue';
 import Carousel from '@/components/Carousel.vue';
+import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
+const { t } = useI18n();
 
 // ─── Хлебные крошки ───
-const breadcrumbs = [
-  { label: 'Главная', path: '/' },
-  { label: 'Туры', path: '/tours' },
-  { label: 'Туры в Узбекистане', path: '/tours' },
-  { label: 'Тур "Выходные в Узбекистане" (3 дня / 2 ночи)', path: null },
-];
+const route = useRoute();
+// Получаем страну из query-параметра
+const selectedCountry = computed(() => route.query.country || null);
+
+// Хлебные крошки с учётом страны
+const breadcrumbs = computed(() => {
+  const crumbs = [{ label: t('breadcrumbs.main'), path: '/' }];
+
+  // Если есть страна — добавляем её в крошки
+  if (selectedCountry.value) {
+    crumbs.push({
+      label: selectedCountry.value,
+      path: `/tours?country=${encodeURIComponent(selectedCountry.value)}`,
+    });
+  }
+
+  // Добавляем название тура
+  crumbs.push({ label: tour.title + ' ' + tour.subtitle, path: null });
+
+  return crumbs;
+});
 
 // ─── Поисковая панель (как на странице туров) ───
 const where = ref(null);
@@ -61,13 +79,13 @@ const submitForm = () => {
   modalStep.value = 2;
 };
 
-const countries = [
+const countries = computed(() =>[
   { id: 'uz', label: 'Узбекистан', icon: '/assets/icons/uzbek.png' },
   { id: 'kz', label: 'Казахстан', icon: '/assets/icons/kazah.png' },
   { id: 'kg', label: 'Кыргызстан', icon: '/assets/icons/kyrg.png' },
   { id: 'tj', label: 'Таджикистан', icon: '/assets/icons/tad.png' },
   { id: 'cauc', label: 'Кавказ', icon: null },
-];
+]);
 
 // ─── Данные тура ───
 const tour = {
@@ -175,13 +193,13 @@ const otherDates = [
 
 // ─── Табы ───
 const activeTab = ref('details');
-const tabs = [
-  { id: 'details', label: 'Узнать больше' },
-  { id: 'route', label: 'Маршруты' },
-  { id: 'reviews', label: 'Отзывы' },
-  { id: 'transport', label: 'Транспорт' },
-  { id: 'countries', label: 'О Странах' },
-];
+const tabs = computed(() => [
+  { id: 'details', label: t('openCard.tab_details') },
+  { id: 'route', label: t('openCard.tab_route') },
+  { id: 'reviews', label: t('openCard.tab_reviews') },
+  { id: 'transport', label: t('openCard.tab_transport') },
+  { id: 'countries', label: t('openCard.tab_countries') },
+]);
 </script>
 
 <template>
@@ -230,14 +248,18 @@ const tabs = [
         <div class="hidden lg:flex bg-white rounded-[12px] border px-[0.5px]">
           <CustomSelect
             v-model="where"
-            placeholder="Куда"
+            :placeholder="t('openCard.search_where')"
             :options="countries"
             type="list"
           />
-          <CustomSelect v-model="when" placeholder="Когда" type="calendar" />
+          <CustomSelect
+            v-model="when"
+            :placeholder="t('openCard.search_when')"
+            type="calendar"
+          />
           <CustomSelect
             v-model="people"
-            placeholder="Кол-во человек"
+            :placeholder="t('openCard.search_people')"
             type="counter"
             :min="1"
             :max="20"
@@ -245,7 +267,7 @@ const tabs = [
           />
           <CustomSelect
             v-model="duration"
-            placeholder="Длительность"
+            :placeholder="t('openCard.search_duration')"
             type="counter"
             :min="1"
             :max="30"
@@ -254,7 +276,7 @@ const tabs = [
           <button
             class="bg-[#a6a6aa] text-white px-8 py-3 text-[14px] font-medium hover:bg-[#285aff] transition cursor-pointer rounded-r-[10px] flex-shrink-0"
           >
-            Поиск
+            {{ t('openCard.search_button') }}
           </button>
         </div>
       </AppContainer>
@@ -497,7 +519,7 @@ const tabs = [
             <!-- Что включено / не включено -->
             <div class="mt-8 sm:mt-12">
               <h3 class="text-[18px] sm:text-[22px] font-medium mb-4 sm:mb-6">
-                В тур включено / В тур не включено
+                {{ t('openCard.included_title') }}
               </h3>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                 <!-- Включено -->
@@ -505,7 +527,7 @@ const tabs = [
                   <h4
                     class="text-[14px] sm:text-[16px] font-medium mb-3 sm:mb-4"
                   >
-                    В тур включено
+                    {{ t('openCard.included') }}
                   </h4>
                   <ul class="space-y-2">
                     <li
@@ -525,7 +547,7 @@ const tabs = [
                   <h4
                     class="text-[14px] sm:text-[16px] font-medium mb-3 sm:mb-4"
                   >
-                    В тур не включено
+                    {{ t('openCard.not_included') }}
                   </h4>
                   <ul class="space-y-2">
                     <li
@@ -551,8 +573,7 @@ const tabs = [
               <p
                 class="text-[11px] sm:text-[16px] text-[#000] leading-[1] py-[20px] border-b border-b-[#e3e3e4] lg:p-[40px]"
               >
-                Исследуйте красоты страны, насладитесь местной кухней и откройте
-                для себя культурные достопримечательности за 3 дня
+                {{ t('openCard.sidebar_description') }}
               </p>
 
               <!-- Характеристики -->
@@ -577,7 +598,7 @@ const tabs = [
                     />
                   </svg>
                   <span class="text-[12px] sm:text-[16px] text-[#000]"
-                    >Длительность:
+                    >{{ t('openCard.duration') }}
                     <span class="font-medium">{{ tour.duration }}</span>
                   </span>
                 </div>
@@ -598,7 +619,7 @@ const tabs = [
                     />
                   </svg>
                   <span class="text-[12px] sm:text-[16px] text-[#000]"
-                    >Транспорт:
+                    >{{ t('openCard.transport') }}
                     <span class="font-medium">{{ tour.transport }}</span>
                   </span>
                 </div>
@@ -619,7 +640,7 @@ const tabs = [
                     />
                   </svg>
                   <span class="text-[12px] sm:text-[16px] text-[#000]"
-                    >Туристов:
+                    >{{ t('openCard.tourists') }}
                     <span class="font-medium">{{ tour.tourists }}</span>
                   </span>
                 </div>
@@ -640,7 +661,8 @@ const tabs = [
                     />
                   </svg>
                   <span class="text-[12px] sm:text-[16px] text-[#000]"
-                    >Города: <span class="font-medium">{{ tour.hotels }}</span>
+                    >{{ t('openCard.cities') }}
+                    <span class="font-medium">{{ tour.hotels }}</span>
                   </span>
                 </div>
                 <div
@@ -660,7 +682,7 @@ const tabs = [
                     />
                   </svg>
                   <span class="text-[12px] sm:text-[16px] text-[#000]"
-                    >Проживание:
+                    >{{ t('openCard.accommodation') }}
                     <span class="font-medium">{{ tour.comfort }}</span>
                   </span>
                 </div>
@@ -683,7 +705,7 @@ const tabs = [
               <button
                 class="w-full text-center text-[12px] sm:text-[13px] text-[#666] hover:text-[#285aff] transition mb-4 sm:mb-5 flex items-center justify-center gap-1"
               >
-                Подробнее
+                {{ t('openCard.more_details') }}
                 <svg
                   class="w-3 h-3"
                   fill="none"
@@ -714,7 +736,9 @@ const tabs = [
                     >100$</span
                   >
                 </div>
-                <div class="text-center mb-[5px] flex lg:block gap-[10px] justify-between">
+                <div
+                  class="text-center mb-[5px] flex lg:block gap-[10px] justify-between"
+                >
                   <p
                     class="text-[11px] sm:text-[12px] text-[#000] font-light leading-[15px]"
                   >
@@ -723,14 +747,15 @@ const tabs = [
                   <p
                     class="text-[11px] sm:text-[12px] text-[#000] leading-[15px]"
                   >
-                    <span class="font-medium">Дедлайн:</span> 8 Сентябрь 2025
+                    <span class="font-medium">{{ t('openCard.deadline') }}</span
+                    > 8 Сентябрь 2025
                   </p>
                 </div>
                 <button
                   @click="openModal"
                   class="w-full bg-[#ff00e7] text-white rounded-[10px] py-2 sm:py-2 text-[14px] font-medium hover:bg-[#eb02d3] transition cursor-pointer"
                 >
-                  Купить
+                  {{ t('openCard.buy') }}
                 </button>
               </div>
 
@@ -742,7 +767,7 @@ const tabs = [
                   <h4
                     class="text-[13px] sm:text-[16px] font-medium text-center"
                   >
-                    Другие даты
+                    {{ t('openCard.other_dates') }}
                   </h4>
                 </div>
                 <div
@@ -752,7 +777,7 @@ const tabs = [
                   <h4
                     class="text-[13px] sm:text-[16px] font-medium text-center"
                   >
-                    Другие даты
+                    {{ t('openCard.other_dates') }}
                   </h4>
                 </div>
                 <div
@@ -788,7 +813,7 @@ const tabs = [
             v-if="modalStep === 1"
             class="py-[33px] border-b border-b-[#4d4d54] w-[50%] bg-[#fff] rounded-t-[15px]"
           >
-            <h2 class="modal-title">Данные о туристе</h2>
+            <h2 class="modal-title">{{ t('openCard.modal_title') }}</h2>
           </div>
           <div
             class="modal-container rounded-br-[15px] rounded-tr-[15px] rounded-bl-[15px]"
@@ -814,85 +839,93 @@ const tabs = [
             <div v-if="modalStep === 1" class="modal-content">
               <form @submit.prevent="submitForm" class="modal-form">
                 <div class="form-group">
-                  <label>Пол</label>
+                  <label>{{ t('openCard.modal_sex') }}</label>
                   <input type="text" v-model="formData.sex" required />
                 </div>
 
                 <div class="form-group">
-                  <label>Имя на латинском</label>
+                  <label>{{ t('openCard.modal_firstname') }}</label>
                   <input type="text" v-model="formData.firstName" required />
                 </div>
 
                 <div class="form-group">
-                  <label>Фамилия на латинице</label>
+                  <label>{{ t('openCard.modal_lastname') }}</label>
                   <input type="text" v-model="formData.lastName" required />
                 </div>
 
                 <div class="form-row">
                   <div class="form-group">
-                    <label>Дата рождения</label>
+                    <label>{{ t('openCard.modal_birthdate') }}</label>
                     <input type="date" v-model="formData.birthDate" />
                   </div>
                   <div class="form-group">
-                    <label>Телефон</label>
+                    <label>{{ t('openCard.modal_phone') }}</label>
                     <input type="tel" v-model="formData.phone" required />
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label>Email</label>
+                  <label>{{ t('openCard.modal_email') }}</label>
                   <input type="email" v-model="formData.email" required />
                 </div>
 
                 <div class="form-row">
                   <div class="form-group">
-                    <label>Тип Документа</label>
+                    <label>{{ t('openCard.modal_doc_type') }}</label>
                     <input type="text" v-model="formData.idCard" />
                   </div>
                   <div class="form-group">
-                    <label>Гражданство</label>
+                    <label>{{ t('openCard.modal_nationality') }}</label>
                     <input type="text" v-model="formData.nationality" />
                   </div>
                 </div>
 
                 <div class="form-row">
                   <div class="form-group">
-                    <label>Серия Паспорта</label>
+                    <label>{{ t('openCard.modal_passport_series') }}</label>
                     <input type="text" v-model="formData.documentSeries" />
                   </div>
                   <div class="form-group">
-                    <label>Номер Документа</label>
+                    <label>{{ t('openCard.modal_doc_number') }}</label>
                     <input type="text" v-model="formData.documentNumber" />
                   </div>
                 </div>
 
                 <div class="form-row">
                   <div class="form-group">
-                    <label>Выдан</label>
+                    <label>{{ t('openCard.modal_issued') }}</label>
                     <input type="date" v-model="formData.issuedDate" />
                   </div>
                   <div class="form-group">
-                    <label>Действителен до</label>
+                    <label>{{ t('openCard.modal_valid_until') }}</label>
                     <input type="date" v-model="formData.validUntil" />
                   </div>
                 </div>
 
-                <button type="submit" class="modal-submit">Далее</button>
+                <button type="submit" class="modal-submit">
+                  {{ t('openCard.modal_next') }}
+                </button>
               </form>
             </div>
 
             <!-- Шаг 2: Успех -->
             <div v-else-if="modalStep === 2" class="modal-success">
               <div class="success-icon">✓</div>
-              <h2 class="success-title">Ваше бронирование получено</h2>
-              <button class="modal-submit" @click="modalStep = 3">Далее</button>
+              <h2 class="success-title">
+                {{ t('openCard.modal_success_title') }}
+              </h2>
+              <button class="modal-submit" @click="modalStep = 3">
+                {{ t('openCard.modal_next') }}
+              </button>
             </div>
 
             <div v-else-if="modalStep === 3" class="modal-success">
               <h2 class="success-title">
-                С вами свяжется наш менеджер для подтверждения
+                {{ t('openCard.modal_success_text') }}
               </h2>
-              <button class="modal-submit" @click="closeModal">Готово</button>
+              <button class="modal-submit" @click="closeModal">
+                {{ t('openCard.modal_close') }}
+              </button>
             </div>
           </div>
         </div>
@@ -917,31 +950,28 @@ const tabs = [
           <div
             class="sticky top-0 bg-white px-4 sm:px-5 pt-3 sm:pt-4 pb-3 border-b border-[#e6e6e7] flex items-center justify-between rounded-t-[20px]"
           >
-            <h3 class="text-[16px] sm:text-[18px] font-medium">Другие даты</h3>
+            <h3 class="text-[16px] sm:text-[18px] font-medium">
+              {{ t('openCard.other_dates') }}
+            </h3>
             <button
               @click="closeMobileFilter"
               class="text-[13px] sm:text-[14px] text-[#285aff] font-medium"
             >
-              Закрыть
+              {{ t('openCard.close') }}
             </button>
           </div>
 
           <div class="px-4 sm:px-5 py-4">
             <!-- Цена -->
-            <div
-              class="lg:px-[40px] py-[15px] rounded-b-[15px]"
-            >
+            <div class="lg:px-[40px] py-[15px] rounded-b-[15px]">
               <div
                 v-for="(d, i) in otherDates"
                 :key="i"
                 class="flex items-center justify-between py-2 border-b border-[#eaeaea] last:border-0"
               >
-                <span class="text-[16px] text-[#000]">{{
-                  d.date
-                }}</span>
+                <span class="text-[16px] text-[#000]">{{ d.date }}</span>
                 <div class="flex items-center gap-2">
-                  <span
-                    class="text-[16px] font-medium text-[#FF00E7]"
+                  <span class="text-[16px] font-medium text-[#FF00E7]"
                     >{{ d.price }}$</span
                   >
                 </div>
