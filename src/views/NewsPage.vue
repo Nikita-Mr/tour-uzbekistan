@@ -15,18 +15,18 @@ const perPage = 9;
 
 // Пример данных — замени на реальный API-запрос
 const allNews = [
-  { id: 1, image: '/assets/icons/card.png', title: 'Flying to the Maldives from November 30!', description: 'Centrum Air and Centrum Holidays proudly launch an exclusive flight program to the Maldives...', date: '2 days ago' },
-  { id: 2, image: '/assets/icons/card.png', title: 'Brand new Airbus A330-300', description: 'First wide-body Airbus A330-300 arrives in Centrum Air fleet...', date: '1 week ago' },
-  { id: 3, image: '/assets/icons/card.png', title: 'Tashkent – Tbilisi on the wings of Centrum Air', description: 'Since May 18, the tour operator Centrum Holidays has launched a flight program on the Tashkent-Tbilisi route...', date: '2 weeks ago' },
-  { id: 4, image: '/assets/icons/card.png', title: 'Brand new Airbus A330-300', description: 'First wide-body Airbus A330-300 arrives in Centrum Air fleet...', date: '3 weeks ago' },
-  { id: 5, image: '/assets/icons/card.png', title: 'Flying to the Maldives from November 30!', description: 'Centrum Air and Centrum Holidays proudly launch an exclusive flight program...', date: '1 month ago' },
-  { id: 6, image: '/assets/icons/card.png', title: 'Tashkent – Tbilisi on the wings of Centrum Air', description: 'Since May 18, the tour operator Centrum Holidays has launched...', date: '1 month ago' },
-  { id: 7, image: '/assets/icons/card.png', title: 'Tashkent – Tbilisi on the wings of Centrum Air', description: 'Since May 18, the tour operator Centrum Holidays has launched...', date: '2 months ago' },
-  { id: 8, image: '/assets/icons/card.png', title: 'Brand new Airbus A330-300', description: 'First wide-body Airbus A330-300 arrives in Centrum Air fleet...', date: '2 months ago' },
-  { id: 9, image: '/assets/icons/card.png', title: 'Flying to the Maldives from November 30!', description: 'Centrum Air and Centrum Holidays proudly launch an exclusive flight program...', date: '3 months ago' },
-  { id: 10, image: '/assets/icons/card.png', title: 'New winter destinations', description: 'Discover our new winter flight program...', date: '3 months ago' },
-  { id: 11, image: '/assets/icons/card.png', title: 'Airbus A330-300 interior reveal', description: 'Take a look inside our newest aircraft...', date: '4 months ago' },
-  { id: 12, image: '/assets/icons/card.png', title: 'Summer schedule update', description: 'More flights, more destinations, more comfort...', date: '4 months ago' },
+  { id: 1, image: '/assets/icons/news1.jpg', title: 'Flying to the Maldives from November 30!', description: 'Centrum Air and Centrum Holidays proudly launch an exclusive flight program to the Maldives...', date: '2 days ago' },
+  { id: 2, image: '/assets/icons/news2.jpg', title: 'Brand new Airbus A330-300', description: 'First wide-body Airbus A330-300 arrives in Centrum Air fleet...', date: '1 week ago' },
+  { id: 3, image: '/assets/icons/news3.jpg', title: 'Tashkent – Tbilisi on the wings of Centrum Air', description: 'Since May 18, the tour operator Centrum Holidays has launched a flight program on the Tashkent-Tbilisi route...', date: '2 weeks ago' },
+  { id: 4, image: '/assets/icons/news1.jpg', title: 'Brand new Airbus A330-300', description: 'First wide-body Airbus A330-300 arrives in Centrum Air fleet...', date: '3 weeks ago' },
+  { id: 5, image: '/assets/icons/news2.jpg', title: 'Flying to the Maldives from November 30!', description: 'Centrum Air and Centrum Holidays proudly launch an exclusive flight program...', date: '1 month ago' },
+  { id: 6, image: '/assets/icons/news3.jpg', title: 'Tashkent – Tbilisi on the wings of Centrum Air', description: 'Since May 18, the tour operator Centrum Holidays has launched...', date: '1 month ago' },
+  { id: 7, image: '/assets/icons/news1.jpg', title: 'Tashkent – Tbilisi on the wings of Centrum Air', description: 'Since May 18, the tour operator Centrum Holidays has launched...', date: '2 months ago' },
+  { id: 8, image: '/assets/icons/news2.jpg', title: 'Brand new Airbus A330-300', description: 'First wide-body Airbus A330-300 arrives in Centrum Air fleet...', date: '2 months ago' },
+  { id: 9, image: '/assets/icons/news3.jpg', title: 'Flying to the Maldives from November 30!', description: 'Centrum Air and Centrum Holidays proudly launch an exclusive flight program...', date: '3 months ago' },
+  { id: 10, image: '/assets/icons/news1.jpg', title: 'New winter destinations', description: 'Discover our new winter flight program...', date: '3 months ago' },
+  { id: 11, image: '/assets/icons/news2.jpg', title: 'Airbus A330-300 interior reveal', description: 'Take a look inside our newest aircraft...', date: '4 months ago' },
+  { id: 12, image: '/assets/icons/news3.jpg', title: 'Summer schedule update', description: 'More flights, more destinations, more comfort...', date: '4 months ago' },
 ];
 
 const totalPages = computed(() => Math.ceil(allNews.length / perPage));

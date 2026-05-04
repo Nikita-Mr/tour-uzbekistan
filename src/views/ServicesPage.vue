@@ -18,52 +18,52 @@ const allServices = [
   {
     title: 'Destination Management Services (DMC)',
     descr: 'Complete on-ground coordination and local expertise',
-    url: '/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news1.jpg',
   },
   {
     title: 'Customized Itineraries',
     descr: 'Tailor-made leisure, group, and special-interest programs',
-    url: '/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news2.jpg',
   },
   {
     title: 'Flight & Air Services Coordination',
     descr: 'In collaboration with group and block seat operations with Centrum Air',
-    url: '/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news3.png',
   },
   {
     title: 'MICE Services',
     descr: 'Meetings, incentives, conferences, and events with full project management',
-    url: '/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news4.jpg',
   },
   {
     title: 'Transfers & Transportation',
     descr: 'Modern, air-conditioned vehicles for individual and group travel',
-    url: '/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news5.jpg',
   },
   {
     title: 'Tour Operations',
     descr: 'Cultural, historical, and adventure tours within Uzbekistan and outbound tours to multiple destinations',
-    url: '/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news6.jpg',
   },
   {
     title: 'Visa Support Services',
     descr: 'Assistance with visa invitations and processing for international travelers',
-    url: '/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news1.jpg',
   },
   {
     title: 'Hotel Booking',
     descr: 'Best rates at partner hotels across Uzbekistan',
-    url: '/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news2.jpg',
   },
   {
     title: '24/7 Customer Support',
     descr: 'Round-the-clock assistance for our partners and clients',
-    url: '/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news3.png',
   },
   {
     title: 'Group Tours',
     descr: 'Organized group experiences with professional guides',
-    url: '/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news4.jpg',
   },
 ];
 

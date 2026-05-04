@@ -91,12 +91,12 @@ const countries = computed(() =>[
 const tour = {
   title: 'Тур "Выходные в Узбекистане"',
   subtitle: '(3 дня / 2 ночи)',
-  mainImage: '/assets/icons/card.png',
+  mainImage: '/assets/icons/card1.png',
   gallery: [
-    '/assets/icons/card.png',
-    '/assets/icons/card.png',
-    '/assets/icons/card.png',
-    '/assets/icons/card.png',
+    '/assets/icons/card2.png',
+    '/assets/icons/card3.png',
+    '/assets/icons/card4.png',
+    '/assets/icons/card5.png',
   ],
   description:
     "Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem ipsum. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.",

@@ -80,6 +80,15 @@ const router = createRouter({
       component: () => import('@/views/TechnicalWorkPage.vue'),
     },
   ],
+  // ✅ Добавленный scrollBehavior для автоматического скролла вверх
+  scrollBehavior(to, from, savedPosition) {
+    // Если есть сохраненная позиция (при нажатии "назад"/"вперед")
+    if (savedPosition) {
+      return savedPosition;
+    }
+    // Иначе скроллим наверх
+    return { top: 0, behavior: 'smooth' };
+  },
 });
 
 export default router;

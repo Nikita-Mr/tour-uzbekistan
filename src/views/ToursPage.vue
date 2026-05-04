@@ -70,7 +70,7 @@ const tours = ref([
     id: 1,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card1.png',
     date: '01.04.2026',
     duration: { day: 3, night: 2 },
     price: 295,
@@ -80,7 +80,7 @@ const tours = ref([
     id: 2,
     title: 'Тур "7 дней восточной сказки"',
     route: 'Ташкент – Самарканд – Бухара',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card2.png',
     date: '01.04.2026',
     duration: { day: 7, night: 6 },
     price: 765,
@@ -90,7 +90,7 @@ const tours = ref([
     id: 3,
     title: 'Тур "15 дней восточной сказки"',
     route: 'Ташкент – Самарканд – Бухара – Хива',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card3.png',
     date: '01.04.2026',
     duration: { day: 15, night: 14 },
     price: 1495,
@@ -100,7 +100,7 @@ const tours = ref([
     id: 4,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card4.png',
     date: '01.04.2026',
     duration: { day: 3, night: 2 },
     price: 295,
@@ -110,7 +110,7 @@ const tours = ref([
     id: 5,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card5.png',
     date: '01.04.2026',
     duration: { day: 3, night: 2 },
     price: 295,
@@ -120,7 +120,7 @@ const tours = ref([
     id: 6,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card6.png',
     date: '01.04.2026',
     duration: { day: 3, night: 2 },
     price: 295,
@@ -130,7 +130,7 @@ const tours = ref([
     id: 7,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card1.png',
     date: '01.04.2026',
     duration: { day: 3, night: 2 },
     price: 295,
@@ -140,7 +140,7 @@ const tours = ref([
     id: 8,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card2.png',
     date: '01.04.2026',
     duration: { day: 3, night: 2 },
     price: 295,
@@ -150,7 +150,7 @@ const tours = ref([
     id: 9,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card3.png',
     date: '01.04.2026',
     duration: { day: 3, night: 2 },
     price: 295,
@@ -299,28 +299,26 @@ const resetFilters = () => {
             class="w-full"
             :border="false"
           />
-          <div class="flex gap-2 sm:gap-3">
-            <CustomSelect
-              v-model="people"
-              :placeholder="t('toursPage.search_people')"
-              type="counter"
-              :min="1"
-              :max="20"
-              :unit="t('toursPage.search_people_unit')"
-              class="flex-1"
-              :border="false"
-            />
-            <CustomSelect
-              v-model="duration"
-              :placeholder="t('toursPage.search_days')"
-              type="counter"
-              :min="1"
-              :max="30"
-              :unit="t('toursPage.search_days_unit')"
-              class="flex-1"
-              :border="false"
-            />
-          </div>
+          <CustomSelect
+            v-model="people"
+            :placeholder="t('toursPage.search_people')"
+            type="counter"
+            :min="1"
+            :max="20"
+            :unit="t('toursPage.search_people_unit')"
+            class="flex-1"
+            :border="false"
+          />
+          <CustomSelect
+            v-model="duration"
+            :placeholder="t('toursPage.search_days')"
+            type="counter"
+            :min="1"
+            :max="30"
+            :unit="t('toursPage.search_days_unit')"
+            class="flex-1"
+            :border="false"
+          />
           <button
             class="bg-[#a6a6aa] text-white px-6 py-2.5 sm:px-8 sm:py-3 rounded-[8px] text-[13px] sm:text-[14px] font-medium hover:bg-[#285aff] transition cursor-pointer w-full"
             @click="performSearch"

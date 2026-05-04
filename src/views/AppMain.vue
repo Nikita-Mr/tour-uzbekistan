@@ -43,31 +43,51 @@ const mass = computed(() => [
   {
     title: t('nav.about'),
     route: '/about',
-    descr: 'Centrum Holidays DMC is a destination management company in Uzbekistan with a young, dynamic team, steadily growing and focused on innovation and high service standards. Founded in Tashkent in 2024 by Abdulaziz Abdurakhmanov.',
+    descr:
+      'Centrum Holidays DMC is a destination management company in Uzbekistan with a young, dynamic team, steadily growing and focused on innovation and high service standards. Founded in Tashkent in 2024 by Abdulaziz Abdurakhmanov.',
   },
   {
     title: t('nav.directions'),
     route: '/directions',
-    descr: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    descr:
+      "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
   },
   {
     title: t('nav.services'),
     route: '/services',
-    descr: 'We provide end-to-end services for individual and group tourism, from airport transfers and visa support to accommodation, health tourism, cultural tours, and tailored programmes.',
+    descr:
+      'We provide end-to-end services for individual and group tourism, from airport transfers and visa support to accommodation, health tourism, cultural tours, and tailored programmes.',
   },
   {
     title: t('nav.why_we'),
     route: '/why-we',
-    descr: 'Because this approach makes the entire process effortless for you. From the planning stage of your trip to its completion, it offers a comprehensive and reliable solution that you can confidently utilise at every step.',
+    descr:
+      'Because this approach makes the entire process effortless for you. From the planning stage of your trip to its completion, it offers a comprehensive and reliable solution that you can confidently utilise at every step.',
   },
 ]);
 const activeCategory = ref('all');
 const buttons = computed(() => [
   { title: t('buttons.all'), category: 'all', url: null },
-  { title: t('countries.uzbekistan'), category: 'uzbekistan', url: '/assets/icons/uzbek.png' },
-  { title: t('countries.kazakhstan'), category: 'kazakhstan', url: '/assets/icons/kazah.png' },
-  { title: t('countries.kyrgyzstan'), category: 'kyrgyzstan', url: '/assets/icons/kyrg.png' },
-  { title: t('countries.tajikistan'), category: 'tajikistan', url: '/assets/icons/tad.png' },
+  {
+    title: t('countries.uzbekistan'),
+    category: 'uzbekistan',
+    url: '/assets/icons/uzbek.png',
+  },
+  {
+    title: t('countries.kazakhstan'),
+    category: 'kazakhstan',
+    url: '/assets/icons/kazah.png',
+  },
+  {
+    title: t('countries.kyrgyzstan'),
+    category: 'kyrgyzstan',
+    url: '/assets/icons/kyrg.png',
+  },
+  {
+    title: t('countries.tajikistan'),
+    category: 'tajikistan',
+    url: '/assets/icons/tad.png',
+  },
   { title: t('countries.caucasus'), category: 'caucasus', url: '#' },
 ]);
 const allTours = [
@@ -75,56 +95,56 @@ const allTours = [
     id: 1,
     title: 'Тур "Выходные в Узбекистане"',
     route: 'Ташкент – Самарканд',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card1.png',
     category: 'uzbekistan',
   },
   {
     id: 2,
     title: 'Тур "Жемчужины Узбекистана"',
     route: 'Ташкент – Бухара – Самарканд',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card2.png',
     category: 'uzbekistan',
   },
   {
     id: 3,
     title: 'Тур "Горный Кыргызстан"',
     route: 'Бишкек – Иссык-Куль',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card3.png',
     category: 'kyrgyzstan',
   },
   {
     id: 4,
     title: 'Тур "Казахстанский трип"',
     route: 'Алматы – Нур-Султан',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card4.png',
     category: 'kazakhstan',
   },
   {
     id: 5,
     title: 'Тур "Кавказское гостеприимство"',
     route: 'Баку – Тбилиси',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card5.png',
     category: 'caucasus',
   },
   {
     id: 6,
     title: 'Тур "Памирские высоты"',
     route: 'Душанбе – Памир',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card6.png',
     category: 'tajikistan',
   },
   {
     id: 7,
     title: 'Тур "Самарканд - жемчужина Востока"',
     route: 'Ташкент – Самарканд – Шахрисабз',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card1.png',
     category: 'uzbekistan',
   },
   {
     id: 8,
     title: 'Тур "Астана - новая столица"',
     route: 'Астана – Алматы',
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/card2.png',
     category: 'kazakhstan',
   },
 ];
@@ -159,67 +179,65 @@ const DMC = [
     id: 1,
     title: 'Destination Management Services (DMC)',
     descr: 'Complete on-ground coordination and local expertise',
-    url: '/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news1.jpg',
   },
   {
     id: 2,
     title: 'Customized Itineraries',
     descr: 'Tailor-made leisure, group, and special-interest programs',
-    url: '/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news2.jpg',
   },
   {
     id: 3,
     title: 'Flight & Air Services Coordination',
     descr:
       'In collaboration with group and block seat operations with Centrum Air',
-    url: '/assets/icons/card-news.jpg',
+    url: '/assets/icons/card-news3.png',
   },
 ];
 
 const items = [
   {
     number: '01',
-    image: '/assets/icons/dmc.png',
+    image: '/assets/icons/dmc1.png',
     title: 'Streamlined and Reliable Operations',
     description:
       'Our operations are built on clearly defined, efficient, and standardized processes. From initial planning and contracting to reservations, on-ground coordination, and post-travel evaluation, every step is managed with precision and consistency. This structured approach allows us to maintain service quality while remaining flexible to meet the unique needs of each client.',
   },
   {
     number: '02',
-    image: '/assets/icons/dmc.png',
+    image: '/assets/icons/dmc2.jpg',
     title: 'Technology-Driven Infrastructure',
     description:
       'Centrum Holidays DMC invests heavily in technology to ensure speed, accuracy, and transparency. Through advanced systems and API integrations, we provide real-time access to hotels, transfers, and packaged products. This technology-driven infrastructure minimizes manual processes, reduces errors, and enables faster decision-making for our partners.',
   },
 ];
 
-
-
 const newsList = [
   {
     id: 1,
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/news1.jpg',
     description:
       '«Чайхана и культура чаепития» — это настоящее искусство в Узбекистане. Многие туристы удивляются: почему в гостях им всегда наливают чай неполную чашку...',
     date: '1 месяц назад',
   },
   {
     id: 2,
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/news2.jpg',
     description:
       'Мы — ваш надежный DMC-партнёр в Узбекистане. С гордостью сообщаем, что наша компания имеет прямые контракты более чем с 700 отелями по всей...',
     date: '2 месяца назад',
   },
   {
     id: 3,
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/news3.jpg',
     description:
       'Необычные туры в Узбекистан — наша специализация. По следам ремесленников — путешествие в Ферганскую долину. Откройте для себя...',
     date: '2 месяца назад',
   },
   {
     id: 4,
-    image: '/assets/icons/card.png',
+    image: '/assets/icons/news1.jpg',
     description: 'Ещё одна новость для туристов...',
     date: '3 месяца назад',
   },
@@ -227,7 +245,7 @@ const newsList = [
 </script>
 
 <template>
-    <div class="page-wrapper relative">
+  <div class="page-wrapper relative">
     <!-- Hero секция -->
     <section>
       <div class="hero-section">
@@ -242,9 +260,15 @@ const newsList = [
       <AppContainer>
         <div class="wrapper-card">
           <div class="card-item" v-for="(item, index) in mass" :key="index">
-            <div class="card-item-title flex items-center justify-between mb-[25px]">
+            <div
+              class="card-item-title flex items-center justify-between mb-[25px]"
+            >
               <h3>{{ item.title }}</h3>
-              <router-link :to="item.route" class="text-[#88888c] underline italic">{{ $t('home.more') }}</router-link>
+              <router-link
+                :to="item.route"
+                class="text-[#88888c] underline italic"
+                >{{ $t('home.more') }}</router-link
+              >
             </div>
             <div class="description">
               <p class="max-w-[235px]">{{ item.descr }}</p>
@@ -260,10 +284,16 @@ const newsList = [
         <div class="w-full border border-[#f6f6f6] mb-[50px]"></div>
         <div class="flex justify-between mb-[15px]">
           <h2 class="text-[24px] lg:text-[32px] font-medium">
-            <span class="lg:hidden uppercase font-medium italic">{{ $t('home.tours_mobile') }}</span>
+            <span class="lg:hidden uppercase font-medium italic">{{
+              $t('home.tours_mobile')
+            }}</span>
             <span class="hidden lg:inline">{{ $t('home.tours_title') }}</span>
           </h2>
-          <Button :title="$t('home.view_all')" :style="'px-[34px] border-[#bfbfbf]'" @click="$router.push({ name: 'tours' })" />
+          <Button
+            :title="$t('home.view_all')"
+            :style="'px-[34px] border-[#bfbfbf]'"
+            @click="$router.push({ name: 'tours' })"
+          />
         </div>
         <div class="location-buttons flex gap-[10px] mb-[50px] flex-wrap">
           <button
@@ -272,16 +302,28 @@ const newsList = [
             @click="setCategory(item.category)"
             class="flex items-center gap-[10px] border rounded-[10px] px-[10px] cursor-pointer transition-all duration-200"
             :class="{
-              'bg-[#285aff] text-white border-[#285aff]': activeCategory === item.category,
+              'bg-[#285aff] text-white border-[#285aff]':
+                activeCategory === item.category,
               'hover:bg-gray-50': activeCategory !== item.category,
             }"
           >
-            <img v-if="item.url" class="w-[18px] h-[14px] rounded-[10px]" :src="item.url" alt="" />
+            <img
+              v-if="item.url"
+              class="w-[18px] h-[14px] rounded-[10px]"
+              :src="item.url"
+              alt=""
+            />
             {{ item.title }}
           </button>
         </div>
       </AppContainer>
-      <Carousel :key="activeCategory" :items="filteredTours" :visible-count="tourVisible" :gap="14" :autoplay="5000">
+      <Carousel
+        :key="activeCategory"
+        :items="filteredTours"
+        :visible-count="tourVisible"
+        :gap="14"
+        :autoplay="5000"
+      >
         <template #default="{ item }">
           <Card :tour="item" />
         </template>
@@ -290,29 +332,53 @@ const newsList = [
 
     <!-- Секция с планетой -->
     <section class="relative bg-black overflow-hidden mb-[20px]">
-      <div class="relative z-10 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-16 xl:px-[140px] pt-16 sm:pt-20 lg:pt-[80px] pb-40 sm:pb-48 lg:pb-28">
+      <div
+        class="relative z-10 max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-16 xl:px-[140px] pt-16 sm:pt-20 lg:pt-[80px] pb-40 sm:pb-48 lg:pb-28"
+      >
         <div class="lg:max-w-[580px]">
-          <h2 class="text-white text-[28px] sm:text-[36px] lg:text-[48px] xl:text-[56px] font-light leading-[1.1] mb-6 lg:mb-[50px]">
+          <h2
+            class="text-white text-[28px] sm:text-[36px] lg:text-[48px] xl:text-[56px] font-light leading-[1.1] mb-6 lg:mb-[50px]"
+          >
             {{ $t('home.planet_title') }}
           </h2>
-          <p class="text-[#a0a0a0] text-[14px] lg:text-[15px] leading-[1.6] mb-8 lg:mb-[50px] max-w-[460px]">
+          <p
+            class="text-[#a0a0a0] text-[14px] lg:text-[15px] leading-[1.6] mb-8 lg:mb-[50px] max-w-[460px]"
+          >
             {{ $t('home.planet_text') }}
           </p>
-          <div class="w-full max-w-[360px] h-px bg-[#989898] mb-8 lg:mb-[50px]"></div>
+          <div
+            class="w-full max-w-[360px] h-px bg-[#989898] mb-8 lg:mb-[50px]"
+          ></div>
           <div>
-            <h3 class="text-white text-[13px] font-bold tracking-[0.12em] uppercase mb-5 lg:mb-[50px]">
+            <h3
+              class="text-white text-[13px] font-bold tracking-[0.12em] uppercase mb-5 lg:mb-[50px]"
+            >
               {{ $t('home.countries_served') }}
             </h3>
             <div class="grid grid-cols-2 gap-x-8 sm:gap-x-16 gap-y-3">
               <div class="flex flex-col gap-[11px]">
-                <p v-for="country in servedCountriesList.slice(0,5)" :key="country.key" class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]">
-                  <img :src="country.icon" class="w-5 h-5 rounded-full object-cover" />
+                <p
+                  v-for="country in servedCountriesList.slice(0, 5)"
+                  :key="country.key"
+                  class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
+                >
+                  <img
+                    :src="country.icon"
+                    class="w-5 h-5 rounded-full object-cover"
+                  />
                   {{ $t(`servedCountries.${country.key}`) }}
                 </p>
               </div>
               <div class="flex flex-col gap-[11px]">
-                <p v-for="country in servedCountriesList.slice(5)" :key="country.key" class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]">
-                  <img :src="country.icon" class="w-5 h-5 rounded-full object-cover" />
+                <p
+                  v-for="country in servedCountriesList.slice(5)"
+                  :key="country.key"
+                  class="text-white flex items-center gap-[7px] text-[14px] lg:text-[16px]"
+                >
+                  <img
+                    :src="country.icon"
+                    class="w-5 h-5 rounded-full object-cover"
+                  />
                   {{ $t(`servedCountries.${country.key}`) }}
                 </p>
               </div>
@@ -320,7 +386,11 @@ const newsList = [
           </div>
         </div>
       </div>
-      <img src="/assets/icons/planet.png" alt="Globe" class="absolute z-0 left-1/2 -translate-x-1/2 lg:left-auto lg:right-[-5%] xl:right-0 lg:translate-x-0 bottom-0 translate-y-[40%] sm:translate-y-[35%] lg:translate-y-[25%] w-[280px] sm:w-[380px] lg:w-[600px] xl:w-[750px] pointer-events-none select-none" />
+      <img
+        src="/assets/icons/planet.png"
+        alt="Globe"
+        class="planet-glow absolute z-0 left-1/2 -translate-x-1/2 lg:left-auto lg:right-[-5%] xl:right-0 lg:translate-x-0 bottom-0 lg:bottom-50 translate-y-[40%] sm:translate-y-[35%] lg:translate-y-[25%] w-[280px] sm:w-[380px] lg:w-[600px] xl:w-[750px] pointer-events-none select-none"
+      />
     </section>
 
     <!-- Секция услуг -->
@@ -328,10 +398,18 @@ const newsList = [
       <AppContainer>
         <div class="flex justify-between items-center mb-[10px]">
           <h2 class="text-[24px] lg:text-[32px] font-medium">
-            <span class="lg:hidden uppercase font-medium italic">{{ $t('home.services_mobile') }}</span>
-            <span class="hidden lg:inline">{{ $t('home.services_title') }}</span>
+            <span class="lg:hidden uppercase font-medium italic">{{
+              $t('home.services_mobile')
+            }}</span>
+            <span class="hidden lg:inline">{{
+              $t('home.services_title')
+            }}</span>
           </h2>
-          <Button :title="$t('home.view_all')" :style="'px-[34px] border-[#bfbfbf]'" @click="$router.push({ name: 'services' })" />
+          <Button
+            :title="$t('home.view_all')"
+            :style="'px-[34px] border-[#bfbfbf]'"
+            @click="$router.push({ name: 'services' })"
+          />
         </div>
         <p class="tracking-[-1.5%] mb-[60px] text-[14px] lg:text-[16px]">
           {{ $t('home.services_text') }}
@@ -341,7 +419,13 @@ const newsList = [
         </div>
       </AppContainer>
       <div class="lg:hidden">
-        <Carousel :items="DMC" :visible-count="1" :gap="20" :autoplay="5000" :item-width="320">
+        <Carousel
+          :items="DMC"
+          :visible-count="1"
+          :gap="20"
+          :autoplay="5000"
+          :item-width="320"
+        >
           <template #default="{ item }">
             <CardDMS :DMC="item" />
           </template>
@@ -355,15 +439,28 @@ const newsList = [
         <div class="w-full border border-[#b1b1b4] mb-8 lg:mb-[65px]"></div>
         <div class="flex justify-between items-center mb-4 lg:mb-[25px]">
           <h2 class="text-[24px] lg:text-[32px] font-medium">
-            <span class="lg:hidden uppercase font-medium italic">{{ $t('home.why_mobile') }}</span>
+            <span class="lg:hidden uppercase font-medium italic">{{
+              $t('home.why_mobile')
+            }}</span>
             <span class="hidden lg:inline">{{ $t('home.why_title') }}</span>
           </h2>
-          <Button :title="$t('home.view_all')" :style="'px-[34px] border-[#bfbfbf]'" @click="$router.push({ name: 'whyWe' })" />
+          <Button
+            :title="$t('home.view_all')"
+            :style="'px-[34px] border-[#bfbfbf]'"
+            @click="$router.push({ name: 'whyWe' })"
+          />
         </div>
-        <p class="text-[12px] lg:text-[16px] leading-[1.5] lg:leading-[1.6] mb-6 lg:mb-[40px] text-[#333]">
+        <p
+          class="text-[12px] lg:text-[16px] leading-[1.5] lg:leading-[1.6] mb-6 lg:mb-[40px] text-[#333]"
+        >
           {{ $t('home.why_text') }}
         </p>
-        <CardGorzontalDMC v-for="(item, i) in items" :key="i" :item="item" :index="i" />
+        <CardGorzontalDMC
+          v-for="(item, i) in items"
+          :key="i"
+          :item="item"
+          :index="i"
+        />
       </AppContainer>
     </section>
 
@@ -373,12 +470,24 @@ const newsList = [
         <div class="w-full border border-[#dddddf] mb-[60px]"></div>
         <div class="flex justify-between items-center mb-[25px]">
           <h2 class="text-[24px] lg:text-[32px] font-medium">
-            <span class="lg:hidden uppercase font-medium italic">{{ $t('home.news_mobile') }}</span>
+            <span class="lg:hidden uppercase font-medium italic">{{
+              $t('home.news_mobile')
+            }}</span>
             <span class="hidden lg:inline">{{ $t('home.news_title') }}</span>
           </h2>
-          <Button :title="$t('home.view_all')" :style="'px-[34px] border-[#bfbfbf]'" @click="$router.push({ name: 'news' })" />
+          <Button
+            :title="$t('home.view_all')"
+            :style="'px-[34px] border-[#bfbfbf]'"
+            @click="$router.push({ name: 'news' })"
+          />
         </div>
-        <Carousel :items="newsList" :visible-count="newsVisible" :gap="20" :autoplay="5000" :item-width="400">
+        <Carousel
+          :items="newsList"
+          :visible-count="newsVisible"
+          :gap="20"
+          :autoplay="5000"
+          :item-width="400"
+        >
           <template #default="{ item }">
             <CardNews :news="item" />
           </template>
@@ -389,6 +498,12 @@ const newsList = [
 </template>
 
 <style scoped>
+.planet-glow {
+  filter: drop-shadow(0 0 60px rgba(255, 255, 255, 0.1))
+    drop-shadow(0 0 30px rgba(255, 255, 255, 0.1))
+    drop-shadow(0 0 80px rgba(255, 255, 255, 0.1));
+}
+
 /* Адаптив для мобильных */
 @media (max-width: 768px) {
   .up-btn {
